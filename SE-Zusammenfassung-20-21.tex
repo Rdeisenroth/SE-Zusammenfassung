@@ -1,0 +1,1326 @@
+\RequirePackage{scrlfile}
+% Wir müssen imakeidx vor Hyperref laden, damit das Stichwortverzeichnis hyperlinks hat
+\AfterClass{scrartcl}{
+  \RequirePackage{imakeidx}
+}
+\documentclass[ngerman]{tuda_summary}
+% Packages (nicht in Class File um CompileTime zu verbessern)
+\usepackage[ngerman]{babel}
+%\usepackage[table]{xcolor}  
+\usepackage{amssymb}
+\usepackage{makecell}
+\usepackage{tikz-uml}
+\usepackage{mleftright}
+\usepackage{tikz}
+\usepackage{placeins}
+\usepackage{csquotes}
+\usetikzlibrary{patterns, shapes, intersections, arrows, math, decorations,decorations.pathreplacing, decorations.pathmorphing, positioning, calc, automata, chains, matrix, arrows.meta, shapes.geometric, shadows.blur, shapes.symbols, backgrounds, tikzmark}
+\usepackage{nccmath}
+\RequirePackage[framemethod=tikz]{mdframed} % Required for creating the theorem, definition, exercise and corollary boxes
+
+
+% Definitionen für das Dokument (Bis auf studentEins alle Optional)
+\sheetnumber{1}
+\groupnumber{69}
+\studentEins{Ruben Deisenroth}{9876543}
+%\studentZwei{Max Mustermann}{1234567}
+%\studentDrei{Peter Peterson}{0000000}
+\groupleader{Senpai Yoda}
+\semester{WiSe 2020/21}
+\fachbereich{Informatik}
+\date{\textbf{\sffamily Datum:} \today}
+\renewcommand*{\taskformat}{H\tasksep\thetask{}} % Taskprefix
+\ConfigureHeadline{
+	headline={summary-centered}
+}
+
+
+% Define Glossary style
+\ifthenelse{\isundefined{\printindex}}{}{
+    \makeindex[
+        columns=3,
+        title=Stichwortverzeichnis, 
+        intoc, 
+        options=-s mystyle
+        ]
+}
+%Fix indent for glossary
+\makeatletter
+\def\@idxitem{\par\hangindent 0pt}
+\makeatother
+
+
+
+% Dokument Anfang
+
+\begin{document}
+\title[SE]{Software Engineering}
+
+\term{
+    \begin{minipage}[t]{.5\linewidth}
+        \textsf{\textbf{Author:}}\space{}Ruben\space{}Deisenroth\\
+        \textbf{\sffamily{}Stand:}\space\today
+    \end{minipage}
+    \begin{minipage}[t]{.49\linewidth}
+        \raggedleft
+        \begin{flushright}
+            \textsf{\textbf{Semester:}}\space{}WiSe\space{}2020/21\\
+            \textsf{\textbf{Fachbereich:}}\space{}Informatik
+        \end{flushright}
+    \end{minipage}
+}
+\subtitle{Zusammenfassung}
+\maketitle{}
+%\printGradeTable{} % Erstellt eine Bewertungstabelle wie in Klausuren (Optionen für weglassen von Summe und Note Geplant)
+\tableofcontents
+
+%% --Beginn Zusammenfassung--%%
+\clearpage
+\section{Einführung}
+\subsection{Software}
+\begin{definition}[Software]\index{Software}
+    Der Begriff \textit{Software} bezeichnet ein Programm und all die dazugehörigen Daten, Informationen und Materialien. Das beinhaltet z.B.\begin{itemize}
+        \item Ein (installierbares), ausführbares (operational) Programm und dessen Daten
+        \item Konfigurationsdateien (configuration files)
+        \item Systemdokumentationen (system documentation), z.B. Architekturmodell, Designvorstellungen, \dots
+        \item Nutzerdokumentationen (user documentation), z.B. Anleitung, \dots
+        \item Support (z.B. Wartung, Website, Telefon, \dots)
+    \end{itemize}
+    \hfill - W.S. Humphrey, SCM SIGSOFT, 1989
+\end{definition}
+\subsubsection{Arten von Software}
+\begin{table}[ht]
+    \centering
+    \rowcolors{2}{white}{black!10}
+    \newcommand{\tabitem}{~\llap{-}~}
+    \begin{tabular}{rl}
+        \toprule
+        \fatsf{Typ}                          & \fatsf{Beschreibung}                                                            \\
+        \midrule
+        \fatsf{Application Software}         & \tabitem interagiert direkt mit dem Nutzer\continuerc                           \\
+                                             & \tabitem Kann sowohl General purpose (z.B. Textverarbeitung, \dots)\continuerc  \\
+                                             & ~~als auch anwendungsspezifisch (z.B. Kassensystem, \dots) sein                 \\
+        \fatsf{System Level Software}        & \tabitem interagiert üblicherweise nicht direkt mit Nutzer\continuerc           \\
+                                             & \tabitem Sorgt für funktionsfähiges System  (z.B. Treiber, \dots)               \\
+        \fatsf{Software as a Service (SaaS)} & \tabitem Läuft auf einem Server\continuerc                                      \\
+                                             & \tabitem Zugriff meist nur indirekt über Client (z.B. über Browser, SSH, \dots) \\
+
+        \bottomrule
+    \end{tabular}
+    \caption{Arten von Software}\index{Softwaretypen}\index{Arten von Software}
+    \label{tab:software:kinds}
+\end{table}
+\subsubsection{Softwarecharakteristiken}
+\begin{itemize}
+    \item Software nutzt sich nicht ab, aber muss sich ständig anpassen (z.B. an neue Hardware, \dots)
+    \item Lebenszeit meist länger als erwartet (schwer zu bestimmen, da zukünftige Anforderungen ungewiss)
+    \item Nur schwer messbar: Softwarequalität, Entwicklungsfortschritt und Zuverlässigkeit
+\end{itemize}
+\clearpage
+\subsection{Engineering}
+\begin{definition}[Engineering]\index{Engineering}
+    (Entwickeln, Ingenieurswesen) bezeichnet den Prozess, wissenschaftliche Prinzipien zu nutzen, um Maschinen, Strukturen und viele weitere Dinge zu entwerfen.\\
+    \phantom{a}\hfill - Cambridge Dictionary
+\end{definition}
+\begin{definition}[Software Engineering]\index{Software Engineering}
+    ist ein Teilgebiet der Informatik und bezeichnet das Anwenden einen systematischen disziplinierten und qualifizierten Ansatzes der Entwicklung, Ausführung und Wartung der Software, sowie die Forschung und Entwicklung solcher Ansätze.
+\end{definition}
+\subsubsection{Characteristics of Engineering Approaches}
+\begin{itemize}
+    \item Fester/Definierter Prozess
+    \item Getrennte Entwicklungsphasen, typischerweise: Analyse, Entwichlung (Design), Evaluation der Entwicklung, Konstruktion, Qualitätskontrolle (z.B. TÜV, oder mathematisch Korrektheit beweisen)
+    \item Klare Trennung einzelner Teilsysteme
+\end{itemize}
+\subsubsection{Probleme der Softwareentwicklung}\index{Software Engineering!Probleme}
+\begin{itemize}
+    \item Kunde/Nutzer wenig/gar nicht an Entwicklung beteiligt
+    \item Konstant verändernde Anforderungen an die Software
+    \item Softwareentwickler oft nicht ausreichend geschult
+    \item Managementprobleme
+    \item Unpassende Methoden,Programmiersprachen, Tools
+\end{itemize}
+\clearpage
+\section{Requirements Engineering}\index{Requirements engineering}
+\includegraphics{bilder/Requirements engineering Process Flow.pdf}
+{\centering
+    \subsection{Anforderungsanalyse}\index{Requirements analysis}\index{Anforderungsanalyse}
+}
+\begin{definition}[Anforderungen]
+    (requirements) sind die Beschreibungen der vom entworfenen System zu erfüllenden Aufgaben und dessen Einschränkungen
+\end{definition}
+Die Anforderungsanalyse beschäftigt sich mit dem Erkennen, der Analyse, der Dokumentation und der Validierung der Anforderungen.
+\begin{itemize}
+    \item Anforderungen werden in einem sog. Pflichtenheft (System Requirements Specification) festgehalten.
+    \item use cases, state diagrams, usw werden im product backlog festgehalten.
+    \item Anforderungen sind \textbf{keine} Lösungen/Implementierungen.
+\end{itemize}
+\subsubsection{Nutzeranforderungen (User requirements)}\index{User requirements}
+\begin{itemize}
+    \item beschreiben Aufgaben und Einschränkungen in Natürlicher Sprache oder mit Diagrammen (meinst von Kunden geschrieben)
+\end{itemize}
+\fatsf{Beispiel:} Das system soll alle Buchungen speichern, so wie es das Gesetz verlangt.
+\subsubsection{Systemanforderungen (System Requirements)}\index{Systemanforderungen}\label{System Requirements}
+\begin{itemize}
+    \item Präzise und detaillierte Beschreibung von  Aufgaben und Einschränkungen des Programmes (Meist von Entwickler geschrieben)
+    \item Verfeinerung der Nutzeranforderungen
+\end{itemize}
+\fatsf{Beispiel:} Die Buchungen müssen für 10 Jahre gespeichert werden ab dem Zeitpunkt der Buchung.
+\subsubsection{Domänenanforderungen (Domain Requirements)}\index{Domänenanforderungen}\label{Domain Requirements}
+\begin{itemize}
+    \item Meist nicht vom Kunden oder Entwickler spezifiziert, sondern von der Domäne (z.B. vom Gesetzgeber, \dots)
+\end{itemize}
+\fatsf{Beispiel:} Für die Polizeiliche Ermittlung muss in Deutschland jede Transaktion für 2 Wochen zwischengespeichert werden.
+\subsubsection{Funktionale Anforderungen (Functional Requirements)}\index{Funktionale Anforderungen}\label{Functional Requirements}
+\begin{itemize}
+    \item Die Dienste, die das System machen können soll
+    \item die Reaktion des Systems auf bestimmte Eingaben und
+    \item das Verhalten des Systems in bestimmten Situationen.
+\end{itemize}
+\fatsf{Beispiel:} Wenn der Nutzer den Knopf "`Neues Dokument"'" drückt, wird eine neues Textdokument angelegt.
+\subsubsection{Nichtfunktionale Anforderungen (Non-Functional Requirements)}\index{Nichtfunktionale Anforderungen}\label{Non-Functional Requirements}
+Spezifizieren Einschränkungen der Dieste/Funktionen des Systems, welche oft nicht vollständig von Tests abgedeckt werden können:
+\begin{itemize}
+    \item Produktanforderungen (Product requirements)\index{Product requirements}\begin{itemize}
+              \item Portabilität (Läuft auf verschiedenen Plattformen/lässt sich leicht darauf anpassen)
+              \item Zuverlässigkeit/Robustheit (Reagiert auch auf unvorhergesehene/Illegale Eingaben und Situationen sinvoll)
+              \item Effizienz (Leistung, Speicherplatz)
+              \item Nutzbarkeit (Verständlichkeit, \dots)
+          \end{itemize}
+    \item Organisatorische Anforderungen(Organisational requirements)\begin{itemize}\index{Organisational requirements}
+              \item Auslieferungsanforderungen
+              \item Implementation
+              \item Nutzung von Standards (ISO, IEEE, \dots)
+          \end{itemize}
+    \item Externe Anforderungen (External requirements)\index{External requirements}\begin{itemize}
+              \item Interoperabilität (Interoperability requirements), d.h. Zusammenspiel mit anderen Systemen
+              \item Ethische Anforderungen
+              \item Rechtliche Anforderungen (Datenschutz, Sicherheit, \dots)
+          \end{itemize}
+\end{itemize}
+Nichtfunktionale Anforderungen sind oftmals großflächige Anforderungen, welche das gesamte System betreffen. Allerdings sind solche Anforderungen meistens kritischer als funktionale Anforderungen
+(bspw. "`Das System soll sicher vor Angriffen sein."').\\
+Um nichtfunktionale Anforderungen überprüfbar zu machen, ist oftmals eine Umformulierung oder
+Abänderung der eigentlichen Anforderung nötig. Hierdurch können auch funktionale Anforderungen
+aufgedeckt werden.\\
+\fatsf{Beispiel:} Die Oberfläche soll ansprechend und einfach zu bedienen sein.
+\clearpage
+\subsubsection{RE-Prozess}
+\fatsf{Viewpoint-Oriented approach}
+\begin{itemize}
+    \item Interactor viewpoints: direktes Interesse
+    \item Indirect viewpoints: indirektes Interesse
+    \item Domain viewpoints: indirektes Interesse
+\end{itemize}
+\begin{definition}[FURPS+ Modell]\index{FURPS+ Modell}
+    Functionality, Usability, Reliability, Performance, Supportability\\Plus Implementation (Interface,Operations,Packaging,Legal)
+\end{definition}
+\fatsf{Anforderungsvalidierung (Requirements validation checks)}\begin{itemize}
+    \item Korrektheit (Validity): Beinhalten die Anforderungen alle nötigen Funktionen oder werden weitere benötigt?
+    \item Konsistenz: Gibt es Konflikte bei den Anforderungen?
+    \item Komplettheit: Sind alle Funktionen und Einschränkungen wie erwünscht angegeben?
+    \item Realisierbarkeit (Realism): Sind die Anforderungen realistisch erfüllbar?
+    \item Testbarkeit (Verifiability): Lässt sich das Erfüllen der Anforderungen testen?
+    \item Verfolgbarkeit (Tracability): Lässt sich nachvollziehen, warum die Anforderung existiert?
+\end{itemize}
+\section{Anwendungsfälle (Use Cases)}
+\subsection{Use Case Analysis}
+\begin{definition}[Anwendungsfälle] (Use Cases)
+    beschreiben, wie ein Angehöriger einer Rolle (\textit{Akteur}) das System in einem bestimmten \textit{Szenario} nutzt.
+\end{definition}
+\subsubsection{Requirements vs Use Cases}
+\begin{table}[ht]
+    \centering
+    \rowcolors{2}{white}{black!10}
+    \begin{tabular}{ll}
+        \toprule
+        \fatsf{Requirements}                                      & \fatsf{Use Cases}                                                 \\
+        \midrule
+        ~\llap{-}~Fokus auf gewünschte \textit{Funktionalität}    & ~\llap{-}~Fokus auf mögliche \textit{Szenarios}                   \\
+        ~\llap{-}~Werden meist einfach deklariert (declaratively) & ~\llap{-}~Werden anhand von Szenarios beschrieben (operationally) \\
+        ~\llap{-}~Perspective des Clients                         & ~\llap{-}~ Perspektive des Users                                  \\
+        \bottomrule
+    \end{tabular}
+    \caption{Requirements vs Use Cases}
+    \label{tab:requirements_vs_use_cases}
+\end{table}
+\begin{itemize}
+    \item Ohne Nutzerbeteiligung nahezu unmöglich, gute/vollständige Anwendungsfälle zu schreiben
+    \item Anwendungsfälle ergänzen die Anforderungsanalyse, ersetzen sie aber nicht (können keine Nichtfunktionalen Anforderungen erfassen)
+\end{itemize}
+\subsubsection{Use Case Formats}
+\begin{itemize}
+    \item kurz (brief): Kurze zusammenfassung, normalerweise das Haupterfolgsszenario
+    \item informell (casual): Informelles Format, mehrere Zeilen die Mehrere Szenarios behandeln
+    \item ausgearbeitet (Fully dressed): Alle Zwischenschritte und Variationen sind im Detail aufgeschrieben, es gibt hilfssektionen, z.B. Vorbedingungen (preconditions) und Erfolgsgarantien (sucess guarantees)
+\end{itemize}
+Ein vollständig ausgearbeiteter Anwendungsfall sieht so aus:
+\begin{table}[ht]
+    \centering
+    \rowcolors{2}{white}{black!10}
+    \begin{tabular}{ll}
+        \toprule
+        \fatsf{Abschnitt}                            & \fatsf{Beschreibung/Einschränkung}                        \\
+        \midrule
+        Use Case Name                                & Der Name des Anwendungsfalls / Startet mit einem Verb     \\
+        Bereich (Scope)                              & Betroffener Bereich des Systems                           \\
+        Ebene (Level)                                & Abstraktionsebene/ \continuerc                            \\
+                                                     & Nutzerziel, Zusammenfassung oder Unterfunktion            \\
+        Hauptakteur (Primary actor)                  & Initiator des Anwendungsfalls                             \\
+        Stakeholders and Interests                   & Personen, die dieser Anwendungsfall betrifft              \\
+        Vorbedingungen (preconditions)               & Was muss beim start des Programmes gelten?\continuerc     \\
+                                                     & Ist es das Wert dem Leser mitzuteilen?                    \\
+        Akzeptanzkriterien (Minimal Guarantee)       & Minimalversprechen an Stakeholders                        \\
+        Erfolgskriterien (Success Guarantee)         & Was sollte das Programm können, wenn es erfolgreich ist?  \\
+        Haupterfolgsszenario (Main Success Scenario) & Typischer Ablauf des Szenarios /\continuerc               \\
+                                                     & Nummerierte Schrittliste um das Ziel zu erreichen         \\
+        Erweiterungen                                & Alternative Erfolgs- und Fehlschlagszenarien /\continuerc \\
+                                                     & Fehlschlagspunkte des Hauptszenarios                      \\
+        \tikzmark{A}Spezialanforderungen             & Verwandte, nichtfunktionale Anforderungen                 \\
+        Technologien                                 & Einzusetzende Technologien                                \\
+        Häufigkeit (Frequency of occurrence)         & Häufigkeit des Eintretens des Anwendungsfalls             \\
+        \tikzmark{B}Anderes (Misc)                   & Bspw. offene Tickets                                      \\
+        \bottomrule
+    \end{tabular}
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw[thick,decorate,decoration={brace,amplitude=8pt,raise=6pt, mirror}, accentcolor]([yshift=.9em]pic cs:A)-- ([yshift=-.3em]pic cs:B)node[midway, xshift = -1.1cm,align=left]{nicht\\immer\\nötig};
+    \end{tikzpicture}
+    \caption{Fully Dressed Use Case schema}
+    \label{tab:fully_dressed_use_case}
+\end{table}
+\subsubsection{Ricktlinien für das Entwickeln von Anwendungsfällen}
+\begin{enumerate}
+    \item Akteure und deren Interessen aufzählen $\Longrightarrow$ Erste Ebene an Präzission
+    \item Stakeholders, Trigger (Erster Schritt des Haupterfolgsszenarios), Validieren $\Longrightarrow$ Zweite Ebene an Präzission
+    \item Alle Fehlschlagszenarien Indentifizieren und auflisten
+    \item Fehlerbehandlung Schreiben
+\end{enumerate}
+\clearpage
+\subsection{UML Nutzungszweck Diagramme (UML Use Case Diagrams)}
+\begin{definition}[Unified Modeling Language (UML)]\index{UML}
+    Visuelle, aber präzise Entwurfsschreibweise für Softwareentwicklung
+    \begin{itemize}
+        \item Hauptziel: Objektmodellierung vereinheitlichen, indem sich auf einen festen Syntax und Semantik geeinigt wird
+    \end{itemize}
+\end{definition}
+\begin{definition}[Nutzungszweck-Diagramm (Use case Diagram)]
+    Stellt Anforderungsfälle und deren Relationen zu dem System und dessen Akteuren dar.
+\end{definition}
+\begin{table}[ht]
+    \centering
+    \rowcolors{2}{white}{black!10}
+    \begin{tabular}{cl}
+        \toprule
+        \fatsf{Element}                                                              & \fatsf{Beschreibung}                                                                \\
+        \midrule
+        \raisebox{-.5\height}{\includegraphics[height=3cm]{bilder/uml/actor.pdf}}    & Stellt einen Akteur innerhalb des Systemes dar.                                     \\
+        \raisebox{-.5\height}{\includegraphics[height=2cm]{bilder/uml/use_case.pdf}} & Stellt einen Anwendungsfall im System dar                                           \\
+        \raisebox{-.5\height}{\includegraphics[height=2cm]{bilder/uml/include.pdf}}  & \Gape[0pt][2pt]{\makecell[l]{Erweitert einen Anwendungsfall um eine Funktionalität. \\
+        Wird der erweiterte Anwendungsfall "`ausgeführt"',                                                                                                                 \\
+        so wird auch dieser Anwendungsfall "`ausgeführt"'.}}                                                                                                               \\
+        \raisebox{-.5\height}{\includegraphics[height=2cm]{bilder/uml/extend.pdf}}   & \Gape[0pt][2pt]{\makecell[l]{Erweitert einen Anwendungsfall um eine Funktionalität. \\Ist die Bedingung in der Beschreibung wahr, so wird der \\ erweiternde Anwendungsfall mit "`ausgeführt"'.}}\\
+        \bottomrule
+    \end{tabular}
+    \caption{Use Case Diagram Elemente}
+    \label{tab:use_case_diagram_elements}
+\end{table}
+\paragraph{Beispiel}\mbox{}\\
+In einem Autohandel ist es möglich, sowohl Bar als auch mit Kreditkarte zu zahlen. Auch ist es dem Kunden möglich, Automobile zu mieten. Da der Handel neue Kunden gewinnen möchte, ist es ab sofort möglich, bei dem Mieten eines Autos Treuepunkte zu sammeln. Dem Ladeninhaber ist es möglich, neue Autos in das Sortiment aufzunehmen. Wurde ein Ausstellungsauto einmal gemietet, so sinkt der Kaufpreis von diesem. \\ \textit{Diese Anforderungen sind in \figurename{} \ref{fig:usecase} dargestellt.}
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+        \umlactor[x = -8, y = 0]{Kunde}
+        \umlactor[x = 8, y = -6]{Inhaber}
+        \begin{umlsystem}[x = 0, y = 0]{Autohandel}
+            \umlusecase[x = 0, y = 2, name = buy]{Auto kaufen}
+            \umlusecase[x = 0, y = -2, name = rent, width = 2.7cm]{Auto mieten \\ EP: Treuepunkte}
+            \umlusecase[x = 0, y = -7, name = add]{Auto aufnehmen}
+            \umlusecase[x = -3, y = 0, name = credit]{Mit Kreditkarte zahlen}
+            \umlusecase[x = 3, y = 0, name = cash]{Mit Bargeld zahlen}
+            \umlusecase[x = 0, y = -5, name = payback]{Treuepunkte sammeln}
+        \end{umlsystem}
+        \umlinclude[]{cash}{buy}
+        \umlinclude{credit}{buy}
+        \umlinclude{cash}{rent}
+        \umlinclude{credit}{rent}
+        \umlextend[name = extend]{payback}{rent}
+        \umlnote[x = 6, y = -3, width = 6cm]{extend-1}{Condition: \{ Kunde hat Kundenkarte \} \\ Extension Point: Treuepunkte}
+        \umlassoc{Kunde}{buy}
+        \umlassoc{Kunde}{rent}
+        \umlassoc{Inhaber}{add}
+    \end{tikzpicture}
+    \caption{Beispiel: Use Case Diagram}
+    \label{fig:usecase}
+\end{figure}
+
+%\fatsf{TODO: Bepspiel}
+\FloatBarrier{}
+\section{Domänenmodellierung (Domain Modelling)}
+\begin{definition}[Domain Modelling]
+    Reparieren von Terminologie und fundamentalen Aktivitäten im Zielraum (solution space)
+\end{definition}
+\begin{definition}[Domänenmodell (Domain Model)]
+    Das Domänenmodell besteht aus den \textbf{Objekt}en (inklusive deren \textbf{Attribut}en) der Domäne und deren  \textbf{Beziehung}  untereinander.
+    Man modelliert es, indem man während der objektorientierten Analyse die relevanten Konzepte, die aktuell benötigt werden, sowie deren identifiziert. Man benötigt ein tiefgreifendes Verständnis der Domäne (des Einsatzgebietes) für einen guten Softwareentwurf (Curtis Gesetz).
+\end{definition}
+
+Ein Domänenmodell (Analysemodell, Konzeptmodell)
+\begin{itemize}
+    \item spaltet die Domäne in Konzeptobjekte auf,
+    \item sollte die Konzeptklassen ausarbeiten und
+    \item wird iterativ vervollständigt und formt die Basis der Softwareentwicklung.
+\end{itemize}
+
+Domänenkonzepte/Konzeptklassen sind \textit{keine} Softwareobjekte!
+
+\subsection{Diagramm: Domain Model (UML)}
+\label{diagram:domain}
+
+\paragraph{Beschreibung}\mbox{}\\
+Domänenmodelle werden mit Hilfe von einfachen UML Klassendiagrammen visualisiert, wenden aber nur einzelne Teile des Klassendiagramms an:
+\begin{itemize}
+    \item Nur Domänenobjekte und Konzeptklassen
+    \item Nur Assoziationen (keine Aggregationen oder Kompositionen)
+    \item Attribute an Konzeptklassen (sollten aber vermieden werden)
+\end{itemize}
+
+Im Diagramm \ref{fig:domain} ist ein Beispiel für ein Domänenmodell gegeben. Im folgenden werden die einzelnen Komponenten erläutert.
+
+\begin{tikzpicture}[item/.style = { minimum width = 4cm }, desc/.style = { text width = 8cm, align = left }]
+    \umlsimpleclass[item, name = domainclass]{Domänen-/Konzeptklasse}
+    \umlclass[item, name = domainclass,below = 2em of Domänen-/Konzeptklasse.south]{Klasse}{attribut1: typ1\\\texttt{\textcolor{red}{/}}abgeleitetesAttribut: typ2}{}
+    \coordinate [below = 3em of Klasse.south west] (assoc1);
+    \coordinate [below = 3em of Klasse.south east] (assoc2);
+    \umlassoc[mult1 = multA, mult2 = multB, arg1 = roleA, arg2 = roleB, name = assoc]{assoc1}{assoc2}
+    \coordinate [below = 1.5 of assoc1] (uniassoc1);
+    \coordinate [below = 1.5 of assoc2] (uniassoc2);
+    \umluniassoc[mult1 = multA, mult2 = multB, arg1 = roleA, arg2 = roleB, name = uniassoc]{uniassoc1}{uniassoc2}
+    \coordinate [below = 1 of uniassoc1] (inherit1);
+    \coordinate [below = 1 of uniassoc2] (inherit2);
+    \umlinherit{inherit1}{inherit2}
+
+    \node [above] at (assoc-1) {Name};
+    \node [above] at (uniassoc-1) {Name};
+
+    \node [desc, right = 1 of Domänen-/Konzeptklasse] {Stellt ein Domänenobjekt/eine Konzeptklasse im Domänenmodell dar.};
+    \node [desc, right = 1 of Klasse] {Attribute: Logische Datenwerte eines Objektes, Abgeleitete Attribute werden mit einem "`/"' vorm namen gekennzeichnet};
+    \node [desc, right = 1 of assoc2] {Repräsentiert eine bidirektionale Assoziation. Ließ: Ein A hat multB viele B und ein B hat multA viele A.};
+    \node [desc, right = 1 of uniassoc2] {Repräsentiert eine unidirektionale Assoziation. Ließ: Ein A hat multB viele B.};
+    \node [desc, right = 1 of inherit2] {Stellt eine Vererbungsbeziehung (Association) dar.};
+\end{tikzpicture}
+% end
+\vspace*{-.8cm}
+\paragraph{Beispiel}\mbox{}\\
+In einer Universität wird jede Vorlesung von mindestens einem Dozenten gelesen. Im Rahmen der Vorlesungen werden Arbeiten angefertigt, welche die Studierenden in Lerngruppen von bis zu 3 Personen bearbeiten müssen. Hierbei kann jeder Studierende von genau einem Dozenten betreut werden, wenn der*die Student*in dies erfragt. Außerdem besuchen Studierende Vorlesungen. Erscheinen keine Studierenden bei einer Vorlesung, so findet diese nicht statt. \textit{Diese textuelle Beschreibung sind im Diagramm \ref{fig:domain} dargestellt.}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+        \umlsimpleclass[x = 0, y = 0]{Dozent*in}
+        \umlsimpleclass[x = 7, y = 0]{Vorlesung}
+        \umlsimpleclass[x = 0, y = -5]{Lerngruppe}
+        \umlsimpleclass[x = 7, y = -5]{Student*in}
+
+        \umluniassoc[mult1 = 1..*, mult2 = *, name = reads]{Dozent*in}{Vorlesung}
+        \umlassoc[mult1 = 0..1, mult2 = *, arg1 = Betreuer]{Dozent*in}{Student*in}
+        \umluniassoc[mult1 = 1, mult2 = 2..3, name = consistsof]{Lerngruppe}{Student*in}
+        \umlassoc[mult1 = 1..*, mult2 = *, name = visits]{Student*in}{Vorlesung}
+
+        \node [above] at (reads-1) {ließt};
+        \node [above] at (consistsof-1) {besteht aus};
+        \node [left] at (visits-1) {besucht};
+    \end{tikzpicture}
+    \caption{Beispiel: Domänenmodell}
+    \label{fig:domain}
+\end{figure}
+% end
+% end
+% end
+% end
+\clearpage
+\subsubsection{Klasse vs Attribut}
+\begin{definition}[Beschreibungsklasse (Description Classes)]
+    Enthält Informationen/Attribute die ein Objekt beschreiben\\
+    Nötig, wenn:\begin{itemize}
+        \item Informationen über ein Objekt oder eine Funktion benötigt wird
+        \item Löschen des beschriebenen Objektes zu Datenverlust führt
+        \item Informationsdopplung vermieden werden kann
+    \end{itemize}
+\end{definition}
+\begin{defBox}
+    \small\textcolor{black}{\sffamily\bfseries Heuristik: Klasse oder Attribut} \space\sffamily\bfseries\color{black}---\normalfont\normalsize\space Wenn wir bei eine Konzeptklasse C nicht als eine Zahl, einen Text, oder ein Datum der echten Welt sehen, so ist C höchst wahrscheinlich eine Konzeptklasse, und kein Attribut.
+\end{defBox}
+\begin{defBox}
+    \small\textcolor{black}{\sffamily\bfseries Heuristik: Verbindung einfügen?} Wenn mehrere Informationen, durch die Verbindung über einen längeren Zeitraum vorhanden sein sollen
+\end{defBox}
+\begin{definition}[Class name-Verb phrase-Class name - Format]
+    Wörter statt mit Leerzeichen mit "`-"' trennen, Klassennamen im CamelCase
+\end{definition}
+\paragraph{Verbindungsnamen}\begin{itemize}
+    \item im Class name-Verb phrase-Class name-Format
+    \item Präzise
+\end{itemize}
+\subsubsection{Attribut vs Verbindung}
+\begin{table}[ht]
+    \centering
+    \rowcolors{2}{white}{black!10}
+    \begin{tabular}{cc}
+        \toprule
+        \fatsf{Attribut}                                                & \fatsf{Verbindung}                              \\
+        \midrule
+        \fakebullet{}Primitive Datentypen sind \textbf{immer} Attribute & \fakebullet{}Relationen zwischen Konzeptklassen \\
+        \bottomrule
+    \end{tabular}
+    \caption{Attribut vs Verbindung}
+    \label{tab:attribute_vs_association}
+\end{table}
+\subsubsection{UML Zustandsdiagram (State Machine Diagram)}
+\paragraph{Beschreibung}\mbox{}\\
+State Machine Diagramme nutzen vereinfachte endliche Automaten zur Darstellung von Eventgetriebenem Verhalten des Systems (Verhalten) und Interaktionssequenzen (Protkoll).
+\begin{figure}[ht]
+    \centering
+    \includegraphics{bilder/State_Machine_Diagram.pdf}
+    \caption{Beispiel für UML State Machine Diagram}
+\end{figure}
+% Kapitel 5
+\clearpage
+\section{Softwarequalität}
+\subsection{Faktoren}
+Die Faktoren guter Software trennen sich in \textit{interne} und \textit{externe Faktoren}:
+\begin{description}
+    \item[Interne Faktoren] Sicht der Entwickler (Code-Qualität). Stellt eine \enquote{White Box} dar.
+    \item[Externe Faktoren] Sicht der Nutzer (interne Qualitätsfaktoren sind nicht bekannt). Stellt eine \enquote{Black Box} dar.
+\end{description}
+\subsubsection{Interne Faktoren}
+\begin{itemize}
+    \item Modularität
+    \item Verständlichkeit
+          \begin{itemize}
+              \item Namensgebung (Methoden, Parameter, Variablen, \dots)
+          \end{itemize}
+    \item Kohäsion
+    \item Prägnanz (keine/wenige Duplikate, klarer (kurzer) Code)
+    \item \dots
+\end{itemize}
+% end
+
+\subsubsection{Externe Faktoren}
+\begin{itemize}
+    \item Korrektheit
+    \item Verlässlichkeit
+    \item Erweiterbarkeit
+    \item Wiederverwendbarkeit
+    \item Kompatibilität
+    \item Portabilität
+    \item Effizienz
+    \item Nutzbarkeit
+    \item Funktionalität
+    \item Wartbarkeit
+    \item \dots
+\end{itemize}
+% end
+% end
+
+\subsection{Verifikation und Validierung}
+\textbf{Verifikation:} Wird das System korrekt erstellt? \\
+\textbf{Validierung:} Wird das richtige System erstellt?
+
+\subsubsection{Techniken}
+\paragraph{Statische Techniken}\mbox{}\\
+Statische Techniken erfordern nicht, dass das Programm ausgeführt wird.
+
+\begin{description}
+    \item[Software Reviews] Händische/Manuelle Überprüfung
+    \item[Automatisierte Statische Analyse] Softwareanalyse, bspw. Typprüfer
+    \item[Formale Verifikation] Formaler Beweis, dass ein Programm eine bestimme Eigenschaft erfüllt
+\end{description}
+
+Siehe \ref{sec:metrics}.
+% end
+
+\paragraph{Dynamische Techniken}\mbox{}\\
+Dynamische Techniken erfordern, dass das Programm ausgeführt wird.
+
+\begin{description}
+    \item[Testen] Führt das Programm aus und Testet es auf bestimmte Eigenschaften (Verhalten)
+    \item[Laufzeitüberprüfung] Analysetools, welche Programme auf Einhaltung bestimmter Einschränkungen (bspw. Speichereinschränkungen) testen
+\end{description}
+% end
+% end
+
+\subsubsection{Codeuntersuchung}
+Das Ziel der Codeuntersuchung, ist
+\begin{itemize}
+    \item Programmfehler,
+    \item Standardfehler und
+    \item Designfehler
+\end{itemize}
+zu finden.
+
+Dies wird üblicherweise an (externe) Teams ausgearbeitet, welche den Code systematisch analysieren.
+
+Eine mögliche Checkliste ist bspw.:
+\begin{description}
+    \item[Datenfehler] Werden Variablen initialisiert, bevor sie genutzt werden? Gibt es mögliche Arra-Out-Of-Bounds Fehler? Werden deklarierte Variablen genutzt?
+    \item[Kontrollflussfehler] Sind die Bedingungen korrekt? Gibt es toten Code? Terminieren alle Schleifen? Sind switch..case Ausdrücke vollständig?
+    \item[I/O Fehler] Werden alle Eingabeparameter genutzt? Können unerwartete Eingaben zu einem Absturz führen?
+    \item[Schnittstellenfehler] Korrekte Anzahl/Typen der Parameter?
+\end{description}
+% end
+% end
+
+\subsection{Metriken}
+\label{sec:metrics}
+
+\begin{description}
+    \item[Fan In] Anzahl Methoden, welche $ m $ aufrufen
+    \item[Fan Out] Anzahl Methoden, welche $ m $ aufruft
+    \item[Codelänge] Anzahl Zeilen
+    \item[Zyklomatische Komplexität] Linear unabhängige Pfade durch den Code (Kontrollflussgraph)
+    \item[Verschachtelungstiefe] Tiefe Verschachtelung von if/else, switch..case, etc. sind schwer zu verstehen
+    \item[Gewichtete Methodenkomplexität pro Klasse] Gewichtete Summe der Methodenkomplexitäten
+    \item[Vererbungstiefe] Tiefe Vererbungsbäume sind hochkomplex (Unterklassen)
+\end{description}
+
+\subsubsection{Kontrollflussgraph (CFG)}
+\label{diagram:cfg}
+
+Ein Kontrollflussgraph stellt Code syntaxfrei dar, wodurch bessere Analysen möglich sind.
+
+\paragraph{Beispiel}\mbox{}\\
+Der in \ref{fig:cfgcode} gezeigte Code wird in \ref{fig:cfg} als Kontrollflussgraph dargestellt.
+\begin{figure}[ht]
+    \centering
+    %\begin{noindent}
+    \begin{codeBlock}[autogobble]{}
+        public static int fibonacci(final int num) {
+        	if (num <= 0) {
+        		throw new IllegalArgumentException();
+        	}
+        	int current = 1;
+        	int previous = 0;
+        	for (int i = 0; i < num - 1; i++) {
+        		int next = current + previous;
+        		previous = current;
+        		current = next;
+        	}
+        	return current;
+        }
+	\end{codeBlock}
+    %\end{noindent}
+    \caption{Beispiel: Kontrollflussgraph / Code}
+    \label{fig:cfgcode}
+\end{figure}
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[part/.style = { draw, align = center }]
+        \node [part] (init) {init};
+        \node [part, below = of init, label = 180:1] (step1) {\texttt{if (num <= 0)}};
+        \coordinate [right = 6 of step1] (step1-);
+        \node [part, below = of step1-, label = 180:11] (step1-1) {\texttt{throw new IllegalArgumentException();}};
+        \node [part, below = of step1, label = 180:2] (step2) {\texttt{int current = 1;}};
+        \node [part, below = of step2, label = 180:3] (step3) {\texttt{int previous = 0;}};
+        \node [part, below = of step3, label = 180:4] (step4) {\texttt{for (int i = 0; i < num - 1; i++)}};
+        \coordinate [right = 5 of step4] (step4-);
+        \node [part, below = of step4-, label = 180:41] (step4-1) {\texttt{int next = current + previous;}};
+        \node [part, below = of step4-1, label = 180:42] (step4-2) {\texttt{previous = current;}};
+        \node [part, below = of step4-2, label = 180:43] (step4-3) {\texttt{current = next;}};
+        \node [part, below = of step4, label = 180:5] (step5) {\texttt{return current;}};
+        \node [part, below = of step5] (exit) {exit};
+
+        \draw [->] (init) -- (step1);
+        \draw [->] (step1) -| node [above] {\texttt{num <= 0}} (step1-1);
+        \draw [->] (step1) -- node [left] {\texttt{num > 0}} (step2);
+        \draw [->] (step2) -- (step3);
+        \draw [->] (step3) -- (step4);
+        \draw [->] (step4) -| node [above] {\texttt{i < num - 1}} (step4-1);
+        \draw [->] (step4-1) -- (step4-2);
+        \draw [->] (step4-2) -- (step4-3);
+        \coordinate [right = 2.5 of step4-3] (back1);
+        \coordinate [right = of step3] (back2);
+        \draw (step4-3) -- (back1);
+        \draw (back1) |- (back2);
+        \draw [->] (back2) -- (step4);
+        \draw [->] (step4) -- node [left] {\texttt{i >= num - 1}} (step5);
+        \draw [->] (step5) -- (exit);
+    \end{tikzpicture}
+    \caption{Beispiel: Kontrollflussgraph}
+    \label{fig:cfg}
+\end{figure}
+% end
+% end
+
+\subsubsection{Zyklomatische Komplexität}
+Die Zyklomatische Komplexität $ C $ berechnet sich durch $ C = E - N + 2P $, wobei $ E $ die Anzahl der Kanten, $ N $ die Anzahl der Kanten und $ P $ die Anzahl der möglichen Zusammenhangskomponenten (in den meisten Fällen $ 1 $) darstellt.
+% end
+% end
+
+\subsection{Testen}
+\subsubsection{Testplan}
+Ein Testplan ist zur Ausführung durch Menschen gedacht. Er dokumentiert die Schritte des Tests und das jeweilige erwartete Ergebnis. In der Testausführung kann das eigentliche Ergebnis dann mit dem erwarteten verglichen werden.
+% end
+
+\subsubsection{Testtypen}
+\paragraph{Unit Tests}\mbox{}\\
+Sehr kleine, automatisierte, Tests, welche eine Funktionalität testen. In typischen Softwareprojekten finden sich $ \leq 1000 $ Unit Tests.
+% end
+
+\paragraph{Integrations-Tests}\mbox{}\\
+Testen eines kompletten (Unter-) Systems, um die Zusammenarbeit der Komponenten zu Testen.
+% end
+
+\paragraph{Systemtests}\mbox{}\\
+Testen einer komplett integrierten Applikation (Funktion, Performanz, Stresstest, \dots).
+% end
+% end
+
+\subsubsection{Testautomation}
+Ein Testautomationssystem
+\begin{itemize}
+    \item startet die \enquote{implementation under test} (IUT),
+    \item setzt die Umgebung auf,
+    \item bringt das System in den erwarteten Ausgangszustand,
+    \item wendet die Testdaten an und
+    \item evaluiert die Ergebnisse und den Zustand des Systems.
+\end{itemize}
+% end
+
+\subsubsection{Testabdeckung}
+\paragraph{Strukturell}\mbox{}\\
+Strukturelle Testabdeckung basiert auf dem Kontrollflussgraphen (CFG) eines Programms.
+
+\paragraph{Statement Coverage (SC)}\mbox{}\\
+Alle Ausdrücke wurden mindestens einmal ausgeführt.
+% end
+
+\paragraph{Basic Block Coverage (BBC)}\mbox{}\\
+Alle Blöcke wurden mindestens einmal ausgeführt.
+% end
+
+\paragraph{Branch Coverage (BC)}\mbox{}\\
+Jede Seite von jedem Knoten wurde mindestens einmal ausgeführt (d.h. jede Kante eines Kontrollflussgraphen).
+% end
+
+\paragraph{Path Coverage (PC)}\mbox{}\\
+Alle Pfade wurden mindestens einmal ausgeführt (siehe CFG).
+% end
+% end
+
+\paragraph{Logisch}\mbox{}\\
+Definition:
+\begin{description}
+    \item[Bedingung] Eine \textit{Bedingung} ist \texttt{ein} boolescher Audruck.
+    \item[Entscheidung] Eine \textit{Entscheidung} ist eine Zusammensetzung von Bedingungen, welche bspw. den Test eines \texttt{if}-Ausdruckes darstellt.
+\end{description}
+
+\paragraph{Condition Coverage (CC)}\mbox{}\\
+Jede Bedingung wurde mindestens einmal zu wahr und falsch ausgewertet.
+% end
+
+\paragraph{Decision Coverage (DC)}\mbox{}\\
+Jede Entscheidung wurde mindestens einmal zu wahr falsch ausgewertet.
+% end
+
+\paragraph{Modified Condition Decision Coverage (MCDC)}\mbox{}\\
+Kombiniert Aspekte der Condition Coverage, Decision Coverage und Unabhängigkeitstests.
+
+Ein Test für eine Bedingung $ c $ in Entscheidung $ d $ (Duplikate von $ c $ werden nicht gezählt) erfüllt MCDC gdw.
+\begin{itemize}
+    \item er $ d $ mindestens zweimal auswertet,
+    \item davon $ c $ einmal zu wahr und einmal zu falsch auswertet,
+    \item $ d $ in beiden Fällen unterschiedlich ausgewertet wird und
+    \item die anderen Bedingungen in $ d $ in beiden identisch oder in mindestens einem nicht ausgewertet werden.
+\end{itemize}
+Für 100\%-ige MCDC-Abdeckung muss dies für jede Bedingung in dem Programm gelten.
+% end
+
+\paragraph{Multiple-Condition Coverage (MCC)}\mbox{}\\
+Alle möglichen Kombinationen innerhalb einer Entscheidung wurden mindestens einmal ausgeführt.
+% end
+% end
+% end
+% end
+% end
+\clearpage
+\section{Verhaltensmodellierung}
+\subsection{Diagramme}
+\subsubsection{Diagramm: Interaction/Sequence Diagram (UML)}
+\label{diagram:umlsequence}
+
+{ \footnotesize UML Specification Version 2.5.1, Chapter 17}
+
+\paragraph{Beschreibung}\mbox{}\\
+\begin{itemize}
+    \item Sequenzendiagramme beschreiben die Interaktionen (Nachrichten) zwischen Objekten in einem konkretem Szenario.
+    \item Nicht geeignet, um einen gesamten Algorithmus zu modellieren!
+\end{itemize}
+
+Im Diagramm \ref{fig:sequencecode} (Codebasis \ref{fig:sequence}) ist ein Beispiel für ein Sequenzendiagramm gegeben. In diesem werden die einzelnen Komponenten erläutert
+% end
+
+\paragraph{Beispiel}\mbox{}\\
+Das Verhalten der Methode \texttt{run(\dots)} in dem in \ref{fig:sequencecode} gezeigtem Code  wird in \ref{fig:sequence} visualisiert.
+
+\begin{figure}[ht]
+    \centering
+    %\begin{noindent}
+	\begin{codeBlock}[autogobble]{}
+        ublic class Query {
+        	public List<Student> run(List<Student> students, ISelector sel) {
+        		List<Student> result = createEmptyResult();
+        		for (Student s : students) {
+        			boolean accepted = sel.accept(s);
+        			if (accepted) {
+        				result.add(s);
+        			} else {
+        				result.remove(s);
+        			}
+        		}
+        		return result;
+        	}
+        }
+    \end{codeBlock}
+    %\end{noindent}
+    %\begin{noindent}
+	\begin{codeBlock}[autogobble]{}
+        public interface ISelector {
+        	boolean accept(Student s);
+        }
+	\end{codeBlock}
+    %\end{noindent}
+    %\begin{noindent}
+	\begin{codeBlock}[autogobble]{}
+        public class SemesterSelector implements ISelector {
+        	private int semester;
+
+        	public SemesterSelector(int semester) {
+        		this.semester = semester;
+        	}
+
+        	@Override
+        	public boolean accept(Student s) {
+        		int current = s.getSemester();
+        		boolean accepted = (semester == current);
+        		return accepted;
+        	}
+        }
+	\end{codeBlock}
+    %\end{noindent}
+    %\begin{noindent}
+	\begin{codeBlock}[autogobble]{}
+        public class Student {
+        	private int semester;
+
+        	public Student(int semester) {
+        		this.semester = semester;
+        	}
+
+        	public int getSemester() {
+        		return semester;
+        	}
+        }
+	\end{codeBlock}
+    %\end{noindent}
+    \caption{Beispiel: UML Sequenzen Diagramm / Code}
+    \label{fig:sequencecode}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+        \begin{umlseqdiag}
+            \umlactor[no ddots]{void}
+            \umlobject[class = Query]{query}
+            \umlobject[class = SemesterSelector]{sel}
+            \umlobject[class = Student]{s}
+
+            \begin{umlcall}[name = initcall, op = {run(students, sel)}, return = result]{void}{query}
+                \begin{umlcall}[op = createEmptyResult(), return = result]{query}{query}
+                    \umlcreatecall[class = LinkedList]{query}{result}
+                \end{umlcall}
+                \begin{umlfragment}[type = loop, label = for each Student s in students]
+                    \begin{umlcall}[op = accept(s), return = accepted]{query}{sel}
+                        \begin{umlcall}[op = getSemester(), return = current]{sel}{s}
+                        \end{umlcall}
+                    \end{umlcall}
+                    \begin{umlfragment}[type = opt, label = accepted]
+                        \begin{umlcall}[op = add(s)]{query}{result}
+                        \end{umlcall}
+                        \umlfpart[else]
+                        \begin{umlcall}[op = remove(s)]{query}{result}
+                        \end{umlcall}
+                    \end{umlfragment}
+                \end{umlfragment}
+            \end{umlcall}
+        \end{umlseqdiag}
+
+        \coordinate (initcall) at (2, -0.5);
+        \coordinate (finalreturn) at (2, -10);
+        \coordinate (lifeline) at (8, -6);
+
+        \umlnote[x = 1, y = 6]{void}{Aufruf aus dem \enquote{Nichts} (nicht betrachtet)}
+        \umlnote[x = 3, y = 3]{initcall}{Aufruf der Methode \texttt{run(students, sel)}}
+        \umlnote[x = 7, y = 5]{sel}{Ein Beteiligtes Objekt der Klasse \texttt{SemesterSelector}}
+        \umlnote[x = 3, y = -13]{finalreturn}{Rückgabe einer Methode (wenn ungleich void)}
+        \umlnote[x = 13, y = -12]{lifeline}{Lebenslinie eines Objektes (startend mit Aufruf, endend mit Return (wenn ungleich void))}
+    \end{tikzpicture}
+    \caption{Beispiel: UML Sequenzen Diagramm}
+    \label{fig:sequence}
+\end{figure}
+% end
+% end
+
+\subsubsection{Diagramm: State Machine Diagram (UML)}
+\label{diagram:statemachine}
+
+{ \footnotesize UML Specification Version 2.5.1, Chapter 14}
+
+\paragraph{Beschreibung}\mbox{}\\
+State Machine Diagramme nutzen vereinfachte endliche Automaten zur Darstellung von:
+\begin{itemize}
+    \item Eventgetriebenem Verhalten des Systems (Verhalten)
+    \item Interaktionssequenzen (Protkoll)
+\end{itemize}
+
+Im Diagramm \ref{fig:smd} ist ein Beispiel für ein State Machine Diagramm gegeben. Im folgenden werden die einzelnen Komponenten erläutert.
+% end
+% end
+% end
+% end
+
+\clearpage
+\section{Softwaredesign}
+\subsection{Heuristiken}
+Design-Heuristiken helfen dabei, die Frage zu beantworten, ob das Design einer Software gut, schlecht oder irgendwo dazwischen ist.
+\begin{itemize}
+    \item Einsichten in OO-Design Verbesserungen
+    \item Sprachunabhängig und erlauben das Einstufen der Integrität einer Software
+    \item Nicht schwer aber schnell: Sollten Warnungen produzieren, welche unter anderem das ignorieren der selbigen erlauben wenn nötig
+\end{itemize}
+
+\textbf{Beispiel:} All Daten in einer Basisklasse sollten privat sein; die Nutzung von nicht-privaten Daten ist untersagt, es sollten Zugriffsmethoden erstellt werden, welche prottected sind.
+
+\subsubsection{Zuständigkeiten}
+\paragraph{Diagramm: Class-Responsibility-Collaborator-Karten (CRC-Karten)}\mbox{}\\
+\label{diagram:crc}
+
+\paragraph{Beschreibung}\mbox{}\\
+\begin{description}[leftmargin = 3cm]
+    \item[Class] Der Name der Klasse/des Akteurs.
+    \item[Responsibilities] Die Zuständigkeiten der Klasse; identifiziert die zu lösenden Probleme.
+    \item[Collaborations] Andere Klassen/Akteure mit denen die Klasse/der Akteur kooperiert um eine Aufgabe zu erfüllen.
+\end{description}
+% end
+
+%\todo{CRC-Karten: Beispiel}
+
+\paragraph{Wichtige Konklusionen}\mbox{}\\
+\begin{description}
+    \item[Class]
+          \begin{itemize}
+              \item Der Name sollte deskreptiv und eindeutig sein.
+          \end{itemize}
+    \item[Responsibilities]
+          \begin{itemize}
+              \item Lange Zuständigkeitsliste  $ \implies $ Sollte die Klasse aufgeteilt werden?
+              \item Zuständigkeiten sollten zusammenhängen.
+          \end{itemize}
+    \item[Collaborations]
+          \begin{itemize}
+              \item Viele Kollaboratoren $ \implies $ Sollte die Klasse aufgeteilt werden?
+              \item \textbf{Vermeide kyklische Kollaboration!} $ \implies $ Es sollten höhere Abstraktionsebenen eingeführt werden.
+          \end{itemize}
+\end{description}
+% end
+% end
+% end
+
+\subsubsection{Kopplung}
+Kopplung ist ein Richtwert zur Messung der Abhängigkeiten zwischen Klassen und zwischen Paketen an:
+\begin{itemize}
+    \item Die Klasse \texttt{C1} is gekoppelt mit Klasse \texttt{C2}, wenn \texttt{C2} eine direkte oder indirekte Abhängigkeit von \texttt{C1} ist.
+    \item Eine Klasse, welche auf 2 anderen Klassen basiert, hat eine lockere Kopplung als eine Klasse, welche auf 8 anderen Klassen basiert.
+\end{itemize}
+
+\paragraph{Kopplung in Java}\mbox{}\\
+Die Klasse
+%\begin{noindent}
+\begin{codeBlock}[autogobble]{}
+    import java.awt.event.ActionEvent;
+    import java.awt.event.ActionListener;
+
+    public class QuitAction implements ActionListener {
+    	@Override
+    	public void actionPerformed(ActionEvent event) {
+    		System.exit(0);
+    	}
+    }
+\end{codeBlock}
+%\end{noindent}
+ist mit den folgenden anderen Klassen gekoppelt: \texttt{ActionEvent}, \texttt{ActionListener}, \texttt{Override}, \texttt{System}, \texttt{Object}
+% end
+
+\paragraph{Lose Kopplung vs. Feste Kopplung}\mbox{}\\
+Eine Klasse mit fester Kopplung ist zu vermeiden, da:
+\begin{itemize}
+    \item Änderungen in verbundenen Klassen ändern mglw. die lokale Logik.
+    \item Schwer zu verstehen ist, ohne das Restsystem zu betrachten.
+    \item Schwer wiederzuverwenden ist in anderen Projekten, da alle Abhängigkeiten ebenfalls erforderlich sind.
+\end{itemize}
+
+Lose Kopplung unterstützt das Design von relativ unabhängigen und dadurch wiederverwendbaren Klassen:
+\begin{itemize}
+    \item Generische Klassen mit hoher Wiederverwendbarkeitswahrscheinlichkeit sollten eine geringe Kopplung aufweisen.
+    \item Wenig oder keine Kopplung ist aber kein generelles Ziel:
+          \begin{itemize}
+              \item Das Grundkonzept von OOP ist, das Klassen miteinander Kommunizieren.
+              \item Lose Kopplung birgt die Gefahr, einzelne Objekte zu bauen, welche zu viele Aufgaben übernehmen.
+          \end{itemize}
+\end{itemize}
+
+\info{Starke Kopplung an stabile Elemente und fundamentale Bibliotheken ist (normalerweise) kein Problem.}
+
+\warning{Die Anforderung an lose Kopplung zur Wiederverwendbarkeit in (mystischen) Zukunftsprojekte birgt die Gefahr von unnötiger Komplexität und hohen Projektkosten!}
+% end
+% end
+
+\subsubsection{Kohäsion}
+Kohäsion ist ein Richtwert zur Messung des Zusammenhangs zwischen Elementen einer Klasse. Alle Operationen und Daten innerhalb einer Klassen sollten \enquote{natürlich} zu dem Konzept gehören, welches von der Klasse modelliert wird.
+
+Arten von Kohäsion (geordnet von sehr schlecht zu sehr gut):
+\begin{enumerate}
+    \item \textbf{Zufällig} (keine Kohäsion vorhanden): Kein sinnvoller Zusammenhang zwischen den Elementen einer Klasse (bspw. bei Utility-Klassen).
+    \item \textbf{Zeitliche Kohäsion}: Alle Elemente einer Klasse werden \enquote{zusammen} ausgeführt.
+    \item \textbf{Sequentielle Kohäsion}: Das Ergebnis einer Methode wird an die nächste übergeben.
+    \item \textbf{Kommunikative Kohäsion}: Alle Funktionen/Methoden einer Klasse lesen/schreiben auf der selben Eingabe/Ausgabe.
+    \item \textbf{Funktionale Kohäsion}: Alle Elemente einer Klasse arbeiten zusammen zur Ausführung einer einzigen, wohldefinierten, Aufgabe.
+\end{enumerate}
+
+Klassen mit geringer Kohäsion sind zu vermeiden, da:
+\begin{itemize}
+    \item Schwer zu verstehen
+    \item Schwer wiederzuverwenden
+    \item Schwer wartbar (einfach änderbar)
+    \item Symptomatisch für sehr grobkörnige Abstraktion
+    \item Es wurden Aufgaben übernommen, die zu anderen Klassen delegiert werden sollten
+\end{itemize}
+Klassen mit hoher Kohäsion können oftmals mit einem einfachen Satz beschrieben werden.
+
+\paragraph{Lack of Cohesion of Methods (LCOM)}\mbox{}\\
+Der \enquote{Lack of Cohesion of Methods}-Wert (kurz LCOM-Wert) ist ein Richtwert zur Bewertung der Kohäsion einer Klasse.
+
+\textbf{Definition:} Sei $ C $ eine Klasse, $ F $ die Instanzvariablen der Klasse $ C $ und $ M $ die Methoden der Klasse $ C $ (Konstruktoren sind keine Methoden). Sei $ G = (V, E) $ ein ungerichteter Graph mit den Knoten $ V = M $ und den Kanten \[ E = \{ (m, n) \in V \times V \,|\, \exists f \in F : (m \text{ nutzt } f) \land (n \text{ nutzt } f) \} \] dann ist $ \text{LCOM}(X) $ definiert als die Anzahl der zusammenhängenden Komponenten des Graphen $ G $. Ist $ N $ die Anzahl der Methoden, so gilt $ \text{LCOM}(X) \in [0, N] $.
+
+Ein hoher LCOM-Wert ist ein Indikator für zu geringe Kohäsion in der Klasse.
+% end
+% end
+% end
+
+\subsection{Prinzipien}
+\subsubsection{Single-Response-Principle (SRP)}
+\info{Eine Klasse sollte nur eine Zuständigkeit haben.}
+% end
+% end
+
+\subsection{Probleme}
+\subsubsection{God Class}
+Eine Klasse kapselt einen Großteil oder alles der (Sub-) Systemlogik. Indikator von:
+\begin{itemize}
+    \item Schlecht verteilter Systemintelligenz
+    \item Schlecht OO-Design, welches auf der Idee von zusammenarbeitenden Objekten aufbaut
+\end{itemize}
+
+\paragraph{Lösungsansätze}\mbox{}\\
+\begin{itemize}
+    \item Gleichmäßige Verteilung der Systemintelligenz \\
+          Oberklassen sollten die Arbeiten so gleich wie möglich verteilen.
+    \item Vermeidung von nichtkommunikativen Klassen (mit geringer Kohäsion) \\
+          Klassen mit geringer Kohäsion arbeiten oftmals auf einem eingeschränkten Teil der eigenen Daten und haben großes Potential, Gottklassen zu werden.
+    \item Sorgfältige Deklaration und Nutzung von Zugriffsmethoden \\
+          Klassen mit vielen (öffentlichen) Zugriffsmethoden geben viele Daten nach außen und halten somit das Verhalten nicht an einem Punkt.
+\end{itemize}
+% end
+% end
+
+\subsubsection{Class Proliferation}
+Zu viele Klassen in Relation zu der Größe des Problems. Oftmals ausgelöst durch zu frühes Ermöglichen von (mystischen) zukünftigen Erweiterungen.
+% end
+% end
+% end
+\clearpage
+\section{Entwurfskonzepte}
+\begin{itemize}
+    \item Dokumentiertes Expertenwissen
+    \item Nutzung von generischen Lösungen
+    \item Erhöhung des Abstraktionsgrades
+    \item Ein Muster hat einen Namen
+    \item Die Lösung kann einfach auf andere Varianten des Problems angewandt werden
+\end{itemize}
+
+\subsection{Idiome}
+Idiome sind \textit{keine} Entwurfsmuster:
+\begin{itemize}
+    \item Limitiert in der Größe und
+    \item oftmals spezifisch für eine Programmiersprache.
+\end{itemize}
+% end
+
+\subsection{Entwurfsmuster}
+Ein Entwurfsmuster beschreibt\dots
+\begin{itemize}
+    \item ein Problem, welches immer wieder auftritt,
+    \item den Kern der Lösung des Problems, soweit abstrahiert, dass die Lösung auf viele Probleme anwendbar ist, ohne zweimal genau das gleich zu tun.
+\end{itemize}
+
+\subsubsection{Template Method}
+\paragraph{Kurzfassung}\mbox{}\\
+\textbf{Ziel:} Implementierung eines Algorithmus, welcher erlaubt, ihn auf mehrere spezifische Probleme anzuwenden.
+
+\textbf{Idee:} Es wird ein Algorithmus implementiert, welcher konkrete Aktionen an abstrakte Methoden und damit Unterklassen weiterreicht.
+
+\textbf{Konsequenzen:}
+\begin{itemize}
+    \item Aufteilung von variablen und statischen Teilen
+    \item Verhinderung von Codeduplikation in Unterklassen
+    \item Kontrolle über Erweiterungen von Unterklassen
+\end{itemize}
+% end
+
+\paragraph{Generisches Klassendiagramm}\mbox{}\\
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+        \umlclass{AbstractClass}{}{
+            + templateMethod() \\
+            \umlvirt{opA()} \\
+            \umlvirt{opB()} \\
+            \dots \\
+        }
+        \umlclass[right = 1 of AbstractClass]{ConcreteClass}{}{
+            opA() \\
+            opB() \\
+            \dots \\
+        }
+
+        \umlinherit{ConcreteClass}{AbstractClass}
+        \umlnote[width = 3.5cm, left = 1 of AbstractClass]{AbstractClass}{\texttt{templateMethod() \{} \\ \texttt{ opA();} \\ \texttt{ \dots} \\ \texttt{ opB();} \\ \texttt{\}}}
+    \end{tikzpicture}
+    \caption{UML: Template Method Pattern}
+\end{figure}
+% end
+
+\paragraph{Beschreibung}\mbox{}\\
+Die Template-Methode definiert den Algorithmus unter Nutzung von abstrakten (und konkreten) Operationen.
+% end
+
+\paragraph{Varianten/Erweiterungen}\mbox{}\\
+Statt abstrakten Operationen, welche implementiert werden \textit{müssen}, können Hooks verwendet werden, welche implementiert werden \textit{können}.
+% end
+% end
+
+\subsubsection{Strategy}
+\paragraph{Kurzfassung}\mbox{}\\
+\textbf{Motivation:}
+\begin{itemize}
+    \item Viele verwandte Klassen unterscheiden sich ausschließlich in ihrem Verhalten statt unterschiedlich verwandte Abstraktionen zu implementieren
+\end{itemize}
+
+\textbf{Ziel:}
+\begin{itemize}
+    \item Erlaubt das konfigurieren einer Klasse mit einem von vielen Verhaltensvarianten
+    \item Implementierung unterschiedlicher Algorithmusvarianten können in der Klassenhierarchie verbaut werden
+\end{itemize}
+
+\textbf{Idee:} Definition einer Familie von Algorithmen, Kapselung von jedem und herstellen einer Austauschbarkeit.
+
+\textbf{Konsequenzen:}
+\begin{itemize}
+    \item Nutzer muss sich im klaren darüber sein, wie sich die Implementierungen unterscheiden und sich für eine entscheiden
+    \item Nutzer sind Implementierungsfehlern ausgesetzt
+    \item Strategy sollte nur genutzt werden, wenn das konkrete Verhalten relevant ist für den Nutzer
+\end{itemize}
+% end
+
+\paragraph{Generisches Klassendiagramm}\mbox{}\\
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+        \umlinterface{Strategy}{}{
+            \umlvirt{+ stategyOperation()} \\
+        }
+        \umlclass[below = 2 of Strategy]{ConcreteStrategyB}{}{
+            + stategyOperation() \\
+        }
+        \umlclass[left = 1 of ConcreteStrategyB]{ConcreteStrategyA}{}{
+            + stategyOperation() \\
+        }
+        \umlclass[right = 1 of ConcreteStrategyB]{ConcreteStrategyC}{}{
+            + stategyOperation() \\
+        }
+        \umlsimpleclass[left = 3 of Strategy]{Context}
+
+        \umlinherit[geometry = |-|]{ConcreteStrategyA}{Strategy}
+        \umlinherit{ConcreteStrategyB}{Strategy}
+        \umlinherit[geometry = |-|]{ConcreteStrategyC}{Strategy}
+        \umluniassoc{Context}{Strategy}
+    \end{tikzpicture}
+    \caption{UML: Stategy Pattern}
+\end{figure}
+% end
+
+\paragraph{Beschreibung}\mbox{}\\
+Der Context (Nutzer) erstellt Instanzen von konkreten Strategien, welche den Algorithmus in einem Interface definieren.
+% end
+
+\paragraph{Varianten/Erweiterungen}\mbox{}\\
+\begin{itemize}
+    \item Optionale Strategy-Objekt
+          \begin{itemize}
+              \item Context prüft, ob Strategy-Objekt gesetzt wurde und nutzt es entsprechend
+              \item Vorteil: Nutzer sind nur dem Strategy-Objekt ausgesetzt, wenn das Standardverhalten nicht genutzt werden soll
+          \end{itemize}
+\end{itemize}
+% end
+% end
+
+\subsubsection{Observer}
+\paragraph{Kurzfassung}\mbox{}\\
+\textbf{Motivation:} OOP vereinfacht die Implementierung einzelner Objekte, die Verdrahtung dieser kann allerdings schwer sein, sofern man die Objekte nicht hart koppeln möchte.
+
+\textbf{Ziel:} Entkopplung des Datenmodells (Subjekt) von den Stellen, welche an Änderungen des Zustands interessiert sind. Voraussetzungen:
+\begin{itemize}
+    \item Das Subjekt sollte nichts über die Observer wissen.
+    \item Identität und Anzahl der Observer ist nicht vorher bekannt.
+    \item Neue Observer sollen dem System später hinzugefügt werden können.
+    \item Polling soll vermieden werden (da inperformant).
+\end{itemize}
+
+\textbf{Idee:} Erstellung von Observern (generalisiert mittels eines Interfaces), welche einem Subjekt hinzugefügt werden können und aufgerufen werden können.
+
+\textbf{Konsequenzen:}
+\begin{itemize}
+    \item Vorteile
+          \begin{itemize}
+              \item Abstrakte Kopplung zwischen Subjekt und Observer
+              \item Unterstützung von Broadcast-Kommunikation
+          \end{itemize}
+    \item Nachteile
+          \begin{itemize}
+              \item Risiko von Update-Kaskaden zwischen Subjekt, Observer und dessen Observern
+              \item Updates werden an alle gesendet, sind aber nur für einige relevant
+              \item Fehlende Details über die Änderungen (Observer muss dies selbst herausfinden)
+              \item Generelles Interface für Observer schränkt die Parameter stark ein
+          \end{itemize}
+\end{itemize}
+% end
+
+\paragraph{Generisches Klassendiagramm}\mbox{}\\
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+        \umlclass[type = abstract, x = 0, y = 0]{Subject}{}{
+            + attach(Observer) \\
+            + detach(Observer) \\
+            \# notify() \\
+        }
+        \umlinterface[x = 7, y = 0]{Observer}{}{
+            \umlvirt{+ update(\dots)} \\
+        }
+        \umlclass[x = 0, y = -4]{ConcreteSubject}{}{
+            + getState() \\
+            + modifyState() \\
+        }
+        \umlclass[x = 7, y = -4]{ConcreteObserver}{}{
+            + update(\dots) \\
+        }
+
+        \umlinherit{ConcreteSubject}{Subject}
+        \umlinherit{ConcreteObserver}{Observer}
+        \umluniassoc[mult2 = *]{Subject}{Observer}
+        \umluniassoc[stereo = optional]{ConcreteObserver}{ConcreteSubject}
+    \end{tikzpicture}
+    \caption{UML: Observer Pattern}
+\end{figure}
+% end
+
+\paragraph{Beschreibung}\mbox{}\\
+\begin{description}
+    \item[Subject] Bietet Methoden zur Implementierung des Musters an.
+    \item[Observer] Definiert ein Interface zum Empfangen von Signalen eines Subjekts.
+    \item[ConcreteSubject] Das konkrete Subjekt, sendet Benachrichtigungen an die Observer
+    \item[ConcreteObserver] Ein konkreter Observer, registriert sich beim Subjekt, empfängt Nachrichten von dem Subjekt
+\end{description}
+% end
+
+\paragraph{Varianten/Erweiterungen}\mbox{}\\
+% end
+% end
+% end
+
+\subsection{Architekturmuster}
+Architekturmuster sind \textit{keine} Entwurfsmuster:
+\begin{itemize}
+    \item Hilfe bei der Spezifikation der Grundlegenden Struktur der Software
+    \item Großer Effekt auf die konkrete Softwarearchitektur
+    \item Definition von globalen Eigenschaften, bspw.:
+          \begin{itemize}
+              \item Wie unterschiedliche Komponenten zusammenarbeiten und Daten austauschen
+              \item Einschränkungen der Subsysteme
+              \item \dots
+          \end{itemize}
+\end{itemize}
+
+\subsubsection{Model-View-Controller (MVC)}
+Das MVC-Muster spaltet die Software in die fundamentalen Teile für interaktive Software auf:
+\begin{description}
+    \item[Model] Enthält die Kernfunktionalität und Daten
+          \begin{itemize}
+              \item Unabhängig von dem Ausgabeformat und dem Eingabeverhalten
+          \end{itemize}
+    \item[View] Präsentiert die Daten dem Nutzer
+          \begin{itemize}
+              \item Die Daten werden von dem Modell geladen
+          \end{itemize}
+    \item[Controller] Verarbeitet die Eingaben des Nutzers
+          \begin{itemize}
+              \item Jeder View wird ein Controller zugewiesen
+              \item Empfängt Eingaben (bspw. durch Events) und übersetzt diese für das Modell oder die Views
+              \item Jede Interaktion geht durch den Controller
+          \end{itemize}
+\end{description}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[->, every node/.style = { draw }]
+        \node (controller) {Controller};
+        \node [below left = 2 of controller] (view) {View};
+        \node [below right = 2 of controller] (model) {Model};
+
+        \draw (controller) -- (view);
+        \draw (controller) -- (model);
+        \draw (view) -- (model);
+        \draw [dashed] (view) to[bend left] (controller);
+        \draw [dashed, color = lightgray] (model) to[bend left] (view);
+    \end{tikzpicture}
+    \caption{Model-View-Controller}
+    \label{fig:mvc}
+\end{figure}
+Controller und View sind direkt gekoppelt mit dem Modell, das Modell ist nicht direkt gekoppelt mit dem Controller oder der View (siehe \ref{fig:mvc}).
+
+\paragraph{Nachteile}\mbox{}\\
+\begin{description}
+    \item[Erhöhte Komplexität] Die Aufspaltung in View und Controller kann die Komplexität erhöhen ohne mehr Flexibilität zu gewinnen.
+    \item[Update Proliferation] Möglicherweise viele Updates; nicht alle Views sind immer interessiert an allen Änderungen.
+    \item[Kopplung View/Controller] View und Controller sind stark gekoppelt.
+\end{description}
+% end
+% end
+% end
+% end
+\clearpage
+% end
+
+
+\clearpage
+% schönes Stichwortverzeichnis 
+%\printindex
+\end{document}
