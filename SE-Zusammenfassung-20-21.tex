@@ -59,12 +59,14 @@
 \term{
     \begin{minipage}[t]{.5\linewidth}
         \textsf{\textbf{Author:}}\space{}Ruben\space{}Deisenroth\\
+        \fatsf{Basierend auf:} \href{https://projects.frisp.org/attachments/download/206/se0_zusammenfassung-v04.pdf}{Merkzettel von Fabian Damken}\\
         \textbf{\sffamily{}Stand:}\space\today
     \end{minipage}
     \begin{minipage}[t]{.49\linewidth}
         \raggedleft
         \begin{flushright}
             \textsf{\textbf{Semester:}}\space{}WiSe\space{}2020/21\\
+            \mbox{}\\
             \textsf{\textbf{Fachbereich:}}\space{}Informatik
         \end{flushright}
     \end{minipage}
@@ -627,33 +629,34 @@ Nachteile:
 \paragraph{Dienstbasierend (Service-Based)}
 \begin{itemize}
     \item Hauptvariante: \begin{itemize}
-        \item Nur eine Bedienoberfläche (UI) für alle Services
-        \item Services bestehen aus mehrenen Komponenten
-        \item Alle Services greifen auf eine gemeinsame Datenbank zu
-    \end{itemize}
+              \item Nur eine Bedienoberfläche (UI) für alle Services
+              \item Services bestehen aus mehrenen Komponenten
+              \item Alle Services greifen auf eine gemeinsame Datenbank zu
+          \end{itemize}
     \item Nicht-Monolythische Variante (Non-Monolithic)\begin{itemize}
-        \item Servicebasierende UIs (eine UI per service)
-    \end{itemize}
+              \item Servicebasierende UIs (eine UI per service)
+          \end{itemize}
     \item Servicelokale Datenbankvariante\begin{itemize}
-        \item Services können eigene oder auch gemeinsame Datenbanken haben
-    \end{itemize}
-    \begin{figure}[ht]
-        \centering
-        \includegraphics{bilder/service_local_service_based_architecture_style.pdf}
-        \caption{Beispiel für Servislokale Datenbankvariante einer Dienstbasierenden Architektur}
-    \end{figure}
+              \item Services können eigene oder auch gemeinsame Datenbanken haben
+          \end{itemize}
+          \begin{figure}[ht]
+              \centering
+              \includegraphics{bilder/service_local_service_based_architecture_style.pdf}
+              \caption{Beispiel für Servislokale Datenbankvariante einer Dienstbasierenden Architektur}
+          \end{figure}
 \end{itemize}
 
 %Kapitel 6
 \clearpage
-\section{Softwarequalität}
-\subsection{Faktoren}
+\section{Designprinzipien (Design Principles)}
+\subsection{Softwarequalität}
+\subsubsection{Faktoren}
 Die Faktoren guter Software trennen sich in \textit{interne} und \textit{externe Faktoren}:
-\begin{description}
-    \item[Interne Faktoren] Sicht der Entwickler (Code-Qualität). Stellt eine \enquote{White Box} dar.
-    \item[Externe Faktoren] Sicht der Nutzer (interne Qualitätsfaktoren sind nicht bekannt). Stellt eine \enquote{Black Box} dar.
-\end{description}
-\subsubsection{Interne Faktoren}
+\begin{itemize}
+    \item Interne Faktoren: Sicht der Entwickler (Code-Qualität). Stellt eine \enquote{White Box} dar.
+    \item Externe Faktoren: Sicht der Nutzer (interne Qualitätsfaktoren sind nicht bekannt). Stellt eine \enquote{Black Box} dar.
+\end{itemize}
+\paragraph{Interne Faktoren}
 \begin{itemize}
     \item Modularität
     \item Verständlichkeit
@@ -666,7 +669,7 @@ Die Faktoren guter Software trennen sich in \textit{interne} und \textit{externe
 \end{itemize}
 % end
 
-\subsubsection{Externe Faktoren}
+\paragraph{Externe Faktoren}
 \begin{itemize}
     \item Korrektheit
     \item Verlässlichkeit
@@ -680,58 +683,18 @@ Die Faktoren guter Software trennen sich in \textit{interne} und \textit{externe
     \item Wartbarkeit
     \item \dots
 \end{itemize}
-% end
-% end
+\begin{defBox}
+    \paragraph{Merkmale von Guter Software:}\begin{itemize}
+        \item Wartbarkeit: Kann an ansprüche des Kunden angepasst werden
+        \item Effizienz: Keine Ressourcenverschwendung
+        \item Usability: Muss für den Nutzer verständlich und benutzbar sein
+        \item Verlässlichkeit (Dependability): Verursacht keinen Wirtschaftlich- oder Physikalischen Schaden falls das System fehlschlägt
+    \end{itemize}
+\end{defBox}
 
-\subsection{Verifikation und Validierung}
-\textbf{Verifikation:} Wird das System korrekt erstellt? \\
-\textbf{Validierung:} Wird das richtige System erstellt?
-
-\subsubsection{Techniken}
-\paragraph{Statische Techniken}\mbox{}\\
-Statische Techniken erfordern nicht, dass das Programm ausgeführt wird.
-
-\begin{description}
-    \item[Software Reviews] Händische/Manuelle Überprüfung
-    \item[Automatisierte Statische Analyse] Softwareanalyse, bspw. Typprüfer
-    \item[Formale Verifikation] Formaler Beweis, dass ein Programm eine bestimme Eigenschaft erfüllt
-\end{description}
-
-Siehe \ref{sec:metrics}.
-% end
-
-\paragraph{Dynamische Techniken}\mbox{}\\
-Dynamische Techniken erfordern, dass das Programm ausgeführt wird.
-
-\begin{description}
-    \item[Testen] Führt das Programm aus und Testet es auf bestimmte Eigenschaften (Verhalten)
-    \item[Laufzeitüberprüfung] Analysetools, welche Programme auf Einhaltung bestimmter Einschränkungen (bspw. Speichereinschränkungen) testen
-\end{description}
-% end
-% end
-
-\subsubsection{Codeuntersuchung}
-Das Ziel der Codeuntersuchung, ist
-\begin{itemize}
-    \item Programmfehler,
-    \item Standardfehler und
-    \item Designfehler
-\end{itemize}
-zu finden.
-
-Dies wird üblicherweise an (externe) Teams ausgearbeitet, welche den Code systematisch analysieren.
-
-Eine mögliche Checkliste ist bspw.:
-\begin{description}
-    \item[Datenfehler] Werden Variablen initialisiert, bevor sie genutzt werden? Gibt es mögliche Arra-Out-Of-Bounds Fehler? Werden deklarierte Variablen genutzt?
-    \item[Kontrollflussfehler] Sind die Bedingungen korrekt? Gibt es toten Code? Terminieren alle Schleifen? Sind switch..case Ausdrücke vollständig?
-    \item[I/O Fehler] Werden alle Eingabeparameter genutzt? Können unerwartete Eingaben zu einem Absturz führen?
-    \item[Schnittstellenfehler] Korrekte Anzahl/Typen der Parameter?
-\end{description}
-% end
-% end
-
-\subsection{Metriken}
+\clearpage
+\subsection{Messen von Softwarequalität}
+\subsubsection{Übersicht Metriken zum Messen von Softwarequalität}
 \label{sec:metrics}
 
 \begin{description}
@@ -744,13 +707,16 @@ Eine mögliche Checkliste ist bspw.:
     \item[Vererbungstiefe] Tiefe Vererbungsbäume sind hochkomplex (Unterklassen)
 \end{description}
 
+\subsubsection{Zyklomatische Komplexität (Cyclomatic Complexity)}
+Die Zyklomatische Komplexität $ C $ berechnet sich durch $ C = E - N + 2P $, wobei $ E $ die Anzahl der Kanten, $ N $ die Anzahl der Kanten und $ P $ die Anzahl der möglichen Zusammenhangskomponenten (in den meisten Fällen $ 1 $) des CFGs darstellt.
+
 \subsubsection{Kontrollflussgraph (CFG)}
 \label{diagram:cfg}
 
 Ein Kontrollflussgraph stellt Code syntaxfrei dar, wodurch bessere Analysen möglich sind.
 
 \paragraph{Beispiel}\mbox{}\\
-Der in \ref{fig:cfgcode} gezeigte Code wird in \ref{fig:cfg} als Kontrollflussgraph dargestellt.
+Der in \figurename{} \ref{fig:fibonaccicodecfg} gezeigte Code wird in \figurename{} \ref{fig:cfg_example} als Kontrollflussgraph dargestellt.
 \begin{figure}[ht]
     \centering
     %\begin{noindent}
@@ -771,7 +737,7 @@ Der in \ref{fig:cfgcode} gezeigte Code wird in \ref{fig:cfg} als Kontrollflussgr
 	\end{codeBlock}
     %\end{noindent}
     \caption{Beispiel: Kontrollflussgraph / Code}
-    \label{fig:cfgcode}
+    \label{fig:fibonaccicodecfg}
 \end{figure}
 \begin{figure}[ht]
     \centering
@@ -807,252 +773,10 @@ Der in \ref{fig:cfgcode} gezeigte Code wird in \ref{fig:cfg} als Kontrollflussgr
         \draw [->] (step5) -- (exit);
     \end{tikzpicture}
     \caption{Beispiel: Kontrollflussgraph}
-    \label{fig:cfg}
+    \label{fig:cfg_example}
 \end{figure}
-% end
-% end
-
-\subsubsection{Zyklomatische Komplexität}
-Die Zyklomatische Komplexität $ C $ berechnet sich durch $ C = E - N + 2P $, wobei $ E $ die Anzahl der Kanten, $ N $ die Anzahl der Kanten und $ P $ die Anzahl der möglichen Zusammenhangskomponenten (in den meisten Fällen $ 1 $) darstellt.
-% end
-% end
-
-\subsection{Testen}
-\subsubsection{Testplan}
-Ein Testplan ist zur Ausführung durch Menschen gedacht. Er dokumentiert die Schritte des Tests und das jeweilige erwartete Ergebnis. In der Testausführung kann das eigentliche Ergebnis dann mit dem erwarteten verglichen werden.
-% end
-
-\subsubsection{Testtypen}
-\paragraph{Unit Tests}\mbox{}\\
-Sehr kleine, automatisierte, Tests, welche eine Funktionalität testen. In typischen Softwareprojekten finden sich $ \leq 1000 $ Unit Tests.
-% end
-
-\paragraph{Integrations-Tests}\mbox{}\\
-Testen eines kompletten (Unter-) Systems, um die Zusammenarbeit der Komponenten zu Testen.
-% end
-
-\paragraph{Systemtests}\mbox{}\\
-Testen einer komplett integrierten Applikation (Funktion, Performanz, Stresstest, \dots).
-% end
-% end
-
-\subsubsection{Testautomation}
-Ein Testautomationssystem
-\begin{itemize}
-    \item startet die \enquote{implementation under test} (IUT),
-    \item setzt die Umgebung auf,
-    \item bringt das System in den erwarteten Ausgangszustand,
-    \item wendet die Testdaten an und
-    \item evaluiert die Ergebnisse und den Zustand des Systems.
-\end{itemize}
-% end
-
-\subsubsection{Testabdeckung}
-\paragraph{Strukturell}\mbox{}\\
-Strukturelle Testabdeckung basiert auf dem Kontrollflussgraphen (CFG) eines Programms.
-
-\paragraph{Statement Coverage (SC)}\mbox{}\\
-Alle Ausdrücke wurden mindestens einmal ausgeführt.
-% end
-
-\paragraph{Basic Block Coverage (BBC)}\mbox{}\\
-Alle Blöcke wurden mindestens einmal ausgeführt.
-% end
-
-\paragraph{Branch Coverage (BC)}\mbox{}\\
-Jede Seite von jedem Knoten wurde mindestens einmal ausgeführt (d.h. jede Kante eines Kontrollflussgraphen).
-% end
-
-\paragraph{Path Coverage (PC)}\mbox{}\\
-Alle Pfade wurden mindestens einmal ausgeführt (siehe CFG).
-% end
-% end
-
-\paragraph{Logisch}\mbox{}\\
-Definition:
-\begin{description}
-    \item[Bedingung] Eine \textit{Bedingung} ist \texttt{ein} boolescher Audruck.
-    \item[Entscheidung] Eine \textit{Entscheidung} ist eine Zusammensetzung von Bedingungen, welche bspw. den Test eines \texttt{if}-Ausdruckes darstellt.
-\end{description}
-
-\paragraph{Condition Coverage (CC)}\mbox{}\\
-Jede Bedingung wurde mindestens einmal zu wahr und falsch ausgewertet.
-% end
-
-\paragraph{Decision Coverage (DC)}\mbox{}\\
-Jede Entscheidung wurde mindestens einmal zu wahr falsch ausgewertet.
-% end
-
-\paragraph{Modified Condition Decision Coverage (MCDC)}\mbox{}\\
-Kombiniert Aspekte der Condition Coverage, Decision Coverage und Unabhängigkeitstests.
-
-Ein Test für eine Bedingung $ c $ in Entscheidung $ d $ (Duplikate von $ c $ werden nicht gezählt) erfüllt MCDC gdw.
-\begin{itemize}
-    \item er $ d $ mindestens zweimal auswertet,
-    \item davon $ c $ einmal zu wahr und einmal zu falsch auswertet,
-    \item $ d $ in beiden Fällen unterschiedlich ausgewertet wird und
-    \item die anderen Bedingungen in $ d $ in beiden identisch oder in mindestens einem nicht ausgewertet werden.
-\end{itemize}
-Für 100\%-ige MCDC-Abdeckung muss dies für jede Bedingung in dem Programm gelten.
-% end
-
-\paragraph{Multiple-Condition Coverage (MCC)}\mbox{}\\
-Alle möglichen Kombinationen innerhalb einer Entscheidung wurden mindestens einmal ausgeführt.
-% end
-% end
-% end
-% end
-% end
-\clearpage
-\section{Verhaltensmodellierung}
-\subsection{Diagramme}
-\subsubsection{Diagramm: Interaction/Sequence Diagram (UML)}
-\label{diagram:umlsequence}
-
-{ \footnotesize UML Specification Version 2.5.1, Chapter 17}
-
-\paragraph{Beschreibung}\mbox{}\\
-\begin{itemize}
-    \item Sequenzendiagramme beschreiben die Interaktionen (Nachrichten) zwischen Objekten in einem konkretem Szenario.
-    \item Nicht geeignet, um einen gesamten Algorithmus zu modellieren!
-\end{itemize}
-
-Im Diagramm \ref{fig:sequencecode} (Codebasis \ref{fig:sequence}) ist ein Beispiel für ein Sequenzendiagramm gegeben. In diesem werden die einzelnen Komponenten erläutert
-% end
-
-\paragraph{Beispiel}\mbox{}\\
-Das Verhalten der Methode \texttt{run(\dots)} in dem in \ref{fig:sequencecode} gezeigtem Code  wird in \ref{fig:sequence} visualisiert.
-
-\begin{figure}[ht]
-    \centering
-    %\begin{noindent}
-	\begin{codeBlock}[autogobble]{}
-        ublic class Query {
-        	public List<Student> run(List<Student> students, ISelector sel) {
-        		List<Student> result = createEmptyResult();
-        		for (Student s : students) {
-        			boolean accepted = sel.accept(s);
-        			if (accepted) {
-        				result.add(s);
-        			} else {
-        				result.remove(s);
-        			}
-        		}
-        		return result;
-        	}
-        }
-    \end{codeBlock}
-    %\end{noindent}
-    %\begin{noindent}
-	\begin{codeBlock}[autogobble]{}
-        public interface ISelector {
-        	boolean accept(Student s);
-        }
-	\end{codeBlock}
-    %\end{noindent}
-    %\begin{noindent}
-	\begin{codeBlock}[autogobble]{}
-        public class SemesterSelector implements ISelector {
-        	private int semester;
-
-        	public SemesterSelector(int semester) {
-        		this.semester = semester;
-        	}
-
-        	@Override
-        	public boolean accept(Student s) {
-        		int current = s.getSemester();
-        		boolean accepted = (semester == current);
-        		return accepted;
-        	}
-        }
-	\end{codeBlock}
-    %\end{noindent}
-    %\begin{noindent}
-	\begin{codeBlock}[autogobble]{}
-        public class Student {
-        	private int semester;
-
-        	public Student(int semester) {
-        		this.semester = semester;
-        	}
-
-        	public int getSemester() {
-        		return semester;
-        	}
-        }
-	\end{codeBlock}
-    %\end{noindent}
-    \caption{Beispiel: UML Sequenzen Diagramm / Code}
-    \label{fig:sequencecode}
-\end{figure}
-
-\begin{figure}[ht]
-    \centering
-    \begin{tikzpicture}
-        \begin{umlseqdiag}
-            \umlactor[no ddots]{void}
-            \umlobject[class = Query]{query}
-            \umlobject[class = SemesterSelector]{sel}
-            \umlobject[class = Student]{s}
-
-            \begin{umlcall}[name = initcall, op = {run(students, sel)}, return = result]{void}{query}
-                \begin{umlcall}[op = createEmptyResult(), return = result]{query}{query}
-                    \umlcreatecall[class = LinkedList]{query}{result}
-                \end{umlcall}
-                \begin{umlfragment}[type = loop, label = for each Student s in students]
-                    \begin{umlcall}[op = accept(s), return = accepted]{query}{sel}
-                        \begin{umlcall}[op = getSemester(), return = current]{sel}{s}
-                        \end{umlcall}
-                    \end{umlcall}
-                    \begin{umlfragment}[type = opt, label = accepted]
-                        \begin{umlcall}[op = add(s)]{query}{result}
-                        \end{umlcall}
-                        \umlfpart[else]
-                        \begin{umlcall}[op = remove(s)]{query}{result}
-                        \end{umlcall}
-                    \end{umlfragment}
-                \end{umlfragment}
-            \end{umlcall}
-        \end{umlseqdiag}
-
-        \coordinate (initcall) at (2, -0.5);
-        \coordinate (finalreturn) at (2, -10);
-        \coordinate (lifeline) at (8, -6);
-
-        \umlnote[x = 1, y = 6]{void}{Aufruf aus dem \enquote{Nichts} (nicht betrachtet)}
-        \umlnote[x = 3, y = 3]{initcall}{Aufruf der Methode \texttt{run(students, sel)}}
-        \umlnote[x = 7, y = 5]{sel}{Ein Beteiligtes Objekt der Klasse \texttt{SemesterSelector}}
-        \umlnote[x = 3, y = -13]{finalreturn}{Rückgabe einer Methode (wenn ungleich void)}
-        \umlnote[x = 13, y = -12]{lifeline}{Lebenslinie eines Objektes (startend mit Aufruf, endend mit Return (wenn ungleich void))}
-    \end{tikzpicture}
-    \caption{Beispiel: UML Sequenzen Diagramm}
-    \label{fig:sequence}
-\end{figure}
-% end
-% end
-
-\subsubsection{Diagramm: State Machine Diagram (UML)}
-\label{diagram:statemachine}
-
-{ \footnotesize UML Specification Version 2.5.1, Chapter 14}
-
-\paragraph{Beschreibung}\mbox{}\\
-State Machine Diagramme nutzen vereinfachte endliche Automaten zur Darstellung von:
-\begin{itemize}
-    \item Eventgetriebenem Verhalten des Systems (Verhalten)
-    \item Interaktionssequenzen (Protkoll)
-\end{itemize}
-
-Im Diagramm \ref{fig:smd} ist ein Beispiel für ein State Machine Diagramm gegeben. Im folgenden werden die einzelnen Komponenten erläutert.
-% end
-% end
-% end
-% end
-
-\clearpage
-\section{Softwaredesign}
-\subsection{Heuristiken}
+\FloatBarrier
+\subsubsection{Heuristiken}
 Design-Heuristiken helfen dabei, die Frage zu beantworten, ob das Design einer Software gut, schlecht oder irgendwo dazwischen ist.
 \begin{itemize}
     \item Einsichten in OO-Design Verbesserungen
@@ -1061,10 +785,54 @@ Design-Heuristiken helfen dabei, die Frage zu beantworten, ob das Design einer S
 \end{itemize}
 
 \textbf{Beispiel:} All Daten in einer Basisklasse sollten privat sein; die Nutzung von nicht-privaten Daten ist untersagt, es sollten Zugriffsmethoden erstellt werden, welche prottected sind.
+\clearpage
+\subsubsection{Verknüpfen/Koppeln (Coupling)}
 
+\begin{definition}[Class Coupling]
+    ist ein Richtwert zur Messung der Abhängigkeiten zwischen Klassen und zwischen Paketen:
+    \begin{itemize}
+        \item  Eine Klasse C ist an Klasse D \textit{gekuppelt}, wenn C direkt oder indirekt von d Abhängt
+        \item  Eine Klasse, welche auf 2 anderen Klassen basiert, hat eine lockerere Kopplung als eine Klasse, welche auf 8 anderen Klassen basiert.
+    \end{itemize}
+\end{definition}
+
+\paragraph{Kopplung in Java}\mbox{}\\
+Die Klasse
+%\begin{noindent}
+\begin{codeBlock}[autogobble]{}
+    import java.awt.event.ActionEvent;
+    import java.awt.event.ActionListener;
+
+    public class QuitAction implements ActionListener {
+    	@Override
+    	public void actionPerformed(ActionEvent event) {
+    		System.exit(0);
+    	}
+    }
+\end{codeBlock}
+%\end{noindent}
+ist mit den folgenden anderen Klassen gekoppelt: \texttt{ActionEvent}, \texttt{ActionListener}, \texttt{Override}, \texttt{System}, \texttt{Object}
+% end
+\paragraph{Lose Kopplung vs. Feste Kopplung}
+\begin{itemize}
+    \item Zu viele Verknüpfungen sind schlecht, denn:\begin{itemize}
+              \item Änderungen in verknüpfter Klasse kann zu Dominoeffekt an Änderungen führen
+              \item Eng verknüpfte Klassen sind isoliert betrachtet nur schwer zu verstehen
+              \item Eng verknüpfte Klassen lassen sich nur schwer wiederverwenden (da alle Abhängigkeiten mit kopiert werden müssten)
+          \end{itemize}
+    \item Zu wenige bzw. gar keine Verknüpfungen sind aber auch unerwünscht, denn:\begin{itemize}
+              \item Geht gegen das Prinzip der Objektorientierten Programmierung: "`Ein system von Verknüpften Objekten, die per Nachrichten Kommunizieren"'
+              \item Führt zur Bildung von Gottklassen
+              \item Führt zu hoher Komplexität
+          \end{itemize}
+    \item Generische Klassen müssen sehr wenige Verknüpfungen haben
+    \item Viele Verknüpfungen von Stabilen Bausteinen (Libaries, z.B. aus der Java-Standartbibliothek) ist kein Problem
+\end{itemize}
+\warning{Die Anforderung an lose Kopplung zur Wiederverwendbarkeit in (mystischen) Zukunftsprojekte birgt die Gefahr von unnötiger Komplexität und hohen Projektkosten!}
+\clearpage
 \subsubsection{Zuständigkeiten}
-\paragraph{Diagramm: Class-Responsibility-Collaborator-Karten (CRC-Karten)}\mbox{}\\
-\label{diagram:crc}
+%\paragraph{Diagramm: Class-Responsibility-Collaborator-Karten (CRC-Karten)}\mbox{}\\
+%\label{diagram:crc}
 
 \paragraph{Beschreibung}\mbox{}\\
 \begin{description}[leftmargin = 3cm]
@@ -1093,69 +861,19 @@ Design-Heuristiken helfen dabei, die Frage zu beantworten, ob das Design einer S
               \item \textbf{Vermeide kyklische Kollaboration!} $ \implies $ Es sollten höhere Abstraktionsebenen eingeführt werden.
           \end{itemize}
 \end{description}
-% end
-% end
-% end
 
-\subsubsection{Kopplung}
-Kopplung ist ein Richtwert zur Messung der Abhängigkeiten zwischen Klassen und zwischen Paketen an:
-\begin{itemize}
-    \item Die Klasse \texttt{C1} is gekoppelt mit Klasse \texttt{C2}, wenn \texttt{C2} eine direkte oder indirekte Abhängigkeit von \texttt{C1} ist.
-    \item Eine Klasse, welche auf 2 anderen Klassen basiert, hat eine lockere Kopplung als eine Klasse, welche auf 8 anderen Klassen basiert.
-\end{itemize}
-
-\paragraph{Kopplung in Java}\mbox{}\\
-Die Klasse
-%\begin{noindent}
-\begin{codeBlock}[autogobble]{}
-    import java.awt.event.ActionEvent;
-    import java.awt.event.ActionListener;
-
-    public class QuitAction implements ActionListener {
-    	@Override
-    	public void actionPerformed(ActionEvent event) {
-    		System.exit(0);
-    	}
-    }
-\end{codeBlock}
-%\end{noindent}
-ist mit den folgenden anderen Klassen gekoppelt: \texttt{ActionEvent}, \texttt{ActionListener}, \texttt{Override}, \texttt{System}, \texttt{Object}
-% end
-
-\paragraph{Lose Kopplung vs. Feste Kopplung}\mbox{}\\
-Eine Klasse mit fester Kopplung ist zu vermeiden, da:
-\begin{itemize}
-    \item Änderungen in verbundenen Klassen ändern mglw. die lokale Logik.
-    \item Schwer zu verstehen ist, ohne das Restsystem zu betrachten.
-    \item Schwer wiederzuverwenden ist in anderen Projekten, da alle Abhängigkeiten ebenfalls erforderlich sind.
-\end{itemize}
-
-Lose Kopplung unterstützt das Design von relativ unabhängigen und dadurch wiederverwendbaren Klassen:
-\begin{itemize}
-    \item Generische Klassen mit hoher Wiederverwendbarkeitswahrscheinlichkeit sollten eine geringe Kopplung aufweisen.
-    \item Wenig oder keine Kopplung ist aber kein generelles Ziel:
-          \begin{itemize}
-              \item Das Grundkonzept von OOP ist, das Klassen miteinander Kommunizieren.
-              \item Lose Kopplung birgt die Gefahr, einzelne Objekte zu bauen, welche zu viele Aufgaben übernehmen.
-          \end{itemize}
-\end{itemize}
-
-\info{Starke Kopplung an stabile Elemente und fundamentale Bibliotheken ist (normalerweise) kein Problem.}
-
-\warning{Die Anforderung an lose Kopplung zur Wiederverwendbarkeit in (mystischen) Zukunftsprojekte birgt die Gefahr von unnötiger Komplexität und hohen Projektkosten!}
-% end
-% end
-
-\subsubsection{Kohäsion}
-Kohäsion ist ein Richtwert zur Messung des Zusammenhangs zwischen Elementen einer Klasse. Alle Operationen und Daten innerhalb einer Klassen sollten \enquote{natürlich} zu dem Konzept gehören, welches von der Klasse modelliert wird.
+\subsubsection{Kohäsion(Cohesion)}
+\begin{definition}[Kohäsion]
+    ist ein Richtwert zur Messung des Zusammenhangs zwischen Elementen einer Klasse. Alle Operationen und Daten innerhalb einer Klassen sollten \enquote{natürlich} zu dem Konzept gehören, welches von der Klasse modelliert wird.
+\end{definition}
 
 Arten von Kohäsion (geordnet von sehr schlecht zu sehr gut):
 \begin{enumerate}
-    \item \textbf{Zufällig} (keine Kohäsion vorhanden): Kein sinnvoller Zusammenhang zwischen den Elementen einer Klasse (bspw. bei Utility-Klassen).
-    \item \textbf{Zeitliche Kohäsion}: Alle Elemente einer Klasse werden \enquote{zusammen} ausgeführt.
-    \item \textbf{Sequentielle Kohäsion}: Das Ergebnis einer Methode wird an die nächste übergeben.
-    \item \textbf{Kommunikative Kohäsion}: Alle Funktionen/Methoden einer Klasse lesen/schreiben auf der selben Eingabe/Ausgabe.
-    \item \textbf{Funktionale Kohäsion}: Alle Elemente einer Klasse arbeiten zusammen zur Ausführung einer einzigen, wohldefinierten, Aufgabe.
+    \item \textbf{Zufällig} (Coincidental, keine Kohäsion vorhanden): Kein sinnvoller Zusammenhang zwischen den Elementen einer Klasse (bspw. bei Utility-Klassen, \textbf{unerwünscht}).
+    \item \textbf{Zeitliche Kohäsion}(Temporal): Alle Elemente einer Klasse werden \enquote{zusammen} ausgeführt.
+    \item \textbf{Sequentielle Kohäsion}(sequential): Das Ergebnis einer Methode wird an die nächste übergeben.
+    \item \textbf{Kommunikative Kohäsion} (Communicational): Alle Funktionen/Methoden einer Klasse lesen/schreiben auf der selben Eingabe/Ausgabe.
+    \item \textbf{Funktionale Kohäsion}: Alle Elemente einer Klasse arbeiten zusammen zur Ausführung einer einzigen, wohldefinierten, Aufgabe. (\textbf{Idealfall})
 \end{enumerate}
 
 Klassen mit geringer Kohäsion sind zu vermeiden, da:
@@ -1169,23 +887,76 @@ Klassen mit geringer Kohäsion sind zu vermeiden, da:
 Klassen mit hoher Kohäsion können oftmals mit einem einfachen Satz beschrieben werden.
 
 \paragraph{Lack of Cohesion of Methods (LCOM)}\mbox{}\\
-Der \enquote{Lack of Cohesion of Methods}-Wert (kurz LCOM-Wert) ist ein Richtwert zur Bewertung der Kohäsion einer Klasse.
+\begin{definition}[LCOM-Wert]
+    Der \textit{Lack of Cohesion of Methods}-Wert (kurz LCOM-Wert) ist ein Richtwert zur Bewertung der Kohäsion einer Klasse.\\
+    Sei $ C $ eine Klasse, $ F $ ihre Instanzvariablen und $ M $ ihre Methoden (Konstruktoren ausgenommen).\\
+    Sei $ G = (M, E) $ ein ungerichteter Graph mit den Knoten $ V = M $ und den Kanten
+    \[ E = \{ \langle m, n\rangle \in M \times M~|~\exists f \in F : (m \text{ nutzt } f) \land (n \text{ nutzt } f) \} \]
+    dann ist $ \texttt{LCOM}(X) $ definiert als die Anzahl der zusammenhängenden Komponenten des Graphen $ G $.\\
+    Ist $ n=\vert M \vert $ die Anzahl der Methoden, so gilt $ \texttt{LCOM}(X) \in [0, n] $.
+\end{definition}
 
-\textbf{Definition:} Sei $ C $ eine Klasse, $ F $ die Instanzvariablen der Klasse $ C $ und $ M $ die Methoden der Klasse $ C $ (Konstruktoren sind keine Methoden). Sei $ G = (V, E) $ ein ungerichteter Graph mit den Knoten $ V = M $ und den Kanten \[ E = \{ (m, n) \in V \times V \,|\, \exists f \in F : (m \text{ nutzt } f) \land (n \text{ nutzt } f) \} \] dann ist $ \text{LCOM}(X) $ definiert als die Anzahl der zusammenhängenden Komponenten des Graphen $ G $. Ist $ N $ die Anzahl der Methoden, so gilt $ \text{LCOM}(X) \in [0, N] $.
 
 Ein hoher LCOM-Wert ist ein Indikator für zu geringe Kohäsion in der Klasse.
-% end
-% end
-% end
 
-\subsection{Prinzipien}
+\subsection{Designprinzipien}
 \subsubsection{Single-Response-Principle (SRP)}
-\info{Eine Klasse sollte nur eine Zuständigkeit haben.}
-% end
-% end
-
+\begin{definition}[Single-Response-Principle]
+    \enquote{Eine Klasse sollte nur einen einzigen Grund haben, sich zu verändern},
+    Also möglichst wenige Abhängigkeiten pro Klasse (ideal wäre nur eine), denn Abhängigkeiten sind der Hauptgrund für Änderungen
+\end{definition}
+\subsubsection{Inheritance vs. Delegation}
+\begin{table}[ht]
+    \centering
+    \rowcolors{2}{white}{black!10}
+    \begin{tabular}{ll}
+        \toprule
+        \fatsf{Inheritance (Übernehmen/Erben)} & \fatsf{Delegation (Übergeben)}\\
+        \midrule
+        \fakebullet{}Auch irrelevante Funktionalität wird vererbt & \fakebullet{}~\mlcell[l]{Es wird ein Objekt übergeben, dass nur die gewünschte\\Funktionalität implementiert}\\
+        \fakebullet{}Schwer zu Warten & \fakebullet{}Abhängigkeiten unverändert\\
+        \bottomrule
+    \end{tabular}
+    \caption{Inheritance vs Delegation}
+    \label{tab:inheritance_vs_delegation}
+\end{table}
+\subsection{Kapselung(Encapsulation)}
+\begin{definition}[Interface-Konzept]
+    Ein Interface deklariert die Methodensignaturen und öffentlichen Konstanten seiner Subklassen
+\end{definition}
+\begin{itemize}
+    \item Vorteile:\begin{itemize}
+        \item Interfaces machen es Möglich, die Funktionalität von der Implementierung zu trennen
+        \item Hilft dabei, ungerechtfertigte Vermutungen über die Implementierung zu vermeiden
+        \item Interfaces sind stabiler als Implementierungen
+        \item Um die Implementierung zu verändern, reicht es den Konstruktur zu verändern
+        \item Einfacher um Kupplung zu vermeiden
+    \end{itemize}
+\end{itemize}
+\clearpage
+\subsubsection{Zugriffsrechte (Field Access)}
+Angenommen es gäbe keine Zugriffsrechte und alles wäre Public, dann:
+\begin{itemize}
+    \item Verletzt das Prinzip der Informationsverbergung (information hiding principle):\begin{itemize}
+        \item Keine Unterscheidung zwischen Implementationsspezifischen- und Öffentlichen Daten
+        \item Implementationsspezifische details werden dem Client enthüllt
+    \end{itemize}
+    \item Instabiler Code, wenn die Implementation des Feldes sich ändert
+    \item für Felder die als Argument oder unter einem Alias definiert sind ist es sehr schwer, die Abhängigkeiten zu erkennen
+\end{itemize}
+Also besser: Getter und Setter, sodass Zugriffe gezielt kontrolliert werden können
+Probleme, wenn zu wenig Freigegeben wird:\begin{itemize}
+    \item Funktionalität muss ggf doppelt implementiert werden
+    \item Verleitet einen dazu, die Abhängigkeiten falsch zu setzen
+\end{itemize}
+\warning{Instanzfelder (vom Konstruktor gesetzt) sollten niemals Public sein}
 \subsection{Probleme}
-\subsubsection{God Class}
+\subsubsection{Gottklassen (God Classes)}%
+\begin{wrapfigure}[5]{r}{.3\textwidth}%
+    \vspace*{-5mm}
+    \includegraphics[width=5cm]{bilder/Godclass.pdf}
+    %\caption{Gottklasse oder so}
+\end{wrapfigure}
 Eine Klasse kapselt einen Großteil oder alles der (Sub-) Systemlogik. Indikator von:
 \begin{itemize}
     \item Schlecht verteilter Systemintelligenz
@@ -1206,281 +977,10 @@ Eine Klasse kapselt einen Großteil oder alles der (Sub-) Systemlogik. Indikator
 
 \subsubsection{Class Proliferation}
 Zu viele Klassen in Relation zu der Größe des Problems. Oftmals ausgelöst durch zu frühes Ermöglichen von (mystischen) zukünftigen Erweiterungen.
-% end
-% end
-% end
-\clearpage
-\section{Entwurfskonzepte}
-\begin{itemize}
-    \item Dokumentiertes Expertenwissen
-    \item Nutzung von generischen Lösungen
-    \item Erhöhung des Abstraktionsgrades
-    \item Ein Muster hat einen Namen
-    \item Die Lösung kann einfach auf andere Varianten des Problems angewandt werden
-\end{itemize}
 
-\subsection{Idiome}
-Idiome sind \textit{keine} Entwurfsmuster:
-\begin{itemize}
-    \item Limitiert in der Größe und
-    \item oftmals spezifisch für eine Programmiersprache.
-\end{itemize}
-% end
 
-\subsection{Entwurfsmuster}
-Ein Entwurfsmuster beschreibt\dots
-\begin{itemize}
-    \item ein Problem, welches immer wieder auftritt,
-    \item den Kern der Lösung des Problems, soweit abstrahiert, dass die Lösung auf viele Probleme anwendbar ist, ohne zweimal genau das gleich zu tun.
-\end{itemize}
 
-\subsubsection{Template Method}
-\paragraph{Kurzfassung}\mbox{}\\
-\textbf{Ziel:} Implementierung eines Algorithmus, welcher erlaubt, ihn auf mehrere spezifische Probleme anzuwenden.
 
-\textbf{Idee:} Es wird ein Algorithmus implementiert, welcher konkrete Aktionen an abstrakte Methoden und damit Unterklassen weiterreicht.
-
-\textbf{Konsequenzen:}
-\begin{itemize}
-    \item Aufteilung von variablen und statischen Teilen
-    \item Verhinderung von Codeduplikation in Unterklassen
-    \item Kontrolle über Erweiterungen von Unterklassen
-\end{itemize}
-% end
-
-\paragraph{Generisches Klassendiagramm}\mbox{}\\
-\begin{figure}[ht]
-    \centering
-    \begin{tikzpicture}
-        \umlclass{AbstractClass}{}{
-            + templateMethod() \\
-            \umlvirt{opA()} \\
-            \umlvirt{opB()} \\
-            \dots \\
-        }
-        \umlclass[right = 1 of AbstractClass]{ConcreteClass}{}{
-            opA() \\
-            opB() \\
-            \dots \\
-        }
-
-        \umlinherit{ConcreteClass}{AbstractClass}
-        \umlnote[width = 3.5cm, left = 1 of AbstractClass]{AbstractClass}{\texttt{templateMethod() \{} \\ \texttt{ opA();} \\ \texttt{ \dots} \\ \texttt{ opB();} \\ \texttt{\}}}
-    \end{tikzpicture}
-    \caption{UML: Template Method Pattern}
-\end{figure}
-% end
-
-\paragraph{Beschreibung}\mbox{}\\
-Die Template-Methode definiert den Algorithmus unter Nutzung von abstrakten (und konkreten) Operationen.
-% end
-
-\paragraph{Varianten/Erweiterungen}\mbox{}\\
-Statt abstrakten Operationen, welche implementiert werden \textit{müssen}, können Hooks verwendet werden, welche implementiert werden \textit{können}.
-% end
-% end
-
-\subsubsection{Strategy}
-\paragraph{Kurzfassung}\mbox{}\\
-\textbf{Motivation:}
-\begin{itemize}
-    \item Viele verwandte Klassen unterscheiden sich ausschließlich in ihrem Verhalten statt unterschiedlich verwandte Abstraktionen zu implementieren
-\end{itemize}
-
-\textbf{Ziel:}
-\begin{itemize}
-    \item Erlaubt das konfigurieren einer Klasse mit einem von vielen Verhaltensvarianten
-    \item Implementierung unterschiedlicher Algorithmusvarianten können in der Klassenhierarchie verbaut werden
-\end{itemize}
-
-\textbf{Idee:} Definition einer Familie von Algorithmen, Kapselung von jedem und herstellen einer Austauschbarkeit.
-
-\textbf{Konsequenzen:}
-\begin{itemize}
-    \item Nutzer muss sich im klaren darüber sein, wie sich die Implementierungen unterscheiden und sich für eine entscheiden
-    \item Nutzer sind Implementierungsfehlern ausgesetzt
-    \item Strategy sollte nur genutzt werden, wenn das konkrete Verhalten relevant ist für den Nutzer
-\end{itemize}
-% end
-
-\paragraph{Generisches Klassendiagramm}\mbox{}\\
-\begin{figure}[ht]
-    \centering
-    \begin{tikzpicture}
-        \umlinterface{Strategy}{}{
-            \umlvirt{+ stategyOperation()} \\
-        }
-        \umlclass[below = 2 of Strategy]{ConcreteStrategyB}{}{
-            + stategyOperation() \\
-        }
-        \umlclass[left = 1 of ConcreteStrategyB]{ConcreteStrategyA}{}{
-            + stategyOperation() \\
-        }
-        \umlclass[right = 1 of ConcreteStrategyB]{ConcreteStrategyC}{}{
-            + stategyOperation() \\
-        }
-        \umlsimpleclass[left = 3 of Strategy]{Context}
-
-        \umlinherit[geometry = |-|]{ConcreteStrategyA}{Strategy}
-        \umlinherit{ConcreteStrategyB}{Strategy}
-        \umlinherit[geometry = |-|]{ConcreteStrategyC}{Strategy}
-        \umluniassoc{Context}{Strategy}
-    \end{tikzpicture}
-    \caption{UML: Stategy Pattern}
-\end{figure}
-% end
-
-\paragraph{Beschreibung}\mbox{}\\
-Der Context (Nutzer) erstellt Instanzen von konkreten Strategien, welche den Algorithmus in einem Interface definieren.
-% end
-
-\paragraph{Varianten/Erweiterungen}\mbox{}\\
-\begin{itemize}
-    \item Optionale Strategy-Objekt
-          \begin{itemize}
-              \item Context prüft, ob Strategy-Objekt gesetzt wurde und nutzt es entsprechend
-              \item Vorteil: Nutzer sind nur dem Strategy-Objekt ausgesetzt, wenn das Standardverhalten nicht genutzt werden soll
-          \end{itemize}
-\end{itemize}
-% end
-% end
-
-\subsubsection{Observer}
-\paragraph{Kurzfassung}\mbox{}\\
-\textbf{Motivation:} OOP vereinfacht die Implementierung einzelner Objekte, die Verdrahtung dieser kann allerdings schwer sein, sofern man die Objekte nicht hart koppeln möchte.
-
-\textbf{Ziel:} Entkopplung des Datenmodells (Subjekt) von den Stellen, welche an Änderungen des Zustands interessiert sind. Voraussetzungen:
-\begin{itemize}
-    \item Das Subjekt sollte nichts über die Observer wissen.
-    \item Identität und Anzahl der Observer ist nicht vorher bekannt.
-    \item Neue Observer sollen dem System später hinzugefügt werden können.
-    \item Polling soll vermieden werden (da inperformant).
-\end{itemize}
-
-\textbf{Idee:} Erstellung von Observern (generalisiert mittels eines Interfaces), welche einem Subjekt hinzugefügt werden können und aufgerufen werden können.
-
-\textbf{Konsequenzen:}
-\begin{itemize}
-    \item Vorteile
-          \begin{itemize}
-              \item Abstrakte Kopplung zwischen Subjekt und Observer
-              \item Unterstützung von Broadcast-Kommunikation
-          \end{itemize}
-    \item Nachteile
-          \begin{itemize}
-              \item Risiko von Update-Kaskaden zwischen Subjekt, Observer und dessen Observern
-              \item Updates werden an alle gesendet, sind aber nur für einige relevant
-              \item Fehlende Details über die Änderungen (Observer muss dies selbst herausfinden)
-              \item Generelles Interface für Observer schränkt die Parameter stark ein
-          \end{itemize}
-\end{itemize}
-% end
-
-\paragraph{Generisches Klassendiagramm}\mbox{}\\
-\begin{figure}[ht]
-    \centering
-    \begin{tikzpicture}
-        \umlclass[type = abstract, x = 0, y = 0]{Subject}{}{
-            + attach(Observer) \\
-            + detach(Observer) \\
-            \# notify() \\
-        }
-        \umlinterface[x = 7, y = 0]{Observer}{}{
-            \umlvirt{+ update(\dots)} \\
-        }
-        \umlclass[x = 0, y = -4]{ConcreteSubject}{}{
-            + getState() \\
-            + modifyState() \\
-        }
-        \umlclass[x = 7, y = -4]{ConcreteObserver}{}{
-            + update(\dots) \\
-        }
-
-        \umlinherit{ConcreteSubject}{Subject}
-        \umlinherit{ConcreteObserver}{Observer}
-        \umluniassoc[mult2 = *]{Subject}{Observer}
-        \umluniassoc[stereo = optional]{ConcreteObserver}{ConcreteSubject}
-    \end{tikzpicture}
-    \caption{UML: Observer Pattern}
-\end{figure}
-% end
-
-\paragraph{Beschreibung}\mbox{}\\
-\begin{description}
-    \item[Subject] Bietet Methoden zur Implementierung des Musters an.
-    \item[Observer] Definiert ein Interface zum Empfangen von Signalen eines Subjekts.
-    \item[ConcreteSubject] Das konkrete Subjekt, sendet Benachrichtigungen an die Observer
-    \item[ConcreteObserver] Ein konkreter Observer, registriert sich beim Subjekt, empfängt Nachrichten von dem Subjekt
-\end{description}
-% end
-
-\paragraph{Varianten/Erweiterungen}\mbox{}\\
-% end
-% end
-% end
-
-\subsection{Architekturmuster}
-Architekturmuster sind \textit{keine} Entwurfsmuster:
-\begin{itemize}
-    \item Hilfe bei der Spezifikation der Grundlegenden Struktur der Software
-    \item Großer Effekt auf die konkrete Softwarearchitektur
-    \item Definition von globalen Eigenschaften, bspw.:
-          \begin{itemize}
-              \item Wie unterschiedliche Komponenten zusammenarbeiten und Daten austauschen
-              \item Einschränkungen der Subsysteme
-              \item \dots
-          \end{itemize}
-\end{itemize}
-
-\subsubsection{Model-View-Controller (MVC)}
-Das MVC-Muster spaltet die Software in die fundamentalen Teile für interaktive Software auf:
-\begin{description}
-    \item[Model] Enthält die Kernfunktionalität und Daten
-          \begin{itemize}
-              \item Unabhängig von dem Ausgabeformat und dem Eingabeverhalten
-          \end{itemize}
-    \item[View] Präsentiert die Daten dem Nutzer
-          \begin{itemize}
-              \item Die Daten werden von dem Modell geladen
-          \end{itemize}
-    \item[Controller] Verarbeitet die Eingaben des Nutzers
-          \begin{itemize}
-              \item Jeder View wird ein Controller zugewiesen
-              \item Empfängt Eingaben (bspw. durch Events) und übersetzt diese für das Modell oder die Views
-              \item Jede Interaktion geht durch den Controller
-          \end{itemize}
-\end{description}
-
-\begin{figure}[ht]
-    \centering
-    \begin{tikzpicture}[->, every node/.style = { draw }]
-        \node (controller) {Controller};
-        \node [below left = 2 of controller] (view) {View};
-        \node [below right = 2 of controller] (model) {Model};
-
-        \draw (controller) -- (view);
-        \draw (controller) -- (model);
-        \draw (view) -- (model);
-        \draw [dashed] (view) to[bend left] (controller);
-        \draw [dashed, color = lightgray] (model) to[bend left] (view);
-    \end{tikzpicture}
-    \caption{Model-View-Controller}
-    \label{fig:mvc}
-\end{figure}
-Controller und View sind direkt gekoppelt mit dem Modell, das Modell ist nicht direkt gekoppelt mit dem Controller oder der View (siehe \ref{fig:mvc}).
-
-\paragraph{Nachteile}\mbox{}\\
-\begin{description}
-    \item[Erhöhte Komplexität] Die Aufspaltung in View und Controller kann die Komplexität erhöhen ohne mehr Flexibilität zu gewinnen.
-    \item[Update Proliferation] Möglicherweise viele Updates; nicht alle Views sind immer interessiert an allen Änderungen.
-    \item[Kopplung View/Controller] View und Controller sind stark gekoppelt.
-\end{description}
-% end
-% end
-% end
-% end
-\clearpage
-% end
 
 
 \clearpage

@@ -49,6 +49,7 @@
 \RequirePackage[font=small, labelfont=sc, position=bottom]{caption}
 \RequirePackage[labelfont=normalfont, position=bottom]{subcaption}
 \RequirePackage{booktabs}
+\RequirePackage{wrapfig}
 %\RequirePackage{xifthen}
 \regtotcounter{task}
 
@@ -260,6 +261,10 @@
 
 % Readjust table height
 \renewcommand{\arraystretch}{1.3}
+
+% Description-list styling.
+\SetLabelAlign{parright}{\parbox[t]{\labelwidth}{\raggedleft#1}}
+\setlist[description]{style = multiline, leftmargin = 4cm, align = parright,font=\mdseries}
 
 \ExplSyntaxOn
 \renewcommand*{\@maketitle}{%
@@ -492,13 +497,19 @@
     \newenvironment{definition}{\begin{defBox}\begin{definitionT}}{\end{definitionT}\end{defBox}}%
     \newtheorem{definitionT}{\textsf{Definition}}%
 
+\renewcommand{\theFancyVerbLine}{\tikz{\coordinate(a);\node[text width=5mm,inner sep=0pt,align=center]{\ttfamily\textcolor{white}{\scriptsize\arabic{FancyVerbLine}}};}}
+
 % Environment für meinen Style (Arg 1 = minted Options, Arg 2 = tcolorbox Options)
 \newtcblisting{codeBlock}[2][]{
     listing engine=minted, % Minted verwenden
-    colback=bashcodebg!30, %Hintergrundfarbe
+    colback=black!10, %Hintergrundfarbe
     colframe=black!70, % Randfarbe
     listing only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
-    %minted style=colorful, %Sieht actually worse aus imo
+    frame hidden,
+    boxrule=0pt,
+    %hbox,
+    title style=black!90,
+    minted style=friendly, %Sieht actually worse aus imo
     minted language=java, % Sprache setzen
     minted options={ %Minted Optionen
       linenos=true,
@@ -506,12 +517,12 @@
       texcl=true,
       #1 % weitere optionen für Minted zulassen
       },
-      left=5mm, % Links Platz lassen
+      left=7.1mm, % Links Platz lassen
       enhanced, % Erlaubt uns, den ramen zu zeichnen
       fonttitle=\sffamily, % Titelschriftart auf 
       overlay={ % Für Grauen Bereich links
                 \begin{tcbclipinterior}
-                  \fill[black!25] (frame.south west) rectangle ([xshift=5mm]frame.north west); % Zeilennummernbereich färben
+                  \fill[black!70] (frame.south west) rectangle ([xshift=5mm]frame.north west); % Zeilennummernbereich färben
                 \end{tcbclipinterior}
               },
       #2 % Weitere Argumente zulassen
@@ -528,7 +539,7 @@
 \newcommand{\anzugeben}{\textbf{\textsf{Anzugeben: }}}
 \newcommand{\loesung}{\textbf{\textsf{Lösung: }}}
 \newcommand{\rechnung}{\textbf{\textsf{Rechnung: }}}
-\newcommand{\fakebullet}{~\raisebox{-.3\height}{\llap{\textbullet}}~}
+\newcommand{\fakebullet}{~\raisebox{-.2\height}{\llap{\textbullet}}~}
 \newcommand{\fakebullett}{~\llap{-}~}
 \newcommand{\fakebullettt}{~\llap{*}~}
 \newcommand{\mlcell}[2][l]{\Gape[0pt][2pt]{\makecell[#1]{#2}}}
@@ -557,10 +568,9 @@
     \end{figure}
 }
 \newcommand{\warning}[1]{
-    \begin{figure}[H]
-        \centering
-        \fbox{\parbox[c]{0.5\textwidth}{\textbf{Warning:} #1}}
-    \end{figure}
+    \begin{defBox}
+      \fatsf{Warnung:} #1
+    \end{defBox}
 }
 
 % Workarounds and similar stuff.
