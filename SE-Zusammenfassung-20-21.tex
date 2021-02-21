@@ -483,6 +483,169 @@ State Machine Diagramme nutzen vereinfachte endliche Automaten zur Darstellung v
 \end{figure}
 % Kapitel 5
 \clearpage
+\section{Softwarearchitektur (Software Architecture)}
+Softwarearchitektur umfasst:
+\begin{itemize}
+    \item Architekturcharakteristiken
+    \item Architekturstyles (architecture styles, software system structure)
+    \item Architekturentscheidungen
+    \item Entwurfsmuster (design principles)
+\end{itemize}
+\begin{table}[ht]
+    \centering
+    \rowcolors{2}{white}{black!10}
+    \begin{tabular}{ll}
+        \toprule
+        \fatsf{Architekten}                                            & \fatsf{Entwicklungsteam}                    \\
+        \midrule
+        \fakebullet{}~\mlcell[l]{Die Charakteristiken der Architur                                                   \\aus der Abhängigkeitsanalyse zu ermitteln} & \fakebullet{}Klassenstruktur für jede Komponente erstellen \\
+        \fakebullet{}Einen Architekturstil für das System auswählen    & \fakebullet{}UI(User Interface) entwerfen   \\
+        \fakebullet{}Komponentenstruktur erstellen (über Klassenebene) & \fakebullet{}Quellcode schreiben und testen \\
+        \bottomrule
+    \end{tabular}
+    \caption{Verantwortungsaufteilung bei der Softwarearchitektur}
+    \label{tab:software_architecture_responsibilities}
+\end{table}
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+        \node[draw,rounded corners,thick, minimum height=1cm,minimum width=3cm](n1){Architekten};
+        \node[draw,rounded corners,thick, minimum height=1cm,minimum width=3cm,right=3cm of n1](n2){Entwicklungsteam};
+        \draw[line width=2mm, draw=accentcolor,-triangle 45,postaction={draw, line width=4mm, shorten >=5mm, -}] (n1) -- node[line width= .4mm,pos=.4,text=white]{Input} (n2);
+        \draw[-{Stealth},ultra thick](n1) to[out=90,in=90,looseness=.5] node[pos=.5,sloped,auto]{Adaption} (n2);
+        \draw[{Stealth}-,ultra thick](n1) to[out=270,in=270,looseness=.5] node[pos=.5,sloped,below]{Rückmendung(Feedback)} (n2);
+    \end{tikzpicture}
+    \caption{Relation Architelten-Entwickler}
+\end{figure}
+\clearpage
+\subsection{Architekturcharakteristiken}
+\begin{definition}[Architekturcharakteristik]\begin{itemize}
+        \item Spezifiziert Operations-und Betriebskriterien um eine gewisse Anforderung zu implementieren
+        \item Beeinflusst den Strukturentwurf, benötigt spezielle Architekturelemente (keine üblichen)
+        \item Es ist nötig, dass die Anwendung wie gewünscht funktioniert (funktionale und nichtfunktionale Abhängigkeiten)
+    \end{itemize}
+\end{definition}
+\fatsf{Operationscharakteristiken (Operational):}\begin{itemize}
+    \item Verfügbarkeit (Availability): Zeitspanne, in der das System online/verfügbar ist
+    \item Leistung (Performance): Umfasst Spitzenauslastungsanalysen, Antwortzeiten, Stresstesten
+    \item Skalierbarkeit: (Scalability): Fähigkeit auch mit einer Steigenden Anzahl an Anfragen Klarzukommen
+\end{itemize}
+\fatsf{Strukturell (Structural):}\begin{itemize}
+    \item Erweiterbarkeit (Entensibility): Wie einfach es ist, neue Funktionalität hinzuzufügen
+    \item Wartbarkeit (Maintainability): Wie einfach es ist, das System zu verbessern oder auszuwechseln (also zu warten)
+    \item Wiederverwendbarkeit (Leveredgability): Häufige Komponenten in mehreren Produkten wiederverwenden
+    \item Lokalisierbarkeit (Localisation): Ünterstützung mehrerer Sprachen, Währungen, Einheiten, \dots
+    \item Konfigurierbarkeit (Configuration): Möglichkeit für den Nutzer, das System nach seinen Vorlieben durch eine benutzbare Oberfläche anzupassen.
+\end{itemize}
+\fatsf{Cross-Cutting (Divide and Conquer)}\begin{itemize}
+    \item Barrierefreiheit: Muss auch nutzbar von Leuten mit Behinderung (Blinde, Taube, \dots) sein
+    \item Datenschutz (Pricary): Möglichkeit, bestimmte Daten für andere Nutzer (auch priveligierte) unzugänglich zu machen
+    \item Sicherheit (Security): Verschlüssellung, Authentifizierung, \dots
+\end{itemize}
+\subsection{Architekturstile}
+\begin{itemize}
+    \item Helfen die Fundamentale Struktur eines Systems zu spezifizieren
+    \item Haben einen großen Einfluss darauf, wie die fertige Architektur aussieht
+    \item Definieren die Globalen Eigenschaften des Systemes (z.B. Wie daten ausgetauscht werden können, welche Einschränkungen die Subsysteme haben)
+\end{itemize}
+Softwaresysteme sind normalerweise aus mehreren Architekturstilen zusammengesetzt
+\clearpage
+\subsubsection{Monolithische Architekturstile (Monolithic Architecture Styles)}
+\paragraph{Ebenen (Layered)}\mbox{}\\
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \node[rectangle split,rectangle split parts=4,draw,text centered, rectangle split part fill={red!30,blue!20, green!20, yellow!30}, rounded corners, thick] (A) {Presentationsebene (Presentation layer)\nodepart{two}Geschäftsebene (Business Layer)\nodepart{three}Beständigkeitsebene (Persistence Layer)\nodepart{four}Datenbankebene (Database Layer)};
+    \end{tikzpicture}
+\end{figure}
+\FloatBarrier
+\begin{itemize}
+    \item Anzahl der Ebenen nicht Festgelegt, manche Architekturen fassen Ebenen zusammen oder fügen neue Hinzu
+\end{itemize}
+
+\begin{table}[ht]
+    \centering
+    \rowcolors{2}{white}{black!10}
+    \begin{tabular}{ll}
+        \toprule
+        \fatsf{pro}                                                  & \fatsf{contra}                                                      \\
+        \midrule
+        \fakebullet{}Simplizität                                     & \fakebullet{}Skalierbarkeit                                         \\
+        \fakebullet{}Kosten                                          & \fakebullet{}Leistung (Parallelisierung \textbf{nicht} unterstützt) \\
+        \fakebullet{}Architekturstil kann später ausgetauscht werden & \fakebullet{}Verfügbarkeit (Lange startzeiten, \dots)               \\
+        \fakebullet{}Gut für kleine-mittlere Anwendungen             & \fakebullet{}                                                       \\
+        \bottomrule
+    \end{tabular}
+    \caption{Layered-Architekturstil Pro Kontra}
+    \label{tab:layered_style_pro_contra}
+\end{table}
+
+\paragraph{Model-View-Controller (MVC)}\mbox{}\\
+Das MVC-Muster spaltet die Software in die fundamentalen Teile für interaktive Software auf:
+\begin{itemize}
+    \item Model: Enthält die Kernfunktionalität und Daten
+          \begin{itemize}
+              \item Unabhängig von dem Ausgabeformat und dem Eingabeverhalten
+          \end{itemize}
+    \item View: Präsentiert die Daten dem Nutzer
+          \begin{itemize}
+              \item Die Daten werden von dem Modell geladen
+          \end{itemize}
+    \item Controller: Verarbeitet die Eingaben des Nutzers
+          \begin{itemize}
+              \item Jeder View wird ein Controller zugewiesen
+              \item Empfängt Eingaben (bspw. durch Events) und übersetzt diese für das Modell oder die Views
+              \item Jede Interaktion geht durch den Controller
+          \end{itemize}
+\end{itemize}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[->, every node/.style = { draw }]
+        \node (controller) {Controller};
+        \node [below left = 2 of controller] (view) {View};
+        \node [below right = 2 of controller] (model) {Model};
+
+        \draw (controller) -- (view);
+        \draw (controller) -- (model);
+        \draw (view) -- (model);
+        \draw [dashed] (view) to[bend left] (controller);
+        \draw [dashed, color = lightgray] (model) to[bend left] (view);
+    \end{tikzpicture}
+    \caption{Model-View-Controller}
+    \label{fig:mvc}
+\end{figure}
+Controller und View sind direkt gekoppelt mit dem Modell, das Modell ist nicht direkt gekoppelt mit dem Controller oder der View (siehe \ref{fig:mvc}).
+\clearpage
+Nachteile:
+\begin{itemize}
+    \item Erhöhte Komplexität: Die Aufspaltung in View und Controller kann die Komplexität erhöhen ohne mehr Flexibilität zu gewinnen.
+    \item Update Proliferation: Möglicherweise viele Updates; nicht alle Views sind immer interessiert an allen Änderungen.
+    \item Kopplung View/Controller: View und Controller sind stark gekoppelt.
+\end{itemize}
+\subsubsection{Verteilte Architekturstile (Distributed Architecutral Styles)}
+\paragraph{Dienstbasierend (Service-Based)}
+\begin{itemize}
+    \item Hauptvariante: \begin{itemize}
+        \item Nur eine Bedienoberfläche (UI) für alle Services
+        \item Services bestehen aus mehrenen Komponenten
+        \item Alle Services greifen auf eine gemeinsame Datenbank zu
+    \end{itemize}
+    \item Nicht-Monolythische Variante (Non-Monolithic)\begin{itemize}
+        \item Servicebasierende UIs (eine UI per service)
+    \end{itemize}
+    \item Servicelokale Datenbankvariante\begin{itemize}
+        \item Services können eigene oder auch gemeinsame Datenbanken haben
+    \end{itemize}
+    \begin{figure}[ht]
+        \centering
+        \includegraphics{bilder/service_local_service_based_architecture_style.pdf}
+        \caption{Beispiel für Servislokale Datenbankvariante einer Dienstbasierenden Architektur}
+    \end{figure}
+\end{itemize}
+
+%Kapitel 6
+\clearpage
 \section{Softwarequalität}
 \subsection{Faktoren}
 Die Faktoren guter Software trennen sich in \textit{interne} und \textit{externe Faktoren}:

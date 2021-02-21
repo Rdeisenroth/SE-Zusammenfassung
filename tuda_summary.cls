@@ -531,6 +531,7 @@
 \newcommand{\fakebullet}{~\raisebox{-.3\height}{\llap{\textbullet}}~}
 \newcommand{\fakebullett}{~\llap{-}~}
 \newcommand{\fakebullettt}{~\llap{*}~}
+\newcommand{\mlcell}[2][l]{\Gape[0pt][2pt]{\makecell[#1]{#2}}}
 
 % Colors
 
