@@ -1401,48 +1401,17 @@ Der Context (Nutzer) erstellt Instanzen von konkreten Strategien, welche den Alg
           \end{itemize}
 \end{itemize}
 
-
 \clearpage
-\section{Softwarequalität}
-\subsection{Faktoren}
-Die Faktoren guter Software trennen sich in \textit{interne} und \textit{externe Faktoren}:
-\begin{description}
-    \item[Interne Faktoren] Sicht der Entwickler (Code-Qualität). Stellt eine \enquote{White Box} dar.
-    \item[Externe Faktoren] Sicht der Nutzer (interne Qualitätsfaktoren sind nicht bekannt). Stellt eine \enquote{Black Box} dar.
-\end{description}
-\subsubsection{Interne Faktoren}
-\begin{itemize}
-    \item Modularität
-    \item Verständlichkeit
-          \begin{itemize}
-              \item Namensgebung (Methoden, Parameter, Variablen, \dots)
-          \end{itemize}
-    \item Kohäsion
-    \item Prägnanz (keine/wenige Duplikate, klarer (kurzer) Code)
-    \item \dots
-\end{itemize}
-% end
-
-\subsubsection{Externe Faktoren}
-\begin{itemize}
-    \item Korrektheit
-    \item Verlässlichkeit
-    \item Erweiterbarkeit
-    \item Wiederverwendbarkeit
-    \item Kompatibilität
-    \item Portabilität
-    \item Effizienz
-    \item Nutzbarkeit
-    \item Funktionalität
-    \item Wartbarkeit
-    \item \dots
-\end{itemize}
-% end
-% end
+\section{Verifikation (Verification)}
+\subsection{Einführung}
 
 \subsection{Verifikation und Validierung}
-\textbf{Verifikation:} Wird das System korrekt erstellt? \\
-\textbf{Validierung:} Wird das richtige System erstellt?
+\begin{definition}[Verifikation]
+    Wird das System korrekt erstellt?
+\end{definition}
+\begin{definition}[Validierung]
+    Wird das richtige System erstellt?
+\end{definition}
 
 \subsubsection{Techniken}
 \paragraph{Statische Techniken}\mbox{}\\
@@ -1467,7 +1436,12 @@ Dynamische Techniken erfordern, dass das Programm ausgeführt wird.
 % end
 % end
 
-\subsubsection{Codeuntersuchung}
+\clearpage
+\subsubsection{Codeuntersuchung (Code reviews)}
+\begin{definition}[Code Review]
+    die Codeuntersuchung ist ein strukturierter Inspektionsprozess einer Software,
+    der meist im Team ausgeführt wird, mit dem Ziel mögliche Fehler im Code zu finden.
+\end{definition}
 Das Ziel der Codeuntersuchung, ist
 \begin{itemize}
     \item Programmfehler,
@@ -1485,98 +1459,51 @@ Eine mögliche Checkliste ist bspw.:
     \item[I/O Fehler] Werden alle Eingabeparameter genutzt? Können unerwartete Eingaben zu einem Absturz führen?
     \item[Schnittstellenfehler] Korrekte Anzahl/Typen der Parameter?
 \end{description}
+
+\begin{itemize}
+    \item Vorteile: \begin{itemize}
+              \item Studien zeigen, dass es funktioniert und Kosten sparen kann
+              \item Helfen dabei, Wissen über den Code bei den Teammitgliedern zu verteilen
+              \item Fehler können gefunden werden, bevor sie in Tests auftauchen
+              \item Können Codequalität erhöhen
+              \item Keine Codeausführung nötig
+          \end{itemize}
+    \item Nachteile\begin{itemize}
+              \item Erfordert \enquote{Erwachsene} Herangehensweise: Teammitglieder können sich kritisiert fühlen
+              \item Unter Zeitdruck fühlen sie sich unproduktiv an
+              \item Funktionieren nur gut wenn korrekt geführt
+          \end{itemize}
+\end{itemize}
 % end
 % end
-
-\subsection{Metriken}
-\label{sec:metrics}
-
-\begin{description}
-    \item[Fan In] Anzahl Methoden, welche $ m $ aufrufen
-    \item[Fan Out] Anzahl Methoden, welche $ m $ aufruft
-    \item[Codelänge] Anzahl Zeilen
-    \item[Zyklomatische Komplexität] Linear unabhängige Pfade durch den Code (Kontrollflussgraph)
-    \item[Verschachtelungstiefe] Tiefe Verschachtelung von if/else, switch..case, etc. sind schwer zu verstehen
-    \item[Gewichtete Methodenkomplexität pro Klasse] Gewichtete Summe der Methodenkomplexitäten
-    \item[Vererbungstiefe] Tiefe Vererbungsbäume sind hochkomplex (Unterklassen)
-\end{description}
-
-\subsubsection{Kontrollflussgraph (CFG)}
-\label{diagram:cfg}
-
-Ein Kontrollflussgraph stellt Code syntaxfrei dar, wodurch bessere Analysen möglich sind.
-
-\paragraph{Beispiel}\mbox{}\\
-Der in \ref{fig:cfgcode} gezeigte Code wird in \ref{fig:cfg} als Kontrollflussgraph dargestellt.
-\begin{figure}[ht]
-    \centering
-    %\begin{noindent}
-    \begin{codeBlock}[autogobble]{}
-        public static int fibonacci(final int num) {
-        	if (num <= 0) {
-        		throw new IllegalArgumentException();
-        	}
-        	int current = 1;
-        	int previous = 0;
-        	for (int i = 0; i < num - 1; i++) {
-        		int next = current + previous;
-        		previous = current;
-        		current = next;
-        	}
-        	return current;
-        }
-	\end{codeBlock}
-    %\end{noindent}
-    \caption{Beispiel: Kontrollflussgraph / Code}
-    \label{fig:cfgcode}
-\end{figure}
-\begin{figure}[ht]
-    \centering
-    \begin{tikzpicture}[part/.style = { draw, align = center }]
-        \node [part] (init) {init};
-        \node [part, below = of init, label = 180:1] (step1) {\texttt{if (num <= 0)}};
-        \coordinate [right = 6 of step1] (step1-);
-        \node [part, below = of step1-, label = 180:11] (step1-1) {\texttt{throw new IllegalArgumentException();}};
-        \node [part, below = of step1, label = 180:2] (step2) {\texttt{int current = 1;}};
-        \node [part, below = of step2, label = 180:3] (step3) {\texttt{int previous = 0;}};
-        \node [part, below = of step3, label = 180:4] (step4) {\texttt{for (int i = 0; i < num - 1; i++)}};
-        \coordinate [right = 5 of step4] (step4-);
-        \node [part, below = of step4-, label = 180:41] (step4-1) {\texttt{int next = current + previous;}};
-        \node [part, below = of step4-1, label = 180:42] (step4-2) {\texttt{previous = current;}};
-        \node [part, below = of step4-2, label = 180:43] (step4-3) {\texttt{current = next;}};
-        \node [part, below = of step4, label = 180:5] (step5) {\texttt{return current;}};
-        \node [part, below = of step5] (exit) {exit};
-
-        \draw [->] (init) -- (step1);
-        \draw [->] (step1) -| node [above] {\texttt{num <= 0}} (step1-1);
-        \draw [->] (step1) -- node [left] {\texttt{num > 0}} (step2);
-        \draw [->] (step2) -- (step3);
-        \draw [->] (step3) -- (step4);
-        \draw [->] (step4) -| node [above] {\texttt{i < num - 1}} (step4-1);
-        \draw [->] (step4-1) -- (step4-2);
-        \draw [->] (step4-2) -- (step4-3);
-        \coordinate [right = 2.5 of step4-3] (back1);
-        \coordinate [right = of step3] (back2);
-        \draw (step4-3) -- (back1);
-        \draw (back1) |- (back2);
-        \draw [->] (back2) -- (step4);
-        \draw [->] (step4) -- node [left] {\texttt{i >= num - 1}} (step5);
-        \draw [->] (step5) -- (exit);
-    \end{tikzpicture}
-    \caption{Beispiel: Kontrollflussgraph}
-    \label{fig:cfg}
-\end{figure}
-% end
-% end
-
-\subsubsection{Zyklomatische Komplexität}
-Die Zyklomatische Komplexität $ C $ berechnet sich durch $ C = E - N + 2P $, wobei $ E $ die Anzahl der Kanten, $ N $ die Anzahl der Kanten und $ P $ die Anzahl der möglichen Zusammenhangskomponenten (in den meisten Fällen $ 1 $) darstellt.
-% end
-% end
-
+\clearpage
 \subsection{Testen}
-\subsubsection{Testplan}
-Ein Testplan ist zur Ausführung durch Menschen gedacht. Er dokumentiert die Schritte des Tests und das jeweilige erwartete Ergebnis. In der Testausführung kann das eigentliche Ergebnis dann mit dem erwarteten verglichen werden.
+\begin{defBox}
+    \enquote{Programmtesten kann zwar die Existenz von Fehlern aufzeigen, aber niemals ihre Abwesenheit beweisen!}\mbox{}\\\mbox{}\hfill — E. W. Dijkstra, EWD 249
+\end{defBox}
+\begin{definition}[Testplan]
+    Ein \textit{Testplan} Testplan ist zur Ausführung durch Menschen gedacht. Er dokumentiert die Schritte des Tests und das jeweilige erwartete Ergebnis. In der Testausführung kann das eigentliche Ergebnis dann mit dem erwarteten verglichen werden.
+\end{definition}
+
+\begin{definition}[Testfall (Test case)]
+    besteht aus\begin{itemize}
+        \item Startzustand (Pretest state)
+        \item Testlogik
+        \item Erwarteten Ergebnissen
+    \end{itemize}
+\end{definition}
+\begin{definition}[Test Suite]
+    Eine Sammlung an Testfällen heißt Test Suite (Testsammlung)
+\end{definition}
+\begin{definition}[Test Run]
+    Ausführung einer Test Suite auf der IUT, wenn der Test durch geht kriegt er den \enquote{Verdict Pass} (Urteilspass), sonst bezeichnet man ihn als gescheitert (failed).
+\end{definition}
+\begin{definition}[Test Driver (Treiber)]
+    Klasse oder Programm, welches den Test auf die IUT anwendet
+\end{definition}
+\begin{definition}[Test Harness (Gerüst)]
+    System von Testtreibern und anderen Tools, um die Testausführung zu unterstützen
+\end{definition}
 % end
 
 \subsubsection{Testtypen}
@@ -1592,8 +1519,43 @@ Testen eines kompletten (Unter-) Systems, um die Zusammenarbeit der Komponenten 
 Testen einer komplett integrierten Applikation (Funktion, Performanz, Stresstest, \dots).
 % end
 % end
+\clearpage
 
-\subsubsection{Testautomation}
+
+\subsection{Testabdeckung}
+\begin{definition}[Bedingung]
+    Eine \textit{Bedingung} ist \texttt{ein} boolescher Audruck.
+\end{definition}
+\begin{definition}[Entscheidung]
+    Eine \textit{Entscheidung} ist eine Zusammensetzung von Bedingungen, welche bspw. den Test eines \texttt{if}-Ausdruckes darstellt.
+\end{definition}
+\begin{definition}[Basisblock (Basic block)]
+    Ein Basisblock $B$ ist eine Maximale Sequenz von Instruktionen ohne Sprünge.
+\end{definition}
+\subsubsection{Strukturell}
+Strukturelle Testabdeckung basiert auf dem Kontrollflussgraphen (CFG) eines Programms\begin{itemize}
+    \item Statement Coverage (SC): Alle Ausdrücke wurden mindestens einmal ausgeführt.
+    \item Basic Block Coverage (BBC): Alle Basisblöcke wurden mindestens einmal ausgeführt.
+    \item Branch Coverage (BC): Jede Seite von jedem Knoten wurde mindestens einmal ausgeführt (d.h. jede Kante eines Kontrollflussgraphen).
+    \item Path Coverage (PC): Alle Pfade wurden mindestens einmal ausgeführt (siehe CFG).
+\end{itemize}
+
+\subsubsection{Logisch}\begin{itemize}
+    \item Condition Coverage (CC): Jede Bedingung wurde mindestens einmal zu wahr und falsch ausgewertet.
+    \item Decision Coverage (DC): Jede Entscheidung wurde mindestens einmal zu wahr falsch ausgewertet.
+    \item Modified Condition Decision Coverage (MCDC): Kombiniert Aspekte der Condition Coverage, Decision Coverage und Unabhängigkeitstests.\\
+          Ein Test für eine Bedingung $ c $ in Entscheidung $ d $ (Duplikate von $ c $ werden nicht gezählt) erfüllt MCDC gdw.
+          \begin{itemize}
+              \item er $ d $ mindestens zweimal auswertet,
+              \item davon $ c $ einmal zu wahr und einmal zu falsch auswertet,
+              \item $ d $ in beiden Fällen unterschiedlich ausgewertet wird und
+              \item die anderen Bedingungen in $ d $ in beiden identisch oder in mindestens einem nicht ausgewertet werden.
+          \end{itemize}
+          Für 100\%-ige MCDC-Abdeckung muss dies für jede Bedingung in dem Programm gelten.
+    \item Multiple-Condition Coverage (MCC): Alle möglichen Kombinationen innerhalb einer Entscheidung wurden mindestens einmal ausgeführt.
+\end{itemize}
+\clearpage
+\subsection{Testautomation}
 Ein Testautomationssystem
 \begin{itemize}
     \item startet die \enquote{implementation under test} (IUT),
@@ -1602,59 +1564,45 @@ Ein Testautomationssystem
     \item wendet die Testdaten an und
     \item evaluiert die Ergebnisse und den Zustand des Systems.
 \end{itemize}
-% end
-
-\subsubsection{Testabdeckung}
-\paragraph{Strukturell}\mbox{}\\
-Strukturelle Testabdeckung basiert auf dem Kontrollflussgraphen (CFG) eines Programms.
-
-\paragraph{Statement Coverage (SC)}\mbox{}\\
-Alle Ausdrücke wurden mindestens einmal ausgeführt.
-% end
-
-\paragraph{Basic Block Coverage (BBC)}\mbox{}\\
-Alle Blöcke wurden mindestens einmal ausgeführt.
-% end
-
-\paragraph{Branch Coverage (BC)}\mbox{}\\
-Jede Seite von jedem Knoten wurde mindestens einmal ausgeführt (d.h. jede Kante eines Kontrollflussgraphen).
-% end
-
-\paragraph{Path Coverage (PC)}\mbox{}\\
-Alle Pfade wurden mindestens einmal ausgeführt (siehe CFG).
-% end
-% end
-
-\paragraph{Logisch}\mbox{}\\
-Definition:
-\begin{description}
-    \item[Bedingung] Eine \textit{Bedingung} ist \texttt{ein} boolescher Audruck.
-    \item[Entscheidung] Eine \textit{Entscheidung} ist eine Zusammensetzung von Bedingungen, welche bspw. den Test eines \texttt{if}-Ausdruckes darstellt.
-\end{description}
-
-\paragraph{Condition Coverage (CC)}\mbox{}\\
-Jede Bedingung wurde mindestens einmal zu wahr und falsch ausgewertet.
-% end
-
-\paragraph{Decision Coverage (DC)}\mbox{}\\
-Jede Entscheidung wurde mindestens einmal zu wahr falsch ausgewertet.
-% end
-
-\paragraph{Modified Condition Decision Coverage (MCDC)}\mbox{}\\
-Kombiniert Aspekte der Condition Coverage, Decision Coverage und Unabhängigkeitstests.
-
-Ein Test für eine Bedingung $ c $ in Entscheidung $ d $ (Duplikate von $ c $ werden nicht gezählt) erfüllt MCDC gdw.
-\begin{itemize}
-    \item er $ d $ mindestens zweimal auswertet,
-    \item davon $ c $ einmal zu wahr und einmal zu falsch auswertet,
-    \item $ d $ in beiden Fällen unterschiedlich ausgewertet wird und
-    \item die anderen Bedingungen in $ d $ in beiden identisch oder in mindestens einem nicht ausgewertet werden.
+\subsubsection{Automatisierte Test Case Generierung (ATCG)}
+\paragraph{White Box}\begin{itemize}
+    \item Syntaktischer Ansatz: Suchen nach Bedingungen, Evaluierung ermöglicht logic-Based Coverage
+    \item Unerreichbarer Code kann gefunden werden
+    \item Symbolische Ausführung: versuchen, CFG mit verschiedensten Werten durchzulaufen, Evaluierung ermöglicht Structural Coverage
 \end{itemize}
-Für 100\%-ige MCDC-Abdeckung muss dies für jede Bedingung in dem Programm gelten.
-% end
-
-\paragraph{Multiple-Condition Coverage (MCC)}\mbox{}\\
-Alle möglichen Kombinationen innerhalb einer Entscheidung wurden mindestens einmal ausgeführt.
+\vspace*{-1ex}
+\paragraph{Black Box}\begin{itemize}
+    \item Analyse der Ein-und Ausgabedaten der IUT
+    \item Probleme: Libary Calls, Unnötige Testfälle, rekursion, \dots
+\end{itemize}
+\vspace*{-1ex}
+\paragraph{Test Coverage Recording}\begin{enumerate}
+    \item IUT Initialisieren
+    \item Test suite ausführen und Informationen während des Testlaufes sammeln
+    \item Test Coverage analysieren und darstellen
+\end{enumerate}
+\vspace*{-1ex}
+\paragraph{Test Oracle Synthesis}\begin{itemize}
+    \item Menschliches Orakel: Zeitaufwändig und Fehleranfällig
+    \item Testen durch Code: Braucht Expertenwissen, schwer zu warten
+\end{itemize}
+\vspace*{-1ex}
+\paragraph{Static Checking}
+Basiert auf CFG, hilft bei:
+\begin{itemize}
+    \item Runtime Exceptions, Informationsfluss
+    \item Vollautomatisiert
+    \item Gefahr: False Positives
+    \item Zeitaufwand gering
+\end{itemize}
+\vspace*{-1ex}
+\paragraph{Dynamic Checking}\begin{itemize}
+    \item Runtime Monitoring
+\end{itemize}
+\vspace*{-1ex}
+\paragraph{Formal Checking}\begin{itemize}
+    \item Design-By-Contract (wie Racket Verträge mit precoditions und so)
+\end{itemize}
 % end
 % end
 % end
