@@ -1608,6 +1608,101 @@ Basiert auf CFG, hilft bei:
 % end
 % end
 % end
+
+\clearpage
+\section{Wartung und Weiterentwicklung (Maintanance \& Evolution)}
+\subsection{Wartung (Maintanance)}
+\begin{itemize}
+    \item Software altert nicht
+    \item \textbf{Aber:} Die Umgebung der Software ändert sich schneller und öfter als in jeder anderen Ingenieursdisziplin
+\end{itemize}
+\subsubsection{Auslöser}
+\begin{enumerate}
+    \item Bugs beheben
+    \item Abhängigkeit verändert sich
+    \item Neue Funktion wird benötigt
+    \item Hardware hat sich weiterentwickelt
+    \item Softwarearchitektur hat sich weiterentwickelt
+    \item Software stack (Libaries und so) hat sich weiterentwickelt
+\end{enumerate}
+\subsubsection{Parallelisierung als eine Wartungsarbeit}
+\paragraph{Beobachtung:} Mehrkernprozessoren und -Systeme werden immer weiter verbreitet\\
+$\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Existierende Software ist noch sequenziell geschrieben.
+\paragraph{Folge:} Parallelisierung von Software wird zu einem wichtigen Teil der Wartung (kann als komplexes Refactoring betrachtete werden)
+
+\begin{itemize}
+    \item Korrekte Parallelisierung erfordert ein gutes Wissen von:\begin{itemize}
+              \item Dem Problem Space
+              \item Parallelisierbaren Algorithmen und Datenstrukturen (\href{https://github.com/Rdeisenroth/AuD-Zusammenfassung/blob/master/AuD-Zusammenfassung-2020.pdf}{AuD Vibes und so})
+              \item Die zugrundeliegende Hardwarearchitektur muss Parallelisierung unterstützen
+          \end{itemize}
+\end{itemize}
+\paragraph{Das Pipeline Parallelisierungsmuster (The Pipeline Parallelization Pattern)}\begin{enumerate}
+    \item Daten des Vorherigen Verarbeitungsschrittes (stage) empfangen (Beenden wenn alle Daten bereits abgearbeitet)
+    \item Daten verarbeiten
+    \item Daten an nächsten Verarbeitungsschritt senden
+\end{enumerate}
+\begin{itemize}
+    \item Sorgt für:\begin{itemize}
+              \item Stabile, Syncrone Verarbeitungsreihenfolge
+              \item Spezifische Verarbeitungsschritte können an dafür optimierte Hardware abgegeben werden
+              \item Erlaubt einfaches Modifizieren, Hintufügen und Neuanordnen der einzeln Verarbeitungsschritten
+              \item Kann aber nicht für Input fauls Kompensieren
+          \end{itemize}
+\end{itemize}
+\clearpage
+\subsubsection{Softwareevolution (Software Evolution)}
+\begin{definition}[Softwareevolution]
+    Die Reihe von Änderungen, neuen Versionen und Anpassung die während der Wartung zwischen entwicklungsbeginn und der letzten Version entstehen.
+\end{definition}
+\paragraph{Probleme:}\begin{itemize}
+    \item Kann bereits existierende Funktionalität zerstören (Verschlimmbesserung)\begin{itemize}
+              \item Lösungsansatz: viel testen und ggf Betaversion an erfahrene Benutzer verteilen
+          \end{itemize}
+    \item Kann Trennung zwischen Spezifikation, Dokumentation und Implementierung bewirken\begin{itemize}
+              \item Lösungsansatz: Neue Funktionen rufen einen \enquote{Full development cycle} hervor.
+          \end{itemize}
+\end{itemize}
+\subsection{Software Variability Engineering}
+\begin{definition}[Softwarevariabilität (Software Variability)]
+    Die Nötigkeit, eine Große Anzahl an eng verwandten Produktvarianten mit unterschiedlichen Abhängigkeiten und Funktionen zu warten.
+\end{definition}
+
+\subsubsection{Herausforderungen in der Varaibilität}\begin{itemize}
+    \item Möglicherweise sehr viele Varianten (Millionen, \dots)
+    \item Abhängigkeitskonflikte sehr wahrscheinlich
+\end{itemize}
+\subsubsection{Software Product Line Engineering}
+\begin{definition}[Software Product Line] (Auch Product Family)
+    Eine Sammlung von Softwaresystemen, die gemeinsame Bausteine und Produktionsmuster teilen.
+\end{definition}
+\begin{itemize}
+    \item Typische Gemeinsamkeiten:\begin{itemize}
+              \item Codebasis der Kernfunktionalität
+              \item Architektur
+              \item Implementationssprache(n)
+          \end{itemize}
+\end{itemize}
+\paragraph{Ziel:} Nicht jede Variante einzeln warten zu müssen
+\clearpage
+\begin{definition}[Merkmal (Software Feature)]
+    Ein Alleinstellungsmerkmal der Software (e.B. leistung, Portabilität oder Funktionalität)
+\end{definition}
+\begin{definition}[Produkt]
+    Eine Ansammlung von Merkmalen und Paramterinstanzierungen, die ausreichen um einen Ausführbaren Code mit der SPL zu produzieren.
+\end{definition}
+\begin{definition}[Variante (Variant)]
+    Ausführbarer Code, der ein Produkt einer SPL implementiert.
+\end{definition}
+
+\paragraph{SPLE-Prinzipien}
+\begin{enumerate}
+    \item Entwurf des \enquote{Feature space} ist getrennt vom Softwareentwurf und wird \textbf{vorher} ausfgeführt.
+    \item Ein Merkmal sollte nie mehr als einmal implementiert werden
+    \item Es muss möglich sein, den Code der ein bestimmtes Merkmal implementiert zu lokalisieren.
+\end{enumerate}
+\subsubsection{Merkmaldiagramme (Feature Diagrams)}
+
 \clearpage
 \section{Verhaltensmodellierung}
 \subsection{Diagramme}
