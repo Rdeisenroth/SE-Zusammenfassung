@@ -771,6 +771,7 @@ Der in \figurename{} \ref{fig:fibonaccicodecfg} gezeigte Code wird in \figurenam
         \draw [->] (back2) -- (step4);
         \draw [->] (step4) -- node [left] {\texttt{i >= num - 1}} (step5);
         \draw [->] (step5) -- (exit);
+        \draw [->] (step1-1.south) |- ++(-3,-.5) |- (exit);
     \end{tikzpicture}
     \caption{Beispiel: Kontrollflussgraph}
     \label{fig:cfg_example}
@@ -1130,7 +1131,7 @@ Zu viele Klassen in Relation zu der Größe des Problems. Oftmals ausgelöst dur
         }                                                                                                 \\
         \midrule
         4.\quad\mlcell[l]{
-            \fakebullet{}\textbf{Konzequenzen}: Nebenwirkungen, Einschränkungen,\\
+        \fakebullet{}\textbf{Konzequenzen}: Nebenwirkungen, Einschränkungen,                              \\
             Auswirkungen auf Flexibilität, Erweiterbarkeit und Portabilität
         }                                                                                                 \\
         \midrule
