@@ -1875,147 +1875,281 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
 \end{figure}
 
 \clearpage
-\section{Verhaltensmodellierung}
-\subsection{Diagramme}
-\subsubsection{Diagramm: Interaction/Sequence Diagram (UML)}
-\label{diagram:umlsequence}
-
-{ \footnotesize UML Specification Version 2.5.1, Chapter 17}
-
-\paragraph{Beschreibung}\mbox{}\\
-\begin{itemize}
-    \item Sequenzendiagramme beschreiben die Interaktionen (Nachrichten) zwischen Objekten in einem konkretem Szenario.
-    \item Nicht geeignet, um einen gesamten Algorithmus zu modellieren!
-\end{itemize}
-
-Im Diagramm \ref{fig:sequencecode} (Codebasis \ref{fig:sequence}) ist ein Beispiel für ein Sequenzendiagramm gegeben. In diesem werden die einzelnen Komponenten erläutert
+\section{Softwareprozesse}
+\subsection{Grundlegende Begriffe}
+\subsubsection{Grundlegende Schritte in der Softwareentwicklung}
+\begin{definition}[Software-Anforderungsspezifikation (Software specification)]
+    Definition der Software, welche entwickelt werden soll und die Einschränkungen dieser Operation.
+\end{definition}
+\begin{definition}[Softwareentwicklung (Software development)]
+    Design und Implementierung der Software.
+\end{definition}
+\begin{definition}[Softwarevalidierung (Software validation)]
+    Sicherung, dass die Software erfüllt, was der Kunde verlangt.
+\end{definition}
+\begin{definition}[Softwareevolution (Software evolution)]
+    Adaption und Modifikation der Software, um mit Änderungen des Kunden oder der Marktbedingungen umzugehen.
+\end{definition}
+% end
 % end
 
-\paragraph{Beispiel}\mbox{}\\
-Das Verhalten der Methode \texttt{run(\dots)} in dem in \ref{fig:sequencecode} gezeigtem Code  wird in \ref{fig:sequence} visualisiert.
+\subsection{Projektplanung}
+\subsubsection{Prozessmodelle}
+\begin{definition}[Softwareprozessmodelle]
+    sind simplifizierte und abstrakte Beschreibungen eines Entwicklungsprozesses, welche eine Sicht auf die Entwicklung darstellen. Sie enthalten Aktivitäten innerhalb der Entwiclung, Softwareprodukte (bspw. Architekturbeschreibungen), Quellcode, Nutzer-Dokumentation und die Rollen der an der Entwicklung beteiligten Personen.
+\end{definition}
 
-\begin{figure}[ht]
-    \centering
-    %\begin{noindent}
-	\begin{codeBlock}[autogobble]{}
-        ublic class Query {
-        	public List<Student> run(List<Student> students, ISelector sel) {
-        		List<Student> result = createEmptyResult();
-        		for (Student s : students) {
-        			boolean accepted = sel.accept(s);
-        			if (accepted) {
-        				result.add(s);
-        			} else {
-        				result.remove(s);
-        			}
-        		}
-        		return result;
-        	}
-        }
-    \end{codeBlock}
-    %\end{noindent}
-    %\begin{noindent}
-	\begin{codeBlock}[autogobble]{}
-        public interface ISelector {
-        	boolean accept(Student s);
-        }
-	\end{codeBlock}
-    %\end{noindent}
-    %\begin{noindent}
-	\begin{codeBlock}[autogobble]{}
-        public class SemesterSelector implements ISelector {
-        	private int semester;
+Beispiele für Prozessmodelle sind:
+\begin{itemize}
+    \item Waterfall
+    \item Spiral
+    \item V-Model (XT)
+    \item eXtreme Programming
+\end{itemize}
+% end
 
-        	public SemesterSelector(int semester) {
-        		this.semester = semester;
-        	}
+\subsubsection{Aktivitäten}
+\begin{itemize}
+    \item Projektplanung
+    \item Kostenabschätzung
+    \item Projektüberwachung und -sichtigungen
+    \item Personalselektion und -evaluierung
+    \item Präsentation
+\end{itemize}
+% end
 
-        	@Override
-        	public boolean accept(Student s) {
-        		int current = s.getSemester();
-        		boolean accepted = (semester == current);
-        		return accepted;
-        	}
-        }
-	\end{codeBlock}
-    %\end{noindent}
-    %\begin{noindent}
-	\begin{codeBlock}[autogobble]{}
-        public class Student {
-        	private int semester;
 
-        	public Student(int semester) {
-        		this.semester = semester;
-        	}
 
-        	public int getSemester() {
-        		return semester;
-        	}
-        }
-	\end{codeBlock}
-    %\end{noindent}
-    \caption{Beispiel: UML Sequenzen Diagramm / Code}
-    \label{fig:sequencecode}
-\end{figure}
+\subsubsection{Prozessmodell: Wasserfall}
+\paragraph{Beschreibung}
+Die folgenden Aktivitäten werden strikt in der folgenden Reihenfolge abgearbeitet und der nächste Schritt wartet auf den vorherigen:
+\begin{enumerate}
+    \item Anforderungsdefinition (Requirements analysis and definition):\begin{itemize}
+        \item Die Anforderungen werden in Zusammenarbeit mit dem Systemnutzern erarbeitet
+    \end{itemize}
+    \item System- und Softwaredesign (System and software design):\begin{itemize}
+        \item Definition der zugrundeliegenden Softwarearchitektur
+        \item Identifikation der Abstraktionen und Relationen
+    \end{itemize}
+    \item Implementation und Unittests (Implementation and unit
+    testing):\begin{itemize}
+        \item Das Softwaredesign wird als Sammlung von \enquote*{Program units} dargestellt
+        \item Durch testen wird geprüft, ob jede Unit seine Spezifikation erfüllt
+    \end{itemize}
+    \item Integrations- und Systemtests (Integration and system
+    testing):\begin{itemize}
+        \item Program Units werden integriert und getestet als ganzes system
+    \end{itemize}
+    \item Inbetriebnahme und Wartung (Operation and maintenance)
+\end{enumerate}
+
+Sollten Fehler in einer Phase auftreten, so wird diese gestoppt und die vorherige Phase muss wiederholt werden. Sommit fließen die Ergebnisse aller Phasen in die vorherigen ein, wie in \ref{fig:waterfall} zu sehen ist.
 
 \begin{figure}[ht]
     \centering
     \begin{tikzpicture}
-        \begin{umlseqdiag}
-            \umlactor[no ddots]{void}
-            \umlobject[class = Query]{query}
-            \umlobject[class = SemesterSelector]{sel}
-            \umlobject[class = Student]{s}
+        \tikzstyle{wfnode} = [rectangle,rounded corners, fill=gray!30];
+        \node [wfnode] (stage1) {Anforderungsdefinition};
+        \node [wfnode, fill=red!50, below right = of stage1.south] (stage2) {System- und Softwaredesign};
+        \node [wfnode, fill=blue!50, below right = of stage2.south] (stage3) {Implementation und Unittests};
+        \node [wfnode, fill=green!50, below right = of stage3.south] (stage4) {Integrations- und Systemtests};
+        \node [wfnode, fill=yellow!60, below right = of stage4.south] (stage5) {Inbetiebnahme und Wartung};
 
-            \begin{umlcall}[name = initcall, op = {run(students, sel)}, return = result]{void}{query}
-                \begin{umlcall}[op = createEmptyResult(), return = result]{query}{query}
-                    \umlcreatecall[class = LinkedList]{query}{result}
-                \end{umlcall}
-                \begin{umlfragment}[type = loop, label = for each Student s in students]
-                    \begin{umlcall}[op = accept(s), return = accepted]{query}{sel}
-                        \begin{umlcall}[op = getSemester(), return = current]{sel}{s}
-                        \end{umlcall}
-                    \end{umlcall}
-                    \begin{umlfragment}[type = opt, label = accepted]
-                        \begin{umlcall}[op = add(s)]{query}{result}
-                        \end{umlcall}
-                        \umlfpart[else]
-                        \begin{umlcall}[op = remove(s)]{query}{result}
-                        \end{umlcall}
-                    \end{umlfragment}
-                \end{umlfragment}
-            \end{umlcall}
-        \end{umlseqdiag}
+        \coordinate (dotleft) at (stage1 |- stage5);
 
-        \coordinate (initcall) at (2, -0.5);
-        \coordinate (finalreturn) at (2, -10);
-        \coordinate (lifeline) at (8, -6);
-
-        \umlnote[x = 1, y = 6]{void}{Aufruf aus dem \enquote{Nichts} (nicht betrachtet)}
-        \umlnote[x = 3, y = 3]{initcall}{Aufruf der Methode \texttt{run(students, sel)}}
-        \umlnote[x = 7, y = 5]{sel}{Ein Beteiligtes Objekt der Klasse \texttt{SemesterSelector}}
-        \umlnote[x = 3, y = -13]{finalreturn}{Rückgabe einer Methode (wenn ungleich void)}
-        \umlnote[x = 13, y = -12]{lifeline}{Lebenslinie eines Objektes (startend mit Aufruf, endend mit Return (wenn ungleich void))}
+        \draw [->,thick] (stage1.east) to [out=0, in=90,looseness=1] (stage2);
+        \draw [->,thick] (stage2.east) to [out=0, in=90,looseness=1] (stage3);
+        \draw [->,thick] (stage3.east) to [out=0, in=90,looseness=1] (stage4);
+        \draw [->,thick] (stage4.east) to [out=0, in=90,looseness=1] (stage5);
+        \draw [->,thick] (dotleft) -| (stage4);
+        \draw [->,thick] (dotleft) -| (stage3);
+        \draw [->,thick] (dotleft) -| (stage2);
+        \draw [->,thick] (dotleft) -| (stage1);
+        \draw [thick] (stage5) -| (dotleft);
     \end{tikzpicture}
-    \caption{Beispiel: UML Sequenzen Diagramm}
-    \label{fig:sequence}
+    \caption{Prozessmodell: Waterfall}
+    \label{fig:waterfall}
 \end{figure}
 % end
-% end
 
-\subsubsection{Diagramm: State Machine Diagram (UML)}
-\label{diagram:statemachine}
+\subsubsection{Projektplanung}
+Ein Softwareprojekt enthält viele Pläne, wobei ein guter Startplan mit allen vorliegenden Informationen Vorraussetzung ist für das Gelingen des Projektes.
 
-{ \footnotesize UML Specification Version 2.5.1, Chapter 14}
-
-\paragraph{Beschreibung}\mbox{}\\
-State Machine Diagramme nutzen vereinfachte endliche Automaten zur Darstellung von:
+Es gibt viele Unterschiedliche Pläne, bspw.:
 \begin{itemize}
-    \item Eventgetriebenem Verhalten des Systems (Verhalten)
-    \item Interaktionssequenzen (Protkoll)
+    \item \textbf{Projektplan} Siehe Sektionen \enquote{Projektplan} (\ref{ssec:projektplan}).
+    \item \textbf{Qualitätssicherungsplan} Beschreibung, welche Qualitätssicherungsprozeduren und Standards genutzt werden.
+    \item \textbf{Personalentwicklungsplan} Beschreibt, wie die Fähigkeiten und Erfahrungen der einzelnen Mitarbeiter und des Teams eingesetzt und weiterentwickelt werden.
 \end{itemize}
 
-Im Diagramm \ref{fig:smd} ist ein Beispiel für ein State Machine Diagramm gegeben. Im folgenden werden die einzelnen Komponenten erläutert.
+\paragraph{Projektplan}
+\label{ssec:projektplan}
+
+\paragraph{Struktur}
+\begin{description}[leftmargin = 5cm]
+    \item[Einleitung] Ziele des Projektes und Einschränkungen (Zeit, Budget, \dots).
+    \item[Projektorganisation] Organisation des Entwicklungsteams, die eingebundenen Personen und deren Rollen.
+    \item[Risikoanalyse] Mögliche Projektrisiken, deren Eintrittswahrscheinlichkeit und Risikominderungsstrategien.
+    \item[Resourcenanforderungen] Nötige Hard- und Software für das Durchführen des Projektes.
+    \item[Arbeitsaufteilung] Aufteilung des Projektes in Aktivitäten, Identifikation von Meilensteinen und Ergebnisse jeder Aktivität.
+    \item[Zeitplan] Abhängigkeiten zwischen Aktivitäten, geschätzte Zeit bis zu jedem Meilenstein und die Zuweisung von Personen zu Aktivitäten.
+    \item[Mechanismen zur Überwachung und Mitteilung]
+\end{description}
+% end
+
+Die Aktivitäten können in einem Aktivitätendiagramm (\enquote{Activity Diagram}) dargestellt werden, siehe \ref{diagram:activity}.
+% end
+% end
+
+\subsubsection{Kritik}
+\begin{itemize}
+    \item Kein iterativer Prozess
+    \item Änderung von Anforderungen und Design schwierig und Zeitaufwändig
+    \item Das Testen der Software startet erst in späteren Phasen $ \implies $ Fehler werden erst spät erkannt
+    \item Einzelne Phasen werden von unterschiedlichen Teams vorangetrieben, welche später möglicherweise nicht mehr zur Verfügung stehen können.
+\end{itemize}
+% end
+% end
+
+\subsubsection{V-Modell}
+Siehe \ref{fig:vmodel}.
+
+Nachteil: Bei einem V-Modell wird 50\% des Budgets für das V-Modell ausgegeben.
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[->, every node/.style = { draw, text width = 3cm, minimum height = 2cm, align = center }]
+        \node [x = 0, y = 0] (l5) {Implementation};
+        \node [above left = of l5] (l41) {Detailliertes Design};
+        \node [left of = l41, above = 2cm] (l31) {System Design};
+        \node [left of = l31, above = 2cm] (l21) {System Spezifikation};
+        \node [left of = l21, above = 2cm] (l11) {Anforderungs Spezifikation};
+
+        \node [above = of l5] (l42) {Modul/Unit Testplan};
+        \node [above = of l42] (l32) {Untersystem Integrations Testplan};
+        \node [above = of l32] (l22) {System Integrations Plan};
+        \node [above = of l22] (l12) {Akzeptanz Testplan};
+
+        \node [above right = of l5] (l43) {Modul/Unit Tests};
+        \node [right of = l43, above = 2cm] (l33) {Untersystem Integrations Test};
+        \node [right of = l33, above = 2cm] (l23) {System Integrations Test};
+        \node [right of = l23, above = 2cm] (l13) {Akzeptanz Tests};
+
+        \draw (l11) -- (l12);
+        \draw (l11) -- (l21);
+        \draw (l21) -- (l12);
+        \draw (l21) -- (l22);
+        \draw (l21) -- (l31);
+        \draw (l31) -- (l22);
+        \draw (l31) -- (l32);
+        \draw (l31) -- (l41);
+        \draw (l41) -- (l32);
+        \draw (l41) -- (l42);
+        \draw (l41) -- (l5);
+        \draw (l5) -- (l42);
+        \draw (l5) -- (l43);
+        \draw (l43) -- (l33);
+        \draw (l33) -- (l23);
+        \draw (l23) -- (l13);
+        \draw (l12) -- (l13);
+        \draw (l22) -- (l23);
+        \draw (l32) -- (l33);
+        \draw (l42) -- (l43);
+    \end{tikzpicture}
+    \caption{V-Modell}
+    \label{fig:vmodel}
+\end{figure}
+% end
+
+\subsubsection{Agile Entwicklung}
+\info{\textbf{Ziel:} Möglichst schnelle Entwicklung von Software und Einarbeitung von Änderungen der Anforderungen}
+
+\begin{itemize}
+    \item Höchste Priorität hat das Zufriedenstellen des Kunden
+    \item Regelmäßige Auslieferung von Zwischenständen (bspw. alle zwei Wochen)
+    \item Funktionierende Software ist das Primärziel und der Fortschritt (30\% Implementiert $ \rightarrow $ 30\% des Projektes abgeschlossen)
+    \item Einfachheit ist essentiell
+    \item Änderungen der Anforderungen
+    \item Das Team reflektiert in regelmäßigen Abständen, um effektiver zu werden
+    \item Manager und Entwickler müssen zusammen arbeiten
+\end{itemize}
+% end
+
+\subsubsection{Prozessmodell: eXtreme Programming (XP)}
+In XP wird in kurzen Iterationen gearbeitet, wobei in jeder Iteration bestimmte User Stories abgearbeitet werden. Die abzuarbeitenden User Stories werden in der Iterationsplanung festgelegt.
+
+\paragraph{User Stories}
+Der essentielle Teil der Entwicklung. Eine User Story beschreibt eine Anforderung. Eine User Story wird anschließend in einzelne Tasks aufgebrochen.
+
+\begin{itemize}
+    \item User Stories müssen für den Kunden verständlich sein
+    \item Jede User Story muss von Wert sein für den Kunden
+    \item User Storie sollten so umfangreich sein, dass man einige abarbeiten kann pro Iteration
+    \item User Stories sollten unabhängig sein
+    \item Jede User Story muss testbar sein
+    \item Jeder User Story werden \textit{Story Points} zugewiesen, welche ein abstraktes Zeitmaß darstellen zur Einschätzung der Bearbeitungsdauer
+    \item In jeder User Story sollte ein Akzeptanzkriterium gegeben sein
+\end{itemize}
+
+\noindent Langes Template: Als ein <Rolle> möchte ich <Ziel> sodass <Vorteile>. \\
+Kurzes Template: Als ein <Rolle> möchte ich <Ziel>.
+% end
+
+\paragraph{Entwicklung}
+\paragraph{Testgetriebene Entwicklung}
+Jede Implementierung startet mit der Entwicklung von Tests, sodass die Implementierung korrekt ist, sobald alle Tests funktionieren.
+% end
+
+\paragraph{Kontinuierliche Integration}
+Entwickler checken ihren Code regelmäßig ein (mehrmals am Tag), sodass ein CI-Server regelmäßig Tests ausführen kann (automatisierte Tests und Build System).
+% end
+
+\paragraph{Pair Programming}
+Code ist von genau zwei Entwicklern geschrieben
+\begin{itemize}
+    \item Einer fokussiert sich auf den besten Weg der Implementierung
+    \item Der andere fokussiert sich auf den Code (aus einer strategischen Sicht)
+\end{itemize}
+% end
+% end
+
+\paragraph{Planung}
+\paragraph{Initiale Planung (Start des Projektes)}
+\begin{itemize}
+    \item Entwickler und Kunden arbeiten gemeinsam die relevanten User Stories heraus
+    \item Entwickler schätzen die Story Points für jede User Story \\
+          {\small Eine User Story mit doppelt so vielen Story Points wie eine andere sollten doppelt so lange dauern.}
+    \item Für eine genaue Zeitabschätzung ist die \textit{Velocity} (Story Points pro Zeit) erforderlich, diese wird mit der Zeit genauer (eine Prototyp-Implementierung zur Messung der Velocity nennt sich \textit{Spike})
+\end{itemize}
+% end
+
+\paragraph{Release Planung}
+\begin{itemize}
+    \item Entwickler und Kunden einigen sich auf ein Datum für das erste Release (2-4 Monate)
+    \item Kunden entscheiden sich für grobe Zusammensetzung der User Stories (unter Beachtung der Velotiy)
+    \item Wird die Velocity genauer, wird der Releaseplan geändert
+\end{itemize}
+% end
+
+\paragraph{Iterations Planung}
+\begin{itemize}
+    \item Der Kunde sucht die User Stories für die Iteration
+    \item Die Reihenfolge der Abarbeitung ist eine technische Entscheidung
+    \item Die Iteration endet an einem bestimmten Tag, auch wenn nicht alle Stories abgearbeitet wurden
+    \item Die Schätzung für alle \textit{erfolgreich abgearbeiteten} Stories wird summiert und die Velocity berechnet
+    \item Die geplante Velocity der nächsten Iteration basiert auf der Velocity der vorherigen Iteration
+\end{itemize}
+
+\begin{equation*}
+    \text{Velocity} = \frac{\text{Summe an Story Points}}{\text{Summe der verbrauchten Zeit pro User Story in einer Iteration}}
+\end{equation*}
+% end
+
+\paragraph{Aufgaben Planung}
+\begin{itemize}
+    \item Stories werden auf Aufgaben (Tasks) heruntergebrochen, welche 4h bis 16h benötigen
+    \item Jeder Entwickler kann sich Aufgaben aussuchen
+\end{itemize}
 % end
 % end
 % end
