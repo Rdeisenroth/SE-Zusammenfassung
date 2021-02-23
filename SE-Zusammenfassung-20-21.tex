@@ -14,7 +14,7 @@
 \usepackage{tikz}
 \usepackage{placeins}
 \usepackage{csquotes}
-\usetikzlibrary{patterns, shapes, intersections, arrows, math, decorations,decorations.pathreplacing, decorations.pathmorphing, positioning, calc, automata, chains, matrix, arrows.meta, shapes.geometric, shadows.blur, shapes.symbols, backgrounds, tikzmark}
+\usetikzlibrary{patterns, shapes, intersections, arrows, math, decorations,decorations.pathreplacing, decorations.pathmorphing, positioning, calc, automata, chains, matrix, arrows.meta, shapes.geometric, shadows.blur, shapes.symbols, backgrounds, tikzmark, angles}
 \usepackage{nccmath}
 \RequirePackage[framemethod=tikz]{mdframed} % Required for creating the theorem, definition, exercise and corollary boxes
 
@@ -826,7 +826,7 @@ ist mit den folgenden anderen Klassen gekoppelt: \texttt{ActionEvent}, \texttt{A
               \item Führt zu hoher Komplexität
           \end{itemize}
     \item Generische Klassen müssen sehr wenige Verknüpfungen haben
-    \item Viele Verknüpfungen von Stabilen Bausteinen (Libaries, z.B. aus der Java-Standartbibliothek) ist kein Problem
+    \item Viele Verknüpfungen von Stabilen Bausteinen (Libraries, z.B. aus der Java-Standartbibliothek) ist kein Problem
 \end{itemize}
 \warning{Die Anforderung an lose Kopplung zur Wiederverwendbarkeit in (mystischen) Zukunftsprojekte birgt die Gefahr von unnötiger Komplexität und hohen Projektkosten!}
 \clearpage
@@ -997,7 +997,7 @@ Zu viele Klassen in Relation zu der Größe des Problems. Oftmals ausgelöst dur
 \begin{itemize}
     \item API-Kommentare:\begin{itemize}
               \item Ausführliche Klassen-und Methodenlevelkommentare
-              \item Zielgruppe: Andere Entwickler, die den Code als Libary/Framework nutzen
+              \item Zielgruppe: Andere Entwickler, die den Code als Library/Framework nutzen
               \item Muss enthalten:\begin{itemize}
                         \item Einschränkungen von Methodenparametern über den Typ hinaus (z.B. nicht null oder nicht negativ)
                         \item Auswirkungen auf den Zustand des Objektes
@@ -1573,7 +1573,7 @@ Ein Testautomationssystem
 \vspace*{-1ex}
 \paragraph{Black Box}\begin{itemize}
     \item Analyse der Ein-und Ausgabedaten der IUT
-    \item Probleme: Libary Calls, Unnötige Testfälle, rekursion, \dots
+    \item Probleme: Library Calls, Unnötige Testfälle, rekursion, \dots
 \end{itemize}
 \vspace*{-1ex}
 \paragraph{Test Coverage Recording}\begin{enumerate}
@@ -1623,7 +1623,7 @@ Basiert auf CFG, hilft bei:
     \item Neue Funktion wird benötigt
     \item Hardware hat sich weiterentwickelt
     \item Softwarearchitektur hat sich weiterentwickelt
-    \item Software stack (Libaries und so) hat sich weiterentwickelt
+    \item Software stack (Libraries und so) hat sich weiterentwickelt
 \end{enumerate}
 \subsubsection{Parallelisierung als eine Wartungsarbeit}
 \paragraph{Beobachtung:} Mehrkernprozessoren und -Systeme werden immer weiter verbreitet\\
@@ -1702,6 +1702,177 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
     \item Es muss möglich sein, den Code der ein bestimmtes Merkmal implementiert zu lokalisieren.
 \end{enumerate}
 \subsubsection{Merkmaldiagramme (Feature Diagrams)}
+\tikzstyle{FeatureNode}[0]=[draw,rectangle,thick, minimum width=3cm,align=center, minimum height=2em, rounded corners=#1]%
+\tikzstyle{FeatureNodeSmall}[0]=[FeatureNode,minimum width=0cm]%
+\tikzstyle{AmountNode}[0]=[FeatureNode=3,fill=red!20,minimum width=0cm]%
+\tikzstyle{OrAngle}=[draw=black,angle radius=8mm,thick,fill=black]%
+\tikzstyle{XorAngle}=[draw=black,angle radius=8mm,thick]%
+
+\paragraph{Aufbau}
+\begin{itemize}
+    \item Oben ist das \enquote*{root Feature}
+    \item Kein Subfeature ohne Parent möglich
+    \item Standartmodus: Oder (Ein oder mehrere Features auswählbar)
+\end{itemize}
+\paragraph{Probleme}\begin{itemize}
+    \item Code mit vielen Macros schwer zu verstehen
+    \item Retundanz nur schwer zu vermeiden (Code wird von mehreren Features benutzt)
+    \item Analyse, Testen und Typchecking schwer auf Familienebene
+\end{itemize}
+\begin{table}[ht]
+    \centering
+    \rowcolors{2}{white}{black!10}
+    \renewcommand{\arraystretch}{2}
+    \begin{tabular}{cl}
+        \toprule
+        \fatsf{Symbol}                                     & \fatsf{Bedeutung}                                                            \\
+        \midrule
+        \raisebox{-.2\height}{\begin{tikzpicture}
+                \draw[thick] (-.5,-.5) coordinate(c1) -- (0,0) coordinate(c2) --(.5,-.5) coordinate(c3);
+                \pic [OrAngle,fill=black,angle radius=3mm] {angle = c1--c2--c3};
+            \end{tikzpicture}} & Oder (Or)                                                                    \\
+        \raisebox{-.2\height}{\begin{tikzpicture}
+                \draw[thick] (-.5,-.5) coordinate(c1) -- (0,0) coordinate(c2) --(.5,-.5) coordinate(c3);
+                \pic [XorAngle,angle radius=3mm] {angle = c1--c2--c3};
+            \end{tikzpicture}} & Exklusives Oder (Xor)                                                        \\
+        \raisebox{-.1\height}{\begin{tikzpicture}
+                \draw[-*,thick] (-.5,0) -- (.5,-.3);
+            \end{tikzpicture}} & Notwendiges Feature                                                          \\
+        \raisebox{-.1\height}{\begin{tikzpicture}
+                \draw[-o,thick] (-.5,0) -- (.5,-.3);
+            \end{tikzpicture}} & Optionales Feature                                                           \\
+        \raisebox{-.3\height}{\begin{tikzpicture}
+                \node[AmountNode]{int i in [min..max]};
+            \end{tikzpicture}} & Anzahl eines Features festlegen                                              \\
+        \raisebox{-.2\height}{\begin{tikzpicture}
+                \draw[-{Triangle},dashed,thick,blue] (-1,0)to[out=30,in=150,looseness=1]node[above,pos=.5,sloped]{requires}(1,0);
+            \end{tikzpicture}} & Legt fest, dass ein Feature ein anderes Feature benötigt um zu funktionieren \\
+        \raisebox{-.2\height}{\begin{tikzpicture}
+                \draw[-{Triangle},dashed,thick,red] (-1,0)to[out=30,in=150,looseness=1]node[above,pos=.5,sloped]{excludes}(1,0);
+            \end{tikzpicture}} & Legt fest, dass ein Feature ein anderes Feature ausschließt                  \\
+        \bottomrule
+    \end{tabular}
+    \caption{Feature Diagram Symbole}
+    \label{tab:feature_diagram_symbols}
+\end{table}
+
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+
+
+        \node[FeatureNode] (FeatureNameNode) {FeatureName};
+        \node[FeatureNode,below left=1cm and .5cm of FeatureNameNode.south,text=blue] (sf1) {SubFeature${}_1$};
+        \node[FeatureNode,below right=1cm and .5cm of FeatureNameNode.south,text=blue] (sf2) {SubFeature${}_2$};
+        \node[FeatureNode,below =.5cm of sf2,text=blue](afeature){AFeature};
+
+        \draw[thick] (sf1) -- (FeatureNameNode.south) coordinate (fnsouth)-- (sf2);
+        \draw[thick] (sf2) -- (afeature);
+        \pic [OrAngle,fill=black,angle radius=5mm] {angle = sf1--fnsouth--sf2};
+    \end{tikzpicture}
+    \caption{Basisstruktur Feature Diagram}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \hspace*{-1cm}
+    \begin{tikzpicture}
+        \tikzstyle{FeatureNode}[0]=[draw,rectangle,thick, minimum width=3cm,align=center, minimum height=2em, rounded corners=#1]
+        \tikzstyle{FeatureNodeSmall}[0]=[FeatureNode,minimum width=0cm]
+        \tikzstyle{AmountNode}[0]=[FeatureNode=3,fill=red!20,minimum width=0cm]
+        \tikzstyle{OrAngle}=[draw=black,angle radius=8mm,thick,fill=black];
+        \tikzstyle{XorAngle}=[draw=black,angle radius=8mm,thick];
+        \node[FeatureNode](cyodNode){CYoD-Phone};
+
+        % Batterie
+        \node[FeatureNode, below left = 1cm and 2cm of cyodNode](bateryNode) {Batteriekapazität};
+        \node[FeatureNode, below left = 2cm and .5cm of bateryNode.south](lowCapNode) {niedrige Kapazität};
+        \node[FeatureNode, below right = 2cm and .5cm of bateryNode.south](highCapNode) {hohe Kapazität};
+        \node[AmountNode,below left= -.1cm and -.1cm of bateryNode.south west]{int capacity};
+        \node[AmountNode,below = .1cm of lowCapNode.south ]{capacity in [1500-2500]};
+        \node[AmountNode,below = .1cm of highCapNode.south]{capacity in [3000-6000]};
+        \draw[thick] (lowCapNode) -- (bateryNode.south) coordinate(btnsouth);
+        \draw[thick] (highCapNode) -- (bateryNode.south) coordinate(btnsouth);
+        \pic [XorAngle] {angle = lowCapNode--btnsouth--highCapNode};
+        % Prozessor
+        \node[FeatureNode, below right = 1cm and 2cm of cyodNode](cpuNode) {Prozessor};
+        \node[FeatureNode, below left = 2cm and .5cm of cpuNode.south](ERPNode) {ERP\\(Energiehungrig,\\schnell)};
+        \node[FeatureNode, below right = 2cm and .5cm of cpuNode.south](STPNode) {STP\\(Energiesparend,\\langsam)};
+        \draw[thick] (STPNode) -- (cpuNode.south) coordinate(btnsouth);
+        \draw[thick] (ERPNode) -- (cpuNode.south) coordinate(btnsouth);
+
+        \pic [XorAngle] {angle = ERPNode--btnsouth--STPNode};
+        % Bildschirm
+        \node[FeatureNode, below left = 6cm and 2cm of cyodNode](screenNode) {Bildschirmqualität};
+        \node[FeatureNodeSmall, below = 2cm of screenNode.south](HDNode) {HD};
+        \node[FeatureNodeSmall, left = .5cm of HDNode](SDNode) {SD};
+        \node[FeatureNodeSmall, right = .5cm of HDNode](UHDNode) {UHD};
+        \draw[thick] (HDNode) -- (screenNode.south) coordinate(btnsouth);
+        \pic [XorAngle,fill=white] {angle = SDNode--btnsouth--UHDNode};
+        \draw[thick] (SDNode) -- (screenNode.south) coordinate(btnsouth);
+        \draw[thick] (UHDNode) -- (screenNode.south) coordinate(btnsouth);
+        %\draw[-{Triangle},dashed,thick] (ERPNode)to[out=90,in=70,looseness=.3]node[above,pos=.3,sloped]{requires}(highCapNode);
+        % Bildschirm
+        \node[FeatureNode, below right = 6cm and 2cm of cyodNode](commNode) {drahtlose Kommunikationstechnik};
+        \node[FeatureNodeSmall, below = 2cm of commNode.south](BTNode) {Bluetooth};
+        \node[FeatureNodeSmall, left = .5cm of BTNode](CELLNode) {Cellular};
+        \node[FeatureNodeSmall, right = .5cm of BTNode](WIFINode) {WiFi};
+        \draw[o-,thick] (BTNode.north) -- (commNode.south) coordinate(btnsouth);
+        %\pic [XorAngle,fill=white] {angle = CELLNode--btnsouth--WIFINode};
+        \draw[*-,thick] (CELLNode.north) -- (commNode.south) coordinate(btnsouth);
+        \draw[o-,thick] (WIFINode.north) -- (commNode.south) coordinate(btnsouth);
+        %\draw[-{Triangle},dashed,thick] (ERPNode)to[out=90,in=70,looseness=.3]node[above,pos=.3,sloped]{requires}(highCapNode);
+
+        % Kamera
+        \node[FeatureNode, below left = 10.5cm and 2cm of cyodNode](camNode) {Kameraausstattung};
+        \node[FeatureNode, below left = 2cm and .5cm of camNode.south](bcamNode) {Backkamera};
+        \node[FeatureNode, below right = 2cm and .5cm of camNode.south](frontCamNode) {Frontkamera};
+        %\node[AmountNode,below = .1cm of frontCamNode.south]{int i in [1500-2500]};
+        \draw[*-,thick] (bcamNode) -- (camNode.south) coordinate(btnsouth);
+        \draw[o-,thick] (frontCamNode) -- (camNode.south) coordinate(btnsouth);
+        %\node[AmountNode,above = .3cm of bcamNode.north ]{int backcams in [1-3]};
+        %\pic [XorAngle] {angle = lowCapNode--btnsouth--frontCamNode};
+        \node[FeatureNodeSmall, below =1cm of bcamNode](standartNode){Standart};
+        \node[FeatureNodeSmall, left =1cm of standartNode](teleNode){Tele};
+        \node[FeatureNodeSmall, right =1cm of standartNode](wwNode){Weitwinkel};
+        \draw[thick](standartNode.north)--(bcamNode.south);
+        \draw[thick](teleNode.north) coordinate(tln)--(bcamNode.south) coordinate(bcamsouth);
+        \draw[thick](wwNode.north)coordinate(wwn)--(bcamNode.south);
+        \pic [OrAngle,fill=black,angle radius=5mm] {angle = tln--bcamsouth--wwn};
+        \draw[thick](teleNode.north) coordinate(tln)--(bcamNode.south) coordinate(bcamsouth);
+        \draw[thick](wwNode.north)coordinate(wwn)--(bcamNode.south);
+        % biometrischen Authentifizierung
+        \node[FeatureNode, below right = 10.5cm and 2cm of cyodNode](biomNode) {biometrische Authentifikation};
+        \node[FeatureNode, below left = 2cm and .5cm of biomNode.south](fprintNode) {Fingerabdruckerkennung};
+        \node[FeatureNode, below right = 2cm and .5cm of biomNode.south](FRNode) {Gesichtserkennung};
+        %\node[AmountNode,below = .1cm of FRNode.south]{int i in [1500-2500]};
+        \draw[thick] (fprintNode) -- (biomNode.south) coordinate(btnsouth);
+        \draw[thick] (FRNode) -- (biomNode.south) coordinate(btnsouth);
+        \pic [XorAngle] {angle = fprintNode--btnsouth--FRNode};
+
+
+        %Verknüpfungen
+        %\draw[draw=none](cyodNode.south)--++(0cm,-1.5cm) coordinate(layer1);
+        %\draw[draw=none](cyodNode.south)--++(0cm,-6.5cm) coordinate(layer2);
+        %\draw[ultra thick](cyodNode.south)--++(0cm,-11.5cm) coordinate(layer3);
+        %Layer 1
+        \draw[-*,ultra thick](cyodNode)|-(bateryNode);
+        \draw[-*,ultra thick](cyodNode)|-(cpuNode);
+        %Layer 2
+        \draw[-*,ultra thick](cyodNode)|-(screenNode);
+        \draw[-*,ultra thick](cyodNode)|-(commNode);
+        %Layer 3
+        \draw[-*,ultra thick](cyodNode)|-(camNode);
+        \draw[-o,ultra thick](cyodNode)|-(biomNode);
+
+        % Connections
+        \draw[-{Triangle},thick,dashed,blue] (FRNode) to[out=270,in=290,looseness=.3]node[pos=.3,below,sloped]{requires} (frontCamNode);
+        \draw[-{Triangle},thick,dashed,red] (fprintNode) to[out=90,in=290,looseness=.5]node[pos=.3,above,sloped]{excludes} (UHDNode);
+        \draw[-{Triangle},dashed,thick,blue] (ERPNode)to[out=90,in=70,looseness=.3]node[above,pos=.3,sloped]{requires}(highCapNode);
+    \end{tikzpicture}
+    \caption{Beispielhaftes Feature Diagram}
+\end{figure}
 
 \clearpage
 \section{Verhaltensmodellierung}
