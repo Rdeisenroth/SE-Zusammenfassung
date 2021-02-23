@@ -561,11 +561,10 @@
 \newcommand{\continuerc}{\global\rownum=\numexpr\rownum - 1\relax} % To continue current row color
 
 % Boxes surrounded by borders for information and warnings.
-\newcommand{\info}[1]{
-    \begin{figure}[H]
-        \centering
-        \fbox{\parbox[c]{0.5\textwidth}{#1}}
-    \end{figure}
+\newcommand{\info}[1]{%
+  \begin{defBox}%
+    #1
+  \end{defBox}
 }
 \newcommand{\warning}[1]{
     \begin{defBox}

@@ -1893,7 +1893,6 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
 % end
 % end
 
-\subsection{Projektplanung}
 \subsubsection{Prozessmodelle}
 \begin{definition}[Softwareprozessmodelle]
     sind simplifizierte und abstrakte Beschreibungen eines Entwicklungsprozesses, welche eine Sicht auf die Entwicklung darstellen. Sie enthalten Aktivitäten innerhalb der Entwiclung, Softwareprodukte (bspw. Architekturbeschreibungen), Quellcode, Nutzer-Dokumentation und die Rollen der an der Entwicklung beteiligten Personen.
@@ -1920,7 +1919,7 @@ Beispiele für Prozessmodelle sind:
 
 
 
-\subsubsection{Prozessmodell: Wasserfall}
+\subsection{Prozessmodell: Wasserfall}
 \paragraph{Beschreibung}
 Die folgenden Aktivitäten werden strikt in der folgenden Reihenfolge abgearbeitet und der nächste Schritt wartet auf den vorherigen:
 \begin{enumerate}
@@ -1970,98 +1969,9 @@ Sollten Fehler in einer Phase auftreten, so wird diese gestoppt und die vorherig
     \caption{Prozessmodell: Waterfall}
     \label{fig:waterfall}
 \end{figure}
-% end
 
-\subsubsection{Projektplanung}
-Ein Softwareprojekt enthält viele Pläne, wobei ein guter Startplan mit allen vorliegenden Informationen Vorraussetzung ist für das Gelingen des Projektes.
-
-Es gibt viele Unterschiedliche Pläne, bspw.:
-\begin{itemize}
-    \item \textbf{Projektplan} Siehe Sektionen \enquote{Projektplan} (\ref{ssec:projektplan}).
-    \item \textbf{Qualitätssicherungsplan} Beschreibung, welche Qualitätssicherungsprozeduren und Standards genutzt werden.
-    \item \textbf{Personalentwicklungsplan} Beschreibt, wie die Fähigkeiten und Erfahrungen der einzelnen Mitarbeiter und des Teams eingesetzt und weiterentwickelt werden.
-\end{itemize}
-
-\paragraph{Projektplan}
-\label{ssec:projektplan}
-
-\paragraph{Struktur}
-\begin{description}[leftmargin = 5cm]
-    \item[Einleitung] Ziele des Projektes und Einschränkungen (Zeit, Budget, \dots).
-    \item[Projektorganisation] Organisation des Entwicklungsteams, die eingebundenen Personen und deren Rollen.
-    \item[Risikoanalyse] Mögliche Projektrisiken, deren Eintrittswahrscheinlichkeit und Risikominderungsstrategien.
-    \item[Resourcenanforderungen] Nötige Hard- und Software für das Durchführen des Projektes.
-    \item[Arbeitsaufteilung] Aufteilung des Projektes in Aktivitäten, Identifikation von Meilensteinen und Ergebnisse jeder Aktivität.
-    \item[Zeitplan] Abhängigkeiten zwischen Aktivitäten, geschätzte Zeit bis zu jedem Meilenstein und die Zuweisung von Personen zu Aktivitäten.
-    \item[Mechanismen zur Überwachung und Mitteilung]
-\end{description}
-% end
-
-Die Aktivitäten können in einem Aktivitätendiagramm (\enquote{Activity Diagram}) dargestellt werden, siehe \ref{diagram:activity}.
-% end
-% end
-
-\subsubsection{Kritik}
-\begin{itemize}
-    \item Kein iterativer Prozess
-    \item Änderung von Anforderungen und Design schwierig und Zeitaufwändig
-    \item Das Testen der Software startet erst in späteren Phasen $ \implies $ Fehler werden erst spät erkannt
-    \item Einzelne Phasen werden von unterschiedlichen Teams vorangetrieben, welche später möglicherweise nicht mehr zur Verfügung stehen können.
-\end{itemize}
-% end
-% end
-
-\subsubsection{V-Modell}
-Siehe \ref{fig:vmodel}.
-
-Nachteil: Bei einem V-Modell wird 50\% des Budgets für das V-Modell ausgegeben.
-
-\begin{figure}[ht]
-    \centering
-    \begin{tikzpicture}[->, every node/.style = { draw, text width = 3cm, minimum height = 2cm, align = center }]
-        \node [x = 0, y = 0] (l5) {Implementation};
-        \node [above left = of l5] (l41) {Detailliertes Design};
-        \node [left of = l41, above = 2cm] (l31) {System Design};
-        \node [left of = l31, above = 2cm] (l21) {System Spezifikation};
-        \node [left of = l21, above = 2cm] (l11) {Anforderungs Spezifikation};
-
-        \node [above = of l5] (l42) {Modul/Unit Testplan};
-        \node [above = of l42] (l32) {Untersystem Integrations Testplan};
-        \node [above = of l32] (l22) {System Integrations Plan};
-        \node [above = of l22] (l12) {Akzeptanz Testplan};
-
-        \node [above right = of l5] (l43) {Modul/Unit Tests};
-        \node [right of = l43, above = 2cm] (l33) {Untersystem Integrations Test};
-        \node [right of = l33, above = 2cm] (l23) {System Integrations Test};
-        \node [right of = l23, above = 2cm] (l13) {Akzeptanz Tests};
-
-        \draw (l11) -- (l12);
-        \draw (l11) -- (l21);
-        \draw (l21) -- (l12);
-        \draw (l21) -- (l22);
-        \draw (l21) -- (l31);
-        \draw (l31) -- (l22);
-        \draw (l31) -- (l32);
-        \draw (l31) -- (l41);
-        \draw (l41) -- (l32);
-        \draw (l41) -- (l42);
-        \draw (l41) -- (l5);
-        \draw (l5) -- (l42);
-        \draw (l5) -- (l43);
-        \draw (l43) -- (l33);
-        \draw (l33) -- (l23);
-        \draw (l23) -- (l13);
-        \draw (l12) -- (l13);
-        \draw (l22) -- (l23);
-        \draw (l32) -- (l33);
-        \draw (l42) -- (l43);
-    \end{tikzpicture}
-    \caption{V-Modell}
-    \label{fig:vmodel}
-\end{figure}
-% end
-
-\subsubsection{Agile Entwicklung}
+\clearpage
+\subsection{Agile Entwicklung}
 \info{\textbf{Ziel:} Möglichst schnelle Entwicklung von Software und Einarbeitung von Änderungen der Anforderungen}
 
 \begin{itemize}
@@ -2075,7 +1985,7 @@ Nachteil: Bei einem V-Modell wird 50\% des Budgets für das V-Modell ausgegeben.
 \end{itemize}
 % end
 
-\subsubsection{Prozessmodell: eXtreme Programming (XP)}
+\subsection{Prozessmodell: eXtreme Programming (XP)}
 In XP wird in kurzen Iterationen gearbeitet, wobei in jeder Iteration bestimmte User Stories abgearbeitet werden. Die abzuarbeitenden User Stories werden in der Iterationsplanung festgelegt.
 
 \paragraph{User Stories}
@@ -2094,8 +2004,8 @@ Der essentielle Teil der Entwicklung. Eine User Story beschreibt eine Anforderun
 \noindent Langes Template: Als ein <Rolle> möchte ich <Ziel> sodass <Vorteile>. \\
 Kurzes Template: Als ein <Rolle> möchte ich <Ziel>.
 % end
-
-\paragraph{Entwicklung}
+\clearpage
+\subsubsection{Entwicklung}
 \paragraph{Testgetriebene Entwicklung}
 Jede Implementierung startet mit der Entwicklung von Tests, sodass die Implementierung korrekt ist, sobald alle Tests funktionieren.
 % end
@@ -2113,7 +2023,7 @@ Code ist von genau zwei Entwicklern geschrieben
 % end
 % end
 
-\paragraph{Planung}
+\subsubsection{Planung}
 \paragraph{Initiale Planung (Start des Projektes)}
 \begin{itemize}
     \item Entwickler und Kunden arbeiten gemeinsam die relevanten User Stories heraus
