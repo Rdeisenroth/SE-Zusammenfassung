@@ -28,12 +28,13 @@
   %fontsize= 12pt,
   a4paper,
   ngerman,
-  color=3b,% Farbe für Hervorhebungen auf Basis der Deklarationen in den
+  %color=3b,% Farbe für Hervorhebungen auf Basis der Deklarationen in den
   %type=intern,
   %titlepage=true,
   marginpar=false,
   colorback=false,
   %logo=head,
+  footsepline=.5pt,
   fleqn,
   leqno,
 ]{tudaexercise}

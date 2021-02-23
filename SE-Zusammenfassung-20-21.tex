@@ -3,7 +3,7 @@
 \AfterClass{scrartcl}{
   \RequirePackage{imakeidx}
 }
-\documentclass[ngerman]{tuda_summary}
+\documentclass[ngerman,color=3b]{tuda_summary}
 % Packages (nicht in Class File um CompileTime zu verbessern)
 \usepackage[ngerman]{babel}
 %\usepackage[table]{xcolor}  
@@ -1130,7 +1130,8 @@ Zu viele Klassen in Relation zu der Größe des Problems. Oftmals ausgelöst dur
         }                                                                                                 \\
         \midrule
         4.\quad\mlcell[l]{
-            \fakebullet{}\textbf{Konzequenzen}: Nebenwirkungen, Einschränkungen, Auswirkungen auf Flexibilität, Erweiterbarkeit und Portabilität
+            \fakebullet{}\textbf{Konzequenzen}: Nebenwirkungen, Einschränkungen,\\
+            Auswirkungen auf Flexibilität, Erweiterbarkeit und Portabilität
         }                                                                                                 \\
         \midrule
         5.\quad\mlcell[l]{
@@ -1714,11 +1715,6 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
     \item Kein Subfeature ohne Parent möglich
     \item Standartmodus: Oder (Ein oder mehrere Features auswählbar)
 \end{itemize}
-\paragraph{Probleme}\begin{itemize}
-    \item Code mit vielen Macros schwer zu verstehen
-    \item Retundanz nur schwer zu vermeiden (Code wird von mehreren Features benutzt)
-    \item Analyse, Testen und Typchecking schwer auf Familienebene
-\end{itemize}
 \begin{table}[ht]
     \centering
     \rowcolors{2}{white}{black!10}
@@ -1755,6 +1751,12 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
     \caption{Feature Diagram Symbole}
     \label{tab:feature_diagram_symbols}
 \end{table}
+
+\paragraph{Probleme}\begin{itemize}
+    \item Code mit vielen Macros schwer zu verstehen
+    \item Retundanz nur schwer zu vermeiden (Code wird von mehreren Features benutzt)
+    \item Analyse, Testen und Typchecking schwer auf Familienebene
+\end{itemize}
 
 
 \begin{figure}[ht]
