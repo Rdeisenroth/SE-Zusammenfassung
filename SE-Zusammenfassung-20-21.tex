@@ -746,32 +746,32 @@ Der in \figurename{} \ref{fig:fibonaccicodecfg} gezeigte Code wird in \figurenam
         \node [part, below = of init, label = 180:1] (step1) {\texttt{if (num <= 0)}};
         \coordinate [right = 6 of step1] (step1-);
         \node [part, below = of step1-, label = 180:11] (step1-1) {\texttt{throw new IllegalArgumentException();}};
-        \node [part, below = of step1, label = 180:2] (step2) {\texttt{int current = 1;}};
-        \node [part, below = of step2, label = 180:3] (step3) {\texttt{int previous = 0;}};
-        \node [part, below = of step3, label = 180:4] (step4) {\texttt{for (int i = 0; i < num - 1; i++)}};
+        \node [part, below = of step1, label = 180:2,align = left] (step2) {\texttt{int current = 1;}\\\texttt{int previous = 0;}\\\texttt{int i = 0;}};
+        %\node [part, below = of step2, label = 180:3] (step3) {\texttt{int previous = 0;}};
+        \node [part, below = of step2, label = 180:3] (step4) {\texttt{for (; i < num - 1;)}};
         \coordinate [right = 5 of step4] (step4-);
-        \node [part, below = of step4-, label = 180:41] (step4-1) {\texttt{int next = current + previous;}};
-        \node [part, below = of step4-1, label = 180:42] (step4-2) {\texttt{previous = current;}};
-        \node [part, below = of step4-2, label = 180:43] (step4-3) {\texttt{current = next;}};
-        \node [part, below = of step4, label = 180:5] (step5) {\texttt{return current;}};
+        \node [part, below = of step4-, label = 180:31,align=left] (step4-1) {\texttt{int next = current + previous;}\\\texttt{previous = current;}\\\texttt{current = next;}};
+        %\node [part, below = of step4-1, label = 180:32] (step4-2) {\texttt{previous = current;}};
+        \node [part, below = of step4-1, label = 180:32] (step4-3) {\texttt{i++;}};
+        \node [part, below = of step4, label = 180:4] (step5) {\texttt{return current;}};
         \node [part, below = of step5] (exit) {exit};
 
         \draw [->] (init) -- (step1);
         \draw [->] (step1) -| node [above] {\texttt{num <= 0}} (step1-1);
         \draw [->] (step1) -- node [left] {\texttt{num > 0}} (step2);
-        \draw [->] (step2) -- (step3);
-        \draw [->] (step3) -- (step4);
+        \draw [->] (step2) -- (step4);
+        %\draw [->] (step3) -- (step4);
         \draw [->] (step4) -| node [above] {\texttt{i < num - 1}} (step4-1);
-        \draw [->] (step4-1) -- (step4-2);
-        \draw [->] (step4-2) -- (step4-3);
-        \coordinate [right = 2.5 of step4-3] (back1);
-        \coordinate [right = of step3] (back2);
+        \draw [->] (step4-1) -- (step4-3);
+        %\draw [->] (step4-2) -- (step4-3);
+        \coordinate [right = 3.5 of step4-3] (back1);
+        \coordinate (back2) at ([xshift=1cm,yshift=-1cm]step2.east);
         \draw (step4-3) -- (back1);
         \draw (back1) |- (back2);
         \draw [->] (back2) -- (step4);
         \draw [->] (step4) -- node [left] {\texttt{i >= num - 1}} (step5);
         \draw [->] (step5) -- (exit);
-        \draw [->] (step1-1.south) |- ++(-3,-.5) |- (exit);
+        \draw [->] (step1-1.south) |- ++(-4,-.5) |- (exit);
     \end{tikzpicture}
     \caption{Beispiel: Kontrollflussgraph}
     \label{fig:cfg_example}
