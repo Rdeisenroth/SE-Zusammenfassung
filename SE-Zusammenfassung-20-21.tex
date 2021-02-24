@@ -160,7 +160,7 @@ Die Anforderungsanalyse beschäftigt sich mit dem Erkennen, der Analyse, der Dok
 \begin{itemize}
     \item beschreiben Aufgaben und Einschränkungen in Natürlicher Sprache oder mit Diagrammen (meinst von Kunden geschrieben)
 \end{itemize}
-\fatsf{Beispiel:} Das system soll alle Buchungen speichern, so wie es das Gesetz verlangt.
+\fatsf{Beispiel:} Das System soll alle Buchungen speichern, so wie es das Gesetz verlangt.
 \subsubsection{Systemanforderungen (System Requirements)}\index{Systemanforderungen}\label{System Requirements}
 \begin{itemize}
     \item Präzise und detaillierte Beschreibung von  Aufgaben und Einschränkungen des Programmes (Meist von Entwickler geschrieben)
@@ -251,7 +251,7 @@ aufgedeckt werden.\\
 \end{itemize}
 \subsubsection{Use Case Formats}
 \begin{itemize}
-    \item kurz (brief): Kurze zusammenfassung, normalerweise das Haupterfolgsszenario
+    \item kurz (brief): Kurze Zusammenfassung, normalerweise das Haupterfolgsszenario
     \item informell (casual): Informelles Format, mehrere Zeilen die Mehrere Szenarios behandeln
     \item ausgearbeitet (Fully dressed): Alle Zwischenschritte und Variationen sind im Detail aufgeschrieben, es gibt hilfssektionen, z.B. Vorbedingungen (preconditions) und Erfolgsgarantien (sucess guarantees)
 \end{itemize}
@@ -362,7 +362,7 @@ In einem Autohandel ist es möglich, sowohl Bar als auch mit Kreditkarte zu zahl
 \end{definition}
 \begin{definition}[Domänenmodell (Domain Model)]
     Das Domänenmodell besteht aus den \textbf{Objekt}en (inklusive deren \textbf{Attribut}en) der Domäne und deren  \textbf{Beziehung}  untereinander.
-    Man modelliert es, indem man während der objektorientierten Analyse die relevanten Konzepte, die aktuell benötigt werden, sowie deren identifiziert. Man benötigt ein tiefgreifendes Verständnis der Domäne (des Einsatzgebietes) für einen guten Softwareentwurf (Curtis Gesetz).
+    Man modelliert es, indem man während der objektorientierten Analyse die relevanten Konzepte, die aktuell benötigt werden, identifiziert. Man benötigt ein tiefgreifendes Verständnis der Domäne (des Einsatzgebietes) für einen guten Softwareentwurf (Curtis Gesetz).
 \end{definition}
 
 Ein Domänenmodell (Analysemodell, Konzeptmodell)
@@ -515,9 +515,9 @@ Softwarearchitektur umfasst:
         \node[draw,rounded corners,thick, minimum height=1cm,minimum width=3cm,right=3cm of n1](n2){Entwicklungsteam};
         \draw[line width=2mm, draw=accentcolor,-triangle 45,postaction={draw, line width=4mm, shorten >=5mm, -}] (n1) -- node[line width= .4mm,pos=.4,text=white]{Input} (n2);
         \draw[-{Stealth},ultra thick](n1) to[out=90,in=90,looseness=.5] node[pos=.5,sloped,auto]{Adaption} (n2);
-        \draw[{Stealth}-,ultra thick](n1) to[out=270,in=270,looseness=.5] node[pos=.5,sloped,below]{Rückmendung(Feedback)} (n2);
+        \draw[{Stealth}-,ultra thick](n1) to[out=270,in=270,looseness=.5] node[pos=.5,sloped,below]{Rückmeldung(Feedback)} (n2);
     \end{tikzpicture}
-    \caption{Relation Architelten-Entwickler}
+    \caption{Relation Architekten-Entwickler}
 \end{figure}
 \clearpage
 \subsection{Architekturcharakteristiken}
@@ -548,7 +548,7 @@ Softwarearchitektur umfasst:
 \begin{itemize}
     \item Helfen die Fundamentale Struktur eines Systems zu spezifizieren
     \item Haben einen großen Einfluss darauf, wie die fertige Architektur aussieht
-    \item Definieren die Globalen Eigenschaften des Systemes (z.B. Wie daten ausgetauscht werden können, welche Einschränkungen die Subsysteme haben)
+    \item Definieren die Globalen Eigenschaften des Systemes (z.B. Wie Daten ausgetauscht werden können, welche Einschränkungen die Subsysteme haben)
 \end{itemize}
 Softwaresysteme sind normalerweise aus mehreren Architekturstilen zusammengesetzt
 \clearpage
@@ -708,7 +708,7 @@ Die Faktoren guter Software trennen sich in \textit{interne} und \textit{externe
 \end{description}
 
 \subsubsection{Zyklomatische Komplexität (Cyclomatic Complexity)}
-Die Zyklomatische Komplexität $ C $ berechnet sich durch $ C = E - N + 2P $, wobei $ E $ die Anzahl der Kanten, $ N $ die Anzahl der Kanten und $ P $ die Anzahl der möglichen Zusammenhangskomponenten (in den meisten Fällen $ 1 $) des CFGs darstellt.
+Die Zyklomatische Komplexität $ C $ berechnet sich durch $ C = E - N + 2P $, wobei $ E $ die Anzahl der Kanten, $ N $ die Anzahl der Knoten und $ P $ die Anzahl der möglichen Zusammenhangskomponenten (in den meisten Fällen $ 1 $) des CFGs darstellt.
 
 \subsubsection{Kontrollflussgraph (CFG)}
 \label{diagram:cfg}
@@ -785,7 +785,7 @@ Design-Heuristiken helfen dabei, die Frage zu beantworten, ob das Design einer S
     \item Nicht schwer aber schnell: Sollten Warnungen produzieren, welche unter anderem das ignorieren der selbigen erlauben wenn nötig
 \end{itemize}
 
-\textbf{Beispiel:} All Daten in einer Basisklasse sollten privat sein; die Nutzung von nicht-privaten Daten ist untersagt, es sollten Zugriffsmethoden erstellt werden, welche prottected sind.
+\textbf{Beispiel:} All Daten in einer Basisklasse sollten privat sein; die Nutzung von nicht-privaten Daten ist untersagt, es sollten Zugriffsmethoden erstellt werden, welche protected sind.
 \clearpage
 \subsubsection{Verknüpfen/Koppeln (Coupling)}
 
@@ -849,7 +849,7 @@ ist mit den folgenden anderen Klassen gekoppelt: \texttt{ActionEvent}, \texttt{A
 \begin{description}
     \item[Class]
           \begin{itemize}
-              \item Der Name sollte deskreptiv und eindeutig sein.
+              \item Der Name sollte deskriptiv und eindeutig sein.
           \end{itemize}
     \item[Responsibilities]
           \begin{itemize}
@@ -901,8 +901,8 @@ Klassen mit hoher Kohäsion können oftmals mit einem einfachen Satz beschrieben
 Ein hoher LCOM-Wert ist ein Indikator für zu geringe Kohäsion in der Klasse.
 
 \subsection{Designprinzipien}
-\subsubsection{Single-Response-Principle (SRP)}
-\begin{definition}[Single-Response-Principle]
+\subsubsection{Single-Responsibility-Principle (SRP)}
+\begin{definition}[Single-Responsibility-Principle]
     \enquote{Eine Klasse sollte nur einen einzigen Grund haben, sich zu verändern},
     Also möglichst wenige Abhängigkeiten pro Klasse (ideal wäre nur eine), denn Abhängigkeiten sind der Hauptgrund für Änderungen
 \end{definition}
@@ -930,7 +930,7 @@ Ein hoher LCOM-Wert ist ein Indikator für zu geringe Kohäsion in der Klasse.
               \item Interfaces machen es Möglich, die Funktionalität von der Implementierung zu trennen
               \item Hilft dabei, ungerechtfertigte Vermutungen über die Implementierung zu vermeiden
               \item Interfaces sind stabiler als Implementierungen
-              \item Um die Implementierung zu verändern, reicht es den Konstruktur zu verändern
+              \item Um die Implementierung zu verändern, reicht es den Konstruktor zu verändern
               \item Einfacher um Kupplung zu vermeiden
           \end{itemize}
 \end{itemize}
@@ -1017,7 +1017,7 @@ Zu viele Klassen in Relation zu der Größe des Problems. Oftmals ausgelöst dur
 \clearpage
 \subsection{Überarbeiten (Refactoring)}
 \begin{definition}[Refactoring]
-    ist eine Disziplinierte Technik, um einen existierenden Codekörper umzustrukturieren, und dabei seine Interne Struktur zu verändern, ohne die Verhaltensweise nach Außen hin zu verändern.
+    ist eine disziplinierte Technik, um einen existierenden Codekörper umzustrukturieren, und dabei seine interne Struktur zu verändern, ohne die Verhaltensweise nach Außen hin zu verändern.
 \end{definition}
 \paragraph{Ziele:}\begin{itemize}
     \item Hinzufügen von neuen Funktionen vorbereiten
@@ -1028,8 +1028,8 @@ Zu viele Klassen in Relation zu der Größe des Problems. Oftmals ausgelöst dur
 \subsubsection{Gründe für das Überarbeiten}
 \begin{itemize}
     \item Macht das Hinzufügen neuer Funktionen einfacher
-    \item Weniger Retundanten Code
-    \item Vermeiden von Verschachtelten Bedingungen
+    \item Weniger eedundanten Code
+    \item Vermeiden von verschachtelten Bedingungen
     \item Macht Code einfacher/verständlicher
 \end{itemize}
 \subsubsection{Methode Extrahieren (Extract Method)}
@@ -1058,7 +1058,7 @@ Zu viele Klassen in Relation zu der Größe des Problems. Oftmals ausgelöst dur
                         \item Methode in Zielklasse deklarieren
                         \item Methode in Zielklasse kopieren und anpassen
                         \item Herausfinden, wie die Zielklasse am Besten referenziert werden kann
-                        \item Quellmethode zu Delegationsmethode umwandeln (Lokik findet in Zielklasse statt, aber Aufruf in Quellklasse)
+                        \item Quellmethode zu Delegationsmethode umwandeln (Logik findet in Zielklasse statt, aber Aufruf in Quellklasse)
                         \item Entscheiden, ob die Quellmehtode noch gebraucht wird, oder ob der Aufruf in der Zielklasse sinvoller ist
                     \end{enumerate}
           \end{itemize}
@@ -1432,7 +1432,7 @@ Siehe \ref{sec:metrics}.
 Dynamische Techniken erfordern, dass das Programm ausgeführt wird.
 
 \begin{description}
-    \item[Testen] Führt das Programm aus und Testet es auf bestimmte Eigenschaften (Verhalten)
+    \item[Testen] Führt das Programm aus und testet es auf bestimmte Eigenschaften (Verhalten)
     \item[Laufzeitüberprüfung] Analysetools, welche Programme auf Einhaltung bestimmter Einschränkungen (bspw. Speichereinschränkungen) testen
 \end{description}
 % end
@@ -1452,12 +1452,12 @@ Das Ziel der Codeuntersuchung, ist
 \end{itemize}
 zu finden.
 
-Dies wird üblicherweise an (externe) Teams ausgearbeitet, welche den Code systematisch analysieren.
+Dies wird üblicherweise in (externen) Teams ausgearbeitet, welche den Code systematisch analysieren.
 
 Eine mögliche Checkliste ist bspw.:
 \begin{description}
-    \item[Datenfehler] Werden Variablen initialisiert, bevor sie genutzt werden? Gibt es mögliche Arra-Out-Of-Bounds Fehler? Werden deklarierte Variablen genutzt?
-    \item[Kontrollflussfehler] Sind die Bedingungen korrekt? Gibt es toten Code? Terminieren alle Schleifen? Sind switch..case Ausdrücke vollständig?
+    \item[Datenfehler] Werden Variablen initialisiert, bevor sie genutzt werden? Gibt es mögliche Array-Out-Of-Bounds Fehler? Werden deklarierte Variablen genutzt?
+    \item[Kontrollflussfehler] Sind die Bedingungen korrekt? Gibt es toten Code? Terminieren alle Schleifen? Sind switch-case Ausdrücke vollständig?
     \item[I/O Fehler] Werden alle Eingabeparameter genutzt? Können unerwartete Eingaben zu einem Absturz führen?
     \item[Schnittstellenfehler] Korrekte Anzahl/Typen der Parameter?
 \end{description}
@@ -1484,7 +1484,7 @@ Eine mögliche Checkliste ist bspw.:
     \enquote{Programmtesten kann zwar die Existenz von Fehlern aufzeigen, aber niemals ihre Abwesenheit beweisen!}\mbox{}\\\mbox{}\hfill — E. W. Dijkstra, EWD 249
 \end{defBox}
 \begin{definition}[Testplan]
-    Ein \textit{Testplan} Testplan ist zur Ausführung durch Menschen gedacht. Er dokumentiert die Schritte des Tests und das jeweilige erwartete Ergebnis. In der Testausführung kann das eigentliche Ergebnis dann mit dem erwarteten verglichen werden.
+    Ein \textit{Testplan} ist zur Ausführung durch Menschen gedacht. Er dokumentiert die Schritte des Tests und das jeweilige erwartete Ergebnis. In der Testausführung kann das eigentliche Ergebnis dann mit dem erwarteten verglichen werden.
 \end{definition}
 
 \begin{definition}[Testfall (Test case)]
@@ -1648,8 +1648,8 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
     \item Sorgt für:\begin{itemize}
               \item Stabile, Syncrone Verarbeitungsreihenfolge
               \item Spezifische Verarbeitungsschritte können an dafür optimierte Hardware abgegeben werden
-              \item Erlaubt einfaches Modifizieren, Hintufügen und Neuanordnen der einzeln Verarbeitungsschritten
-              \item Kann aber nicht für Input fauls Kompensieren
+              \item Erlaubt einfaches Modifizieren, Hinzufügen und Neuanordnen der einzeln Verarbeitungsschritten
+              \item Kann aber nicht für Input Fauls kompensieren
           \end{itemize}
 \end{itemize}
 \clearpage
@@ -1659,7 +1659,7 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
 \end{definition}
 \paragraph{Probleme:}\begin{itemize}
     \item Kann bereits existierende Funktionalität zerstören (Verschlimmbesserung)\begin{itemize}
-              \item Lösungsansatz: viel testen und ggf Betaversion an erfahrene Benutzer verteilen
+              \item Lösungsansatz: viel testen und ggf. Betaversion an erfahrene Benutzer verteilen
           \end{itemize}
     \item Kann Trennung zwischen Spezifikation, Dokumentation und Implementierung bewirken\begin{itemize}
               \item Lösungsansatz: Neue Funktionen rufen einen \enquote{Full development cycle} hervor.
@@ -1688,10 +1688,10 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
 \paragraph{Ziel:} Nicht jede Variante einzeln warten zu müssen
 \clearpage
 \begin{definition}[Merkmal (Software Feature)]
-    Ein Alleinstellungsmerkmal der Software (e.B. leistung, Portabilität oder Funktionalität)
+    Ein Alleinstellungsmerkmal der Software (e.B. Leistung, Portabilität oder Funktionalität)
 \end{definition}
 \begin{definition}[Produkt]
-    Eine Ansammlung von Merkmalen und Paramterinstanzierungen, die ausreichen um einen Ausführbaren Code mit der SPL zu produzieren.
+    Eine Ansammlung von Merkmalen und Paramterinstanzierungen, die ausreichen um einen ausführbaren Code mit der SPL zu produzieren.
 \end{definition}
 \begin{definition}[Variante (Variant)]
     Ausführbarer Code, der ein Produkt einer SPL implementiert.
@@ -1712,7 +1712,7 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
 
 \paragraph{Aufbau}
 \begin{itemize}
-    \item Oben ist das \enquote*{root Feature}
+    \item Oben ist das \enquote{Root Feature}
     \item Kein Subfeature ohne Parent möglich
     \item Standartmodus: Oder (Ein oder mehrere Features auswählbar)
 \end{itemize}
@@ -1893,7 +1893,7 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
 
 \subsubsection{Prozessmodelle}
 \begin{definition}[Softwareprozessmodelle]
-    sind simplifizierte und abstrakte Beschreibungen eines Entwicklungsprozesses, welche eine Sicht auf die Entwicklung darstellen. Sie enthalten Aktivitäten innerhalb der Entwiclung, Softwareprodukte (bspw. Architekturbeschreibungen), Quellcode, Nutzer-Dokumentation und die Rollen der an der Entwicklung beteiligten Personen.
+    sind simplifizierte und abstrakte Beschreibungen eines Entwicklungsprozesses, welche eine Sicht auf die Entwicklung darstellen. Sie enthalten Aktivitäten innerhalb der Entwicklung, Softwareprodukte (bspw. Architekturbeschreibungen), Quellcode, Nutzer-Dokumentation und die Rollen der an der Entwicklung beteiligten Personen.
 \end{definition}
 
 Beispiele für Prozessmodelle sind:
@@ -1930,8 +1930,8 @@ Die folgenden Aktivitäten werden strikt in der folgenden Reihenfolge abgearbeit
           \end{itemize}
     \item Implementation und Unittests (Implementation and unit
           testing):\begin{itemize}
-              \item Das Softwaredesign wird als Sammlung von \enquote*{Program units} dargestellt
-              \item Durch testen wird geprüft, ob jede Unit seine Spezifikation erfüllt
+              \item Das Softwaredesign wird als Sammlung von \enquote{Program units} dargestellt
+              \item Durch Testen wird geprüft, ob jede Unit ihre Spezifikation erfüllt
           \end{itemize}
     \item Integrations- und Systemtests (Integration and system
           testing):\begin{itemize}
@@ -1940,7 +1940,7 @@ Die folgenden Aktivitäten werden strikt in der folgenden Reihenfolge abgearbeit
     \item Inbetriebnahme und Wartung (Operation and maintenance)
 \end{enumerate}
 
-Sollten Fehler in einer Phase auftreten, so wird diese gestoppt und die vorherige Phase muss wiederholt werden. Sommit fließen die Ergebnisse aller Phasen in die vorherigen ein, wie in \ref{fig:waterfall} zu sehen ist.
+Sollten Fehler in einer Phase auftreten, so wird diese gestoppt und die vorherige Phase muss wiederholt werden. Somit fließen die Ergebnisse aller Phasen in die vorherigen ein, wie in \ref{fig:waterfall} zu sehen ist.
 
 \begin{figure}[ht]
     \centering
@@ -1975,7 +1975,7 @@ Sollten Fehler in einer Phase auftreten, so wird diese gestoppt und die vorherig
 \begin{itemize}
     \item Höchste Priorität hat das Zufriedenstellen des Kunden
     \item Regelmäßige Auslieferung von Zwischenständen (bspw. alle zwei Wochen)
-    \item Funktionierende Software ist das Primärziel und der Fortschritt (30\% Implementiert $ \rightarrow $ 30\% des Projektes abgeschlossen)
+    \item Funktionierende Software ist das Primärziel (30\% Implementiert $ \rightarrow $ 30\% des Projektes abgeschlossen)
     \item Einfachheit ist essentiell
     \item Änderungen der Anforderungen
     \item Das Team reflektiert in regelmäßigen Abständen, um effektiver zu werden
