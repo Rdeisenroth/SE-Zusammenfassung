@@ -764,14 +764,14 @@ Der in \figurename{} \ref{fig:fibonaccicodecfg} gezeigte Code wird in \figurenam
         \draw [->] (step4) -| node [above] {\texttt{i < num - 1}} (step4-1);
         \draw [->] (step4-1) -- (step4-3);
         %\draw [->] (step4-2) -- (step4-3);
-        \coordinate [right = 3.5 of step4-3] (back1);
+        \coordinate [right = 3.3 of step4-3] (back1);
         \coordinate (back2) at ([xshift=1cm,yshift=-1cm]step2.east);
         \draw (step4-3) -- (back1);
         \draw (back1) |- (back2);
         \draw [->] (back2) -- (step4);
         \draw [->] (step4) -- node [left] {\texttt{i >= num - 1}} (step5);
         \draw [->] (step5) -- (exit);
-        \draw [->] (step1-1.south) |- ++(-4,-.5) |- (exit);
+        \draw [->] (step1-1.south) |- ++(-4.3,-.5) |- (exit);
     \end{tikzpicture}
     \caption{Beispiel: Kontrollflussgraph}
     \label{fig:cfg_example}
