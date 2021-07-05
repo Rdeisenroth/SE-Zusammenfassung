@@ -3,11 +3,18 @@
 \AfterClass{scrartcl}{
   \RequirePackage{imakeidx}
 }
-\documentclass[ngerman,color=3b]{tuda_summary}
+\documentclass[
+    ngerman,
+    color=3b,
+    % dark_mode,
+    % load_common, % Loads a list of commonly used Packages
+    summary,
+    boxarc,
+    main,
+]{rubos-tuda-template}
 % Packages (nicht in Class File um CompileTime zu verbessern)
 \usepackage[ngerman]{babel}
 %\usepackage[table]{xcolor}  
-\usepackage{amssymb}
 \usepackage{makecell}
 \usepackage{tikz-uml}
 \usepackage{mleftright}
@@ -20,61 +27,29 @@
 
 
 % Definitionen für das Dokument (Bis auf studentEins alle Optional)
-\sheetnumber{1}
-\groupnumber{69}
-\studentEins{Ruben Deisenroth}{9876543}
-%\studentZwei{Max Mustermann}{1234567}
-%\studentDrei{Peter Peterson}{0000000}
-\groupleader{Senpai Yoda}
+\title[SE]{Software Engineering}
+\subtitle{Zusammenfassung}
+\author{Ruben Deisenroth}
+% \contributor{} % List contributors here, seperate with \and
 \semester{WiSe 2020/21}
 \fachbereich{Informatik}
-\date{\textbf{\sffamily Datum:} \today}
-\renewcommand*{\taskformat}{H\tasksep\thetask{}} % Taskprefix
+\version{1.0 (SNAPSHOT)}
+\date{\today}
+\termStyle{left-right-manual}
+\termLeft{printAuthor,printContributor}
+\termRight{printSemester,printVersion}
+\term{\vspace{\baselineskip}\printDate{}\hfill\printFachbereich{}}
 \ConfigureHeadline{
 	headline={summary-centered}
 }
 
-
-% Define Glossary style
-\ifthenelse{\isundefined{\printindex}}{}{
-    \makeindex[
-        columns=3,
-        title=Stichwortverzeichnis, 
-        intoc, 
-        options=-s mystyle
-        ]
-}
-%Fix indent for glossary
-\makeatletter
-\def\@idxitem{\par\hangindent 0pt}
-\makeatother
-
-
-
 % Dokument Anfang
 
 \begin{document}
-\title[SE]{Software Engineering}
 
-\term{
-    \begin{minipage}[t]{.5\linewidth}
-        \textsf{\textbf{Author:}}\space{}Ruben\space{}Deisenroth\\
-        \fatsf{Basierend auf:} \href{https://projects.frisp.org/attachments/download/206/se0_zusammenfassung-v04.pdf}{Merkzettel von Fabian Damken}\\
-        \textbf{\sffamily{}Stand:}\space\today
-    \end{minipage}
-    \begin{minipage}[t]{.49\linewidth}
-        \raggedleft
-        \begin{flushright}
-            \textsf{\textbf{Semester:}}\space{}WiSe\space{}2020/21\\
-            \mbox{}\\
-            \textsf{\textbf{Fachbereich:}}\space{}Informatik
-        \end{flushright}
-    \end{minipage}
-}
-\subtitle{Zusammenfassung}
+%--Titelseite--
 \maketitle{}
-%\printGradeTable{} % Erstellt eine Bewertungstabelle wie in Klausuren (Optionen für weglassen von Summe und Note Geplant)
-\tableofcontents
+\tableofcontents %Inhaltsverzeichnis
 
 %% --Beginn Zusammenfassung--%%
 \clearpage
@@ -835,7 +810,7 @@ ist mit den folgenden anderen Klassen gekoppelt: \texttt{ActionEvent}, \texttt{A
 %\paragraph{Diagramm: Class-Responsibility-Collaborator-Karten (CRC-Karten)}\mbox{}\\
 %\label{diagram:crc}
 
-\paragraph{Beschreibung}\mbox{}\\
+\paragraph{Beschreibung}\mbox{}\par
 \begin{description}[leftmargin = 3cm]
     \item[Class] Der Name der Klasse/des Akteurs.
     \item[Responsibilities] Die Zuständigkeiten der Klasse; identifiziert die zu lösenden Probleme.
@@ -845,7 +820,7 @@ ist mit den folgenden anderen Klassen gekoppelt: \texttt{ActionEvent}, \texttt{A
 
 %\todo{CRC-Karten: Beispiel}
 
-\paragraph{Wichtige Konklusionen}\mbox{}\\
+\paragraph{Wichtige Konklusionen}\mbox{}\par
 \begin{description}
     \item[Class]
           \begin{itemize}
@@ -887,7 +862,7 @@ Klassen mit geringer Kohäsion sind zu vermeiden, da:
 \end{itemize}
 Klassen mit hoher Kohäsion können oftmals mit einem einfachen Satz beschrieben werden.
 
-\paragraph{Lack of Cohesion of Methods (LCOM)}\mbox{}\\
+\paragraph{Lack of Cohesion of Methods (LCOM)}\mbox{}\par
 \begin{definition}[LCOM-Wert]
     Der \textit{Lack of Cohesion of Methods}-Wert (kurz LCOM-Wert) ist ein Richtwert zur Bewertung der Kohäsion einer Klasse.\\
     Sei $ C $ eine Klasse, $ F $ ihre Instanzvariablen und $ M $ ihre Methoden (Konstruktoren ausgenommen).\\
@@ -964,7 +939,7 @@ Eine Klasse kapselt einen Großteil oder alles der (Sub-) Systemlogik. Indikator
     \item Schlecht OO-Design, welches auf der Idee von zusammenarbeitenden Objekten aufbaut
 \end{itemize}
 
-\paragraph{Lösungsansätze}\mbox{}\\
+\paragraph{Lösungsansätze}\mbox{}\par
 \begin{itemize}
     \item Gleichmäßige Verteilung der Systemintelligenz \\
           Oberklassen sollten die Arbeiten so gleich wie möglich verteilen.
@@ -1256,7 +1231,7 @@ Statt abstrakten Operationen, welche implementiert werden \textit{müssen}, kön
 Der Context (Nutzer) erstellt Instanzen von konkreten Strategien, welche den Algorithmus in einem Interface definieren.
 % end
 
-\paragraph{Varianten/Erweiterungen}\mbox{}\\
+\paragraph{Varianten/Erweiterungen}\mbox{}\par
 \begin{itemize}
     \item Optionale Strategy-Objekt
           \begin{itemize}
@@ -1310,7 +1285,7 @@ Der Context (Nutzer) erstellt Instanzen von konkreten Strategien, welche den Alg
 \end{figure}
 % end
 
-\paragraph{Beschreibung}\mbox{}\\
+\paragraph{Beschreibung}\mbox{}\par
 \begin{description}
     \item[Subject] Abstrakte Klasse, bietet Methoden zur Implementierung des Musters an.
     \item[Observer] Interface zum Empfangen von Signalen eines Subjekts.
@@ -1337,7 +1312,7 @@ Der Context (Nutzer) erstellt Instanzen von konkreten Strategien, welche den Alg
 \end{itemize}
 % end
 
-\paragraph{Varianten/Erweiterungen}\mbox{}\\
+\paragraph{Varianten/Erweiterungen}\mbox{}\par
 \begin{itemize}
     \item Pull Mode:\begin{itemize}
               \item Subjekt wird nach Änderung gefragt
@@ -1990,7 +1965,7 @@ Sollten Fehler in einer Phase auftreten, so wird diese gestoppt und die vorherig
 \subsection{Prozessmodell: eXtreme Programming (XP)}
 In XP wird in kurzen Iterationen gearbeitet, wobei in jeder Iteration bestimmte User Stories abgearbeitet werden. Die abzuarbeitenden User Stories werden in der Iterationsplanung festgelegt.
 
-\paragraph{User Stories}\mbox{}\\
+\paragraph{User Stories}\mbox{}\par
 \begin{definition}[User Stories]
     Der essentielle Teil der Entwicklung. Eine User Story beschreibt eine Anforderung. Eine User Story wird anschließend in einzelne Tasks aufgebrochen.
 \end{definition}
