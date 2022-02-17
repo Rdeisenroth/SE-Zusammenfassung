@@ -38,6 +38,11 @@
 	headline={summary-centered}
 }
 
+% Workarounds and similar stuff.
+\DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
+
+\DeclareDocumentCommand{\resetrc}{}{\global\rownum=0\relax} % T#
+
 % Dokument Anfang
 
 \begin{document}
@@ -63,6 +68,7 @@
 \subsubsection{Arten von Software}
 \begin{table}[ht]
     \centering
+    \rowcolors{2}{\thepagecolor}{fgcolor!10!\thepagecolor}
     \newcommand{\tabitem}{~\llap{-}~}
     \begin{tabular}{rl}
         \toprule
@@ -201,6 +207,7 @@ aufgedeckt werden.\\
 \subsubsection{Requirements vs Use Cases}
 \begin{table}[ht]
     \centering
+    \rowcolors{2}{\thepagecolor}{fgcolor!10!\thepagecolor}
     \resetrc{}
     \begin{tabular}{ll}
         \toprule
@@ -227,6 +234,7 @@ aufgedeckt werden.\\
 Ein vollständig ausgearbeiteter Anwendungsfall sieht so aus:
 \begin{table}[ht]
     \centering
+    \rowcolors{2}{\thepagecolor}{fgcolor!10!\thepagecolor}
     \resetrc{}
     \begin{tabular}{ll}
         \toprule
@@ -278,6 +286,7 @@ Ein vollständig ausgearbeiteter Anwendungsfall sieht so aus:
 \end{definition}
 \begin{table}[ht]
     \centering
+    \rowcolors{2}{\thepagecolor}{fgcolor!10!\thepagecolor}
     \resetrc{}
     \begin{tabular}{cl}
         \toprule
@@ -433,6 +442,7 @@ In einer Universität wird jede Vorlesung von mindestens einem Dozenten gelesen.
 \subsubsection{Attribut vs Verbindung}
 \begin{table}[ht]
     \centering
+    \rowcolors{2}{\thepagecolor}{fgcolor!10!\thepagecolor}
     \resetrc{}
     \begin{tabular}{cc}
         \toprule
@@ -464,6 +474,7 @@ Softwarearchitektur umfasst:
 \end{itemize}
 \begin{table}[ht]
     \centering
+    \rowcolors{2}{\thepagecolor}{fgcolor!10!\thepagecolor}
     \resetrc{}
     \begin{tabular}{ll}
         \toprule
@@ -536,6 +547,7 @@ Softwaresysteme sind normalerweise aus mehreren Architekturstilen zusammengesetz
 
 \begin{table}[ht]
     \centering
+    \rowcolors{2}{\thepagecolor}{fgcolor!10!\thepagecolor}
     \resetrc{}
     \begin{tabular}{ll}
         \toprule
@@ -878,6 +890,7 @@ Ein hoher LCOM-Wert ist ein Indikator für zu geringe Kohäsion in der Klasse.
 \subsubsection{Inheritance vs. Delegation}
 \begin{table}[ht]
     \centering
+    \rowcolors{2}{\thepagecolor}{fgcolor!10!\thepagecolor}
     \resetrc{}
     \begin{tabular}{ll}
         \toprule
@@ -1087,6 +1100,7 @@ Idiome sind \textit{keine} Entwurfsmuster, sondern kleine Codeschnipsel:
 \paragraph{Vorlage Design Pattern}\mbox{}\\
 \begin{table}[ht]
     \centering
+    \rowcolors{2}{\thepagecolor}{fgcolor!10!\thepagecolor}
     \resetrc{}
     \begin{tabular}{l}
         \toprule
@@ -1691,6 +1705,7 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
 \end{itemize}
 \begin{table}[ht]
     \centering
+    \rowcolors{2}{\thepagecolor}{fgcolor!10!\thepagecolor}
     \resetrc{}
     \renewcommand{\arraystretch}{2}
     \begin{tabular}{cl}
