@@ -9,6 +9,7 @@
 ]{rubos-tuda-template}
 % Packages (nicht in Class File um CompileTime zu verbessern)
 \usepackage[ngerman]{babel}
+%\usepackage[utf8]{luainputenc} % if problems with ß exist
 %\usepackage[table]{xcolor}  
 \usepackage{makecell}
 \usepackage{tikz-uml}
@@ -133,12 +134,12 @@ Die Anforderungsanalyse beschäftigt sich mit dem Erkennen, der Analyse, der Dok
 \end{itemize}
 \subsubsection{Nutzeranforderungen (User requirements)}\index{User requirements}
 \begin{itemize}
-    \item beschreiben Aufgaben und Einschränkungen in Natürlicher Sprache oder mit Diagrammen (meinst von Kunden geschrieben)
+    \item beschreiben Aufgaben und Einschränkungen in Natürlicher Sprache oder mit Diagrammen (meist von Kunden geschrieben)
 \end{itemize}
 \fatsf{Beispiel:} Das System soll alle Buchungen speichern, so wie es das Gesetz verlangt.
 \subsubsection{Systemanforderungen (System Requirements)}\index{Systemanforderungen}\label{System Requirements}
 \begin{itemize}
-    \item Präzise und detaillierte Beschreibung von  Aufgaben und Einschränkungen des Programmes (Meist von Entwickler geschrieben)
+    \item Präzise und detaillierte Beschreibung von  Aufgaben und Einschränkungen des Programmes (meist von Entwicklern geschrieben)
     \item Verfeinerung der Nutzeranforderungen
 \end{itemize}
 \fatsf{Beispiel:} Die Buchungen müssen für 10 Jahre gespeichert werden ab dem Zeitpunkt der Buchung.
@@ -146,16 +147,16 @@ Die Anforderungsanalyse beschäftigt sich mit dem Erkennen, der Analyse, der Dok
 \begin{itemize}
     \item Meist nicht vom Kunden oder Entwickler spezifiziert, sondern von der Domäne (z.B. vom Gesetzgeber, \dots)
 \end{itemize}
-\fatsf{Beispiel:} Für die Polizeiliche Ermittlung muss in Deutschland jede Transaktion für 2 Wochen zwischengespeichert werden.
+\fatsf{Beispiel:} Für die polizeiliche Ermittlung muss in Deutschland jede Transaktion für 2 Wochen zwischengespeichert werden.
 \subsubsection{Funktionale Anforderungen (Functional Requirements)}\index{Funktionale Anforderungen}\label{Functional Requirements}
 \begin{itemize}
     \item Die Dienste, die das System machen können soll
     \item die Reaktion des Systems auf bestimmte Eingaben und
     \item das Verhalten des Systems in bestimmten Situationen.
 \end{itemize}
-\fatsf{Beispiel:} Wenn der Nutzer den Knopf "`Neues Dokument"'" drückt, wird eine neues Textdokument angelegt.
+\fatsf{Beispiel:} Wenn der Nutzer den Knopf "`Neues Dokument"' drückt, wird eine neues Textdokument angelegt.
 \subsubsection{Nichtfunktionale Anforderungen (Non-Functional Requirements)}\index{Nichtfunktionale Anforderungen}\label{Non-Functional Requirements}
-Spezifizieren Einschränkungen der Dieste/Funktionen des Systems, welche oft nicht vollständig von Tests abgedeckt werden können:
+Spezifizieren Einschränkungen der Dienste/Funktionen des Systems, welche oft nicht vollständig von Tests abgedeckt werden können:
 \begin{itemize}
     \item Produktanforderungen (Product requirements)\index{Product requirements}\begin{itemize}
               \item Portabilität (Läuft auf verschiedenen Plattformen/lässt sich leicht darauf anpassen)
@@ -223,12 +224,12 @@ aufgedeckt werden.\\
 \end{table}
 \begin{itemize}
     \item Ohne Nutzerbeteiligung nahezu unmöglich, gute/vollständige Anwendungsfälle zu schreiben
-    \item Anwendungsfälle ergänzen die Anforderungsanalyse, ersetzen sie aber nicht (können keine Nichtfunktionalen Anforderungen erfassen)
+    \item Anwendungsfälle ergänzen die Anforderungsanalyse, ersetzen sie aber nicht (können keine nichtfunktionalen Anforderungen erfassen)
 \end{itemize}
 \subsubsection{Use Case Formats}
 \begin{itemize}
     \item kurz (brief): Kurze Zusammenfassung, normalerweise das Haupterfolgsszenario
-    \item informell (casual): Informelles Format, mehrere Zeilen die Mehrere Szenarios behandeln
+    \item informell (casual): Informelles Format, mehrere Zeilen die mehrere Szenarios behandeln
     \item ausgearbeitet (Fully dressed): Alle Zwischenschritte und Variationen sind im Detail aufgeschrieben, es gibt hilfssektionen, z.B. Vorbedingungen (preconditions) und Erfolgsgarantien (sucess guarantees)
 \end{itemize}
 Ein vollständig ausgearbeiteter Anwendungsfall sieht so aus:
@@ -270,15 +271,15 @@ Ein vollständig ausgearbeiteter Anwendungsfall sieht so aus:
 \begin{enumerate}
     \item Akteure und deren Interessen aufzählen $\Longrightarrow$ Erste Ebene an Präzission
     \item Stakeholders, Trigger (Erster Schritt des Haupterfolgsszenarios), Validieren $\Longrightarrow$ Zweite Ebene an Präzission
-    \item Alle Fehlschlagszenarien Indentifizieren und auflisten
-    \item Fehlerbehandlung Schreiben
+    \item Alle Fehlschlagszenarien identifizieren und auflisten
+    \item Fehlerbehandlung schreiben
 \end{enumerate}
 \clearpage
 \subsection{UML Nutzungszweck Diagramme (UML Use Case Diagrams)}
 \begin{definition}[Unified Modeling Language (UML)]\index{UML}
     Visuelle, aber präzise Entwurfsschreibweise für Softwareentwicklung
     \begin{itemize}
-        \item Hauptziel: Objektmodellierung vereinheitlichen, indem sich auf einen festen Syntax und Semantik geeinigt wird
+        \item Hauptziel: Objektmodellierung vereinheitlichen, indem sich auf eine feste Syntax und Semantik geeinigt wird
     \end{itemize}
 \end{definition}
 \begin{definition}[Nutzungszweck-Diagramm (Use case Diagram)]
@@ -480,7 +481,7 @@ Softwarearchitektur umfasst:
         \toprule
         \fatsf{Architekten}                                            & \fatsf{Entwicklungsteam}                    \\
         \midrule
-        \fakebullet{}~\mlcell[l]{Die Charakteristiken der Architur                                                   \\aus der Abhängigkeitsanalyse zu ermitteln} & \fakebullet{}Klassenstruktur für jede Komponente erstellen \\
+        \fakebullet{}~\mlcell[l]{Die Charakteristiken der Architektur                                                \\aus der Abhängigkeitsanalyse zu ermitteln} & \fakebullet{}Klassenstruktur für jede Komponente erstellen \\
         \fakebullet{}Einen Architekturstil für das System auswählen    & \fakebullet{}UI(User Interface) entwerfen   \\
         \fakebullet{}Komponentenstruktur erstellen (über Klassenebene) & \fakebullet{}Quellcode schreiben und testen \\
         \bottomrule
@@ -501,7 +502,8 @@ Softwarearchitektur umfasst:
 \end{figure}
 \clearpage
 \subsection{Architekturcharakteristiken}
-\begin{definition}[Architekturcharakteristik]\begin{itemize}
+\begin{definition}[Architekturcharakteristik]\mbox{}
+    \begin{itemize}
         \item Spezifiziert Operations-und Betriebskriterien um eine gewisse Anforderung zu implementieren
         \item Beeinflusst den Strukturentwurf, benötigt spezielle Architekturelemente (keine üblichen)
         \item Es ist nötig, dass die Anwendung wie gewünscht funktioniert (funktionale und nichtfunktionale Abhängigkeiten)
@@ -509,26 +511,26 @@ Softwarearchitektur umfasst:
 \end{definition}
 \fatsf{Operationscharakteristiken (Operational):}\begin{itemize}
     \item Verfügbarkeit (Availability): Zeitspanne, in der das System online/verfügbar ist
-    \item Leistung (Performance): Umfasst Spitzenauslastungsanalysen, Antwortzeiten, Stresstesten
-    \item Skalierbarkeit: (Scalability): Fähigkeit auch mit einer Steigenden Anzahl an Anfragen Klarzukommen
+    \item Leistung (Performance): Umfasst Spitzenauslastungsanalysen, Antwortzeiten, Stresstests
+    \item Skalierbarkeit: (Scalability): Fähigkeit auch mit einer steigenden Anzahl an Anfragen klarzukommen
 \end{itemize}
 \fatsf{Strukturell (Structural):}\begin{itemize}
     \item Erweiterbarkeit (Extensibility): Wie einfach es ist, neue Funktionalität hinzuzufügen
     \item Wartbarkeit (Maintainability): Wie einfach es ist, das System zu verbessern oder auszuwechseln (also zu warten)
     \item Wiederverwendbarkeit (Leveragability): Häufige Komponenten in mehreren Produkten wiederverwenden
     \item Lokalisierbarkeit (Localisation): Ünterstützung mehrerer Sprachen, Währungen, Einheiten, \dots
-    \item Konfigurierbarkeit (Configuration): Möglichkeit für den Nutzer, das System nach seinen Vorlieben durch eine benutzbare Oberfläche anzupassen.
+    \item Konfigurierbarkeit (Configuration): Möglichkeit für den Nutzer das System nach seinen Vorlieben durch eine benutzbare Oberfläche anzupassen.
 \end{itemize}
 \fatsf{Cross-Cutting (Divide and Conquer)}\begin{itemize}
-    \item Barrierefreiheit: Muss auch nutzbar von Leuten mit Behinderung (Blinde, Taube, \dots) sein
+    \item Barrierefreiheit: Muss auch nutzbar von Leuten mit Behinderung (Seh-, Höreinschränkungen, \dots) sein
     \item Datenschutz (Privacy): Möglichkeit, bestimmte Daten für andere Nutzer (auch priveligierte) unzugänglich zu machen
     \item Sicherheit (Security): Verschlüssellung, Authentifizierung, \dots
 \end{itemize}
 \subsection{Architekturstile}
 \begin{itemize}
-    \item Helfen die Fundamentale Struktur eines Systems zu spezifizieren
+    \item Helfen die fundamentale Struktur eines Systems zu spezifizieren
     \item Haben einen großen Einfluss darauf, wie die fertige Architektur aussieht
-    \item Definieren die Globalen Eigenschaften des Systemes (z.B. Wie Daten ausgetauscht werden können, welche Einschränkungen die Subsysteme haben)
+    \item Definieren die globalen Eigenschaften des Systems (z.B. Wie Daten ausgetauscht werden können, welche Einschränkungen die Subsysteme haben)
 \end{itemize}
 Softwaresysteme sind normalerweise aus mehreren Architekturstilen zusammengesetzt
 \clearpage
@@ -542,7 +544,7 @@ Softwaresysteme sind normalerweise aus mehreren Architekturstilen zusammengesetz
 \end{figure}
 \FloatBarrier
 \begin{itemize}
-    \item Anzahl der Ebenen nicht Festgelegt, manche Architekturen fassen Ebenen zusammen oder fügen neue Hinzu
+    \item Anzahl der Ebenen nicht festgelegt, manche Architekturen fassen Ebenen zusammen oder fügen neue hinzu
 \end{itemize}
 
 \begin{table}[ht]
@@ -555,8 +557,8 @@ Softwaresysteme sind normalerweise aus mehreren Architekturstilen zusammengesetz
         \midrule
         \fakebullet{}Simplizität                                     & \fakebullet{}Skalierbarkeit                                         \\
         \fakebullet{}Kosten                                          & \fakebullet{}Leistung (Parallelisierung \textbf{nicht} unterstützt) \\
-        \fakebullet{}Architekturstil kann später ausgetauscht werden & \fakebullet{}Verfügbarkeit (Lange startzeiten, \dots)               \\
-        \fakebullet{}Gut für kleine-mittlere Anwendungen             & \fakebullet{}                                                       \\
+        \fakebullet{}Architekturstil kann später ausgetauscht werden & \fakebullet{}Verfügbarkeit (lange startzeiten, \dots)               \\
+        \fakebullet{}Gut für kleine-mittlere Anwendungen             &                                                                     \\ 
         \bottomrule
     \end{tabular}
     \caption{Layered-Architekturstil Pro Kontra}
@@ -598,12 +600,12 @@ Das MVC-Muster spaltet die Software in die fundamentalen Teile für interaktive 
     \caption{Model-View-Controller}
     \label{fig:mvc}
 \end{figure}
-Controller und View sind direkt gekoppelt mit dem Modell, das Modell ist nicht direkt gekoppelt mit dem Controller oder der View (siehe \ref{fig:mvc}).
+Controller und View sind direkt mit dem Modell gekoppelt, das Modell ist nicht direkt mit dem Controller oder der View gekoppelt (siehe \ref{fig:mvc}).
 \clearpage
 Nachteile:
 \begin{itemize}
     \item Erhöhte Komplexität: Die Aufspaltung in View und Controller kann die Komplexität erhöhen ohne mehr Flexibilität zu gewinnen.
-    \item Update Proliferation: Möglicherweise viele Updates; nicht alle Views sind immer interessiert an allen Änderungen.
+    \item Update Proliferation: Möglicherweise viele Updates; nicht alle Views sind immer an allen Änderungen interessiert.
     \item Kopplung View/Controller: View und Controller sind stark gekoppelt.
 \end{itemize}
 \subsubsection{Verteilte Architekturstile (Distributed Architecutral Styles)}
@@ -614,7 +616,7 @@ Nachteile:
               \item Services bestehen aus mehrenen Komponenten
               \item Alle Services greifen auf eine gemeinsame Datenbank zu
           \end{itemize}
-    \item Nicht-Monolythische Variante (Non-Monolithic)\begin{itemize}
+    \item Nicht-Monolithische Variante (Non-Monolithic)\begin{itemize}
               \item Servicebasierende UIs (eine UI per service)
           \end{itemize}
     \item Servicelokale Datenbankvariante\begin{itemize}
@@ -666,10 +668,10 @@ Die Faktoren guter Software trennen sich in \textit{interne} und \textit{externe
 \end{itemize}
 \begin{defBox}
     \paragraph{Merkmale von Guter Software:}\begin{itemize}
-        \item Wartbarkeit: Kann an ansprüche des Kunden angepasst werden
+        \item Wartbarkeit: Kann an Ansprüche des Kunden angepasst werden
         \item Effizienz: Keine Ressourcenverschwendung
         \item Usability: Muss für den Nutzer verständlich und benutzbar sein
-        \item Verlässlichkeit (Dependability): Verursacht keinen Wirtschaftlich- oder Physikalischen Schaden falls das System fehlschlägt
+        \item Verlässlichkeit (Dependability): Verursacht keinen wirtschaftlichen oder physikalischen Schaden falls das System fehlschlägt
     \end{itemize}
 \end{defBox}
 
@@ -773,7 +775,7 @@ Design-Heuristiken helfen dabei, die Frage zu beantworten, ob das Design einer S
 \begin{definition}[Class Coupling]
     ist ein Richtwert zur Messung der Abhängigkeiten zwischen Klassen und zwischen Paketen:
     \begin{itemize}
-        \item  Eine Klasse C ist an Klasse D \textit{gekuppelt}, wenn C direkt oder indirekt von d Abhängt
+        \item  Eine Klasse C ist an Klasse D \textit{gekoppelt}, wenn C direkt oder indirekt von d abhängt
         \item  Eine Klasse, welche auf 2 anderen Klassen basiert, hat eine lockerere Kopplung als eine Klasse, welche auf 8 anderen Klassen basiert.
     \end{itemize}
 \end{definition}
@@ -808,7 +810,7 @@ ist mit den folgenden anderen Klassen gekoppelt: \texttt{ActionEvent}, \texttt{A
               \item Führt zu hoher Komplexität
           \end{itemize}
     \item Generische Klassen müssen sehr wenige Verknüpfungen haben
-    \item Viele Verknüpfungen von Stabilen Bausteinen (Libraries, z.B. aus der Java-Standartbibliothek) ist kein Problem
+    \item Viele Verknüpfungen von stabilen Bausteinen (Libraries, z.B. aus der Java-Standartbibliothek) ist kein Problem
 \end{itemize}
 \warning{Die Anforderung an lose Kopplung zur Wiederverwendbarkeit in (mystischen) Zukunftsprojekte birgt die Gefahr von unnötiger Komplexität und hohen Projektkosten!}
 \clearpage
@@ -840,7 +842,7 @@ ist mit den folgenden anderen Klassen gekoppelt: \texttt{ActionEvent}, \texttt{A
     \item[Collaborations]
           \begin{itemize}
               \item Viele Kollaboratoren $ \implies $ Sollte die Klasse aufgeteilt werden?
-              \item \textbf{Vermeide kyklische Kollaboration!} $ \implies $ Es sollten höhere Abstraktionsebenen eingeführt werden.
+              \item \textbf{Vermeide zyklische Kollaboration!} $ \implies $ Es sollten höhere Abstraktionsebenen eingeführt werden.
           \end{itemize}
 \end{description}
 
@@ -921,14 +923,14 @@ Ein hoher LCOM-Wert ist ein Indikator für zu geringe Kohäsion in der Klasse.
 Angenommen es gäbe keine Zugriffsrechte und alles wäre Public, dann:
 \begin{itemize}
     \item Verletzt das Prinzip der Informationsverbergung (information hiding principle):\begin{itemize}
-              \item Keine Unterscheidung zwischen Implementationsspezifischen- und Öffentlichen Daten
-              \item Implementationsspezifische details werden dem Client enthüllt
+              \item Keine Unterscheidung zwischen implementationsspezifischen und öffentlichen Daten
+              \item Implementationsspezifische Details werden dem Client enthüllt
           \end{itemize}
     \item Instabiler Code, wenn die Implementation des Feldes sich ändert
     \item für Felder die als Argument oder unter einem Alias definiert sind ist es sehr schwer, die Abhängigkeiten zu erkennen
 \end{itemize}
 Also besser: Getter und Setter, sodass Zugriffe gezielt kontrolliert werden können
-Probleme, wenn zu wenig Freigegeben wird:\begin{itemize}
+Probleme, wenn zu wenig freigegeben wird:\begin{itemize}
     \item Funktionalität muss ggf doppelt implementiert werden
     \item Verleitet einen dazu, die Abhängigkeiten falsch zu setzen
 \end{itemize}
@@ -943,16 +945,16 @@ Probleme, wenn zu wenig Freigegeben wird:\begin{itemize}
 Eine Klasse kapselt einen Großteil oder alles der (Sub-) Systemlogik. Indikator von:
 \begin{itemize}
     \item Schlecht verteilter Systemintelligenz
-    \item Schlecht OO-Design, welches auf der Idee von zusammenarbeitenden Objekten aufbaut
+    \item Schlechtem OO-Design, welches auf der Idee von zusammenarbeitenden Objekten aufbaut
 \end{itemize}
 
 \paragraph{Lösungsansätze}\mbox{}\par
 \begin{itemize}
-    \item Gleichmäßige Verteilung der Systemintelligenz \\
+    \item Gleichmäßige Verteilung der Systemintelligenz. \\
           Oberklassen sollten die Arbeiten so gleich wie möglich verteilen.
-    \item Vermeidung von nichtkommunikativen Klassen (mit geringer Kohäsion) \\
+    \item Vermeidung von nichtkommunikativen Klassen (mit geringer Kohäsion). \\
           Klassen mit geringer Kohäsion arbeiten oftmals auf einem eingeschränkten Teil der eigenen Daten und haben großes Potential, Gottklassen zu werden.
-    \item Sorgfältige Deklaration und Nutzung von Zugriffsmethoden \\
+    \item Sorgfältige Deklaration und Nutzung von Zugriffsmethoden. \\
           Klassen mit vielen (öffentlichen) Zugriffsmethoden geben viele Daten nach außen und halten somit das Verhalten nicht an einem Punkt.
 \end{itemize}
 % end
@@ -972,7 +974,7 @@ Zu viele Klassen in Relation zu der Größe des Problems. Oftmals ausgelöst dur
                         \item Codestilkonventionen
                         \item Einschränkungen der Nutzung bestimmter Sprachkonstrukte (z.B. var in Java)
                         \item gute Benennung von Klassen, Methoden und Variablen
-                        \item Aussagekräftige Kommentare
+                        \item aussagekräftige Kommentare
                     \end{itemize}
           \end{itemize}
 \end{itemize}
@@ -999,7 +1001,7 @@ Zu viele Klassen in Relation zu der Größe des Problems. Oftmals ausgelöst dur
 \clearpage
 \subsection{Überarbeiten (Refactoring)}
 \begin{definition}[Refactoring]
-    ist eine disziplinierte Technik, um einen existierenden Codekörper umzustrukturieren, und dabei seine interne Struktur zu verändern, ohne die Verhaltensweise nach Außen hin zu verändern.
+    ist eine disziplinierte Technik, um einen existierenden Codekörper umzustrukturieren, und dabei seine interne Struktur zu verändern, ohne die Verhaltensweise nach außen hin zu verändern.
 \end{definition}
 \paragraph{Ziele:}\begin{itemize}
     \item Hinzufügen von neuen Funktionen vorbereiten
@@ -1010,7 +1012,7 @@ Zu viele Klassen in Relation zu der Größe des Problems. Oftmals ausgelöst dur
 \subsubsection{Gründe für das Überarbeiten}
 \begin{itemize}
     \item Macht das Hinzufügen neuer Funktionen einfacher
-    \item Weniger eedundanten Code
+    \item Weniger redundanter Code
     \item Vermeiden von verschachtelten Bedingungen
     \item Macht Code einfacher/verständlicher
 \end{itemize}
@@ -1018,13 +1020,13 @@ Zu viele Klassen in Relation zu der Größe des Problems. Oftmals ausgelöst dur
 \begin{itemize}
     \item Wann?: \begin{itemize}
               \item wenn eine Methode zu viele Dinge macht
-              \item wenn eine Funktionalität mehrfach innerhalb einer Methode oder von mehreren Mehtoden gebraucht wird.
+              \item wenn eine Funktionalität mehrfach innerhalb einer Methode oder von mehreren Methoden gebraucht wird
           \end{itemize}
     \item Vorgehensweise:\begin{enumerate}
               \item Neue Methode erstellen (Target)
               \item Extrahierten Code zur neuen Methode kopieren
               \item Lokale Variablen identifizieren, die in dem extrahierten Code verwendet wurden und als Parameter übergeben
-              \item Code in ursprünglicher Methode mit Methodenaufruf ersetzen.
+              \item Code in ursprünglicher Methode mit Methodenaufruf ersetzen
           \end{enumerate}
 \end{itemize}
 \clearpage
@@ -1041,7 +1043,7 @@ Zu viele Klassen in Relation zu der Größe des Problems. Oftmals ausgelöst dur
                         \item Methode in Zielklasse kopieren und anpassen
                         \item Herausfinden, wie die Zielklasse am Besten referenziert werden kann
                         \item Quellmethode zu Delegationsmethode umwandeln (Logik findet in Zielklasse statt, aber Aufruf in Quellklasse)
-                        \item Entscheiden, ob die Quellmehtode noch gebraucht wird, oder ob der Aufruf in der Zielklasse sinvoller ist
+                        \item Entscheiden, ob die Quellmethode noch gebraucht wird, oder ob der Aufruf in der Zielklasse sinvoller ist
                     \end{enumerate}
           \end{itemize}
 \end{itemize}
@@ -1049,7 +1051,7 @@ Zu viele Klassen in Relation zu der Größe des Problems. Oftmals ausgelöst dur
 \begin{itemize}
     \item Wann:\begin{itemize}
               \item Klasse hat zwei oder mehr unabhängige Abhängigkeiten
-              \item Keine Andere Klasse ist für Move Method geeignet
+              \item Keine andere Klasse ist für Move Method geeignet
           \end{itemize}
     \item Vorgehensweise\begin{enumerate}
               \item Neue Klasse erstellen
@@ -1072,7 +1074,7 @@ Idiome sind \textit{keine} Entwurfsmuster, sondern kleine Codeschnipsel:
 \section{Entwurfskonzepte (Design Patterns)}
 \begin{definition}[Design Pattern]\mbox{}
     \begin{itemize}
-        \item beschreibt ein Problem, welches öfter innerhalb der Domäne auftritt
+        \item beschreibt ein Problem, welches öfters innerhalb der Domäne auftritt
         \item bietet Bauplan für Lösung des Problemes, welcher oft wiederverwendet werden kann, aber niemals den Bauplan selbst sondern eine angepasste Form
     \end{itemize}
 \end{definition}
@@ -1116,9 +1118,9 @@ Idiome sind \textit{keine} Entwurfsmuster, sondern kleine Codeschnipsel:
         \midrule
         3.\quad\mlcell[l]{
         \fakebullet{}\textbf{Struktur}: statische Struktur des Patterns (z.B. UML Klassendiagramm)        \\
-        \fakebullet{}\textbf{Participants}(Teilnehmer): Welche Klassen sind Beteiligt                     \\
+        \fakebullet{}\textbf{Participants}(Teilnehmer): Welche Klassen sind beteiligt                     \\
         \fakebullet{}\textbf{Collaboration}: Zusammenspiel der Teilnehmer                                 \\
-            \fakebullet{}\textbf{Implementation}: Wie das Pattern angepasst/Implementiert werden kann
+            \fakebullet{}\textbf{Implementation}: Wie das Pattern angepasst/implementiert werden kann
         }                                                                                                 \\
         \midrule
         4.\quad\mlcell[l]{
@@ -1144,7 +1146,7 @@ Idiome sind \textit{keine} Entwurfsmuster, sondern kleine Codeschnipsel:
     Die Template-Methode definiert den Algorithmus unter Nutzung von abstrakten (und konkreten) Operationen.
 \end{definition}
 \paragraph{Kurzfassung}\mbox{}\\
-\textbf{Ziel:} Implementierung eines Algorithmus, welcher erlaubt, ihn auf mehrere spezifische Probleme anzuwenden.
+\textbf{Ziel:} Implementierung eines Algorithmus, welcher erlaubt ihn auf mehrere spezifische Probleme anzuwenden.
 
 \textbf{Idee:} Es wird ein Algorithmus implementiert, welcher konkrete Aktionen an abstrakte Methoden und damit Unterklassen weiterreicht.
 
@@ -1194,7 +1196,7 @@ Statt abstrakten Operationen, welche implementiert werden \textit{müssen}, kön
 
 \textbf{Ziel:}
 \begin{itemize}
-    \item Erlaubt das konfigurieren einer Klasse mit einem von vielen Verhaltensvarianten
+    \item Erlaubt das Konfigurieren einer Klasse mit einem von vielen Verhaltensvarianten
     \item Implementierung unterschiedlicher Algorithmusvarianten können in der Klassenhierarchie verbaut werden
 \end{itemize}
 
@@ -1204,7 +1206,7 @@ Statt abstrakten Operationen, welche implementiert werden \textit{müssen}, kön
 \begin{itemize}
     \item Nutzer muss sich im klaren darüber sein, wie sich die Implementierungen unterscheiden und sich für eine entscheiden
     \item Nutzer sind Implementierungsfehlern ausgesetzt
-    \item Strategy sollte nur genutzt werden, wenn das konkrete Verhalten relevant ist für den Nutzer
+    \item Strategy sollte nur genutzt werden, wenn das konkrete Verhalten relevant für den Nutzer ist
 \end{itemize}
 % end
 
@@ -1252,7 +1254,7 @@ Der Context (Nutzer) erstellt Instanzen von konkreten Strategien, welche den Alg
 
 \subsubsection{Observer}
 \paragraph{Kurzfassung}\mbox{}\\
-\textbf{Motivation:} OOP(Objektorientierte Programmierung) vereinfacht die Implementierung einzelner Objekte, die Verdrahtung dieser kann allerdings schwer sein, sofern man die Objekte nicht hart koppeln möchte.
+\textbf{Motivation:} OOP (Objektorientierte Programmierung) vereinfacht die Implementierung einzelner Objekte, die Verdrahtung dieser kann allerdings schwer sein, sofern man die Objekte nicht hart koppeln möchte.
 
 \textbf{Ziel:} Entkopplung des Datenmodells (Subjekt) von den Stellen, welche an Änderungen des Zustands interessiert sind. Voraussetzungen:
 \begin{itemize}
@@ -1298,7 +1300,7 @@ Der Context (Nutzer) erstellt Instanzen von konkreten Strategien, welche den Alg
     \item[Subject] Abstrakte Klasse, bietet Methoden zur Implementierung des Musters an.
     \item[Observer] Interface zum Empfangen von Signalen eines Subjekts.
     \item[ConcreteSubject] Das konkrete Subjekt, sendet Benachrichtigungen an die Observer
-    \item[ConcreteObserver] Ein konkreter Observer (implementiert observer Interface), registriert sich beim Subjekt, empfängt Nachrichten von dem Subjekt
+    \item[ConcreteObserver] Ein konkreter Observer (implementiert Observer Interface), registriert sich beim Subjekt, empfängt Nachrichten vom Subjekt
 \end{description}
 % end
 
@@ -1355,13 +1357,13 @@ Der Context (Nutzer) erstellt Instanzen von konkreten Strategien, welche den Alg
 \end{description}
 \paragraph{Konzequenzen}
 \begin{itemize}
-    \item Der Klient-Code kennt nur das Produkt-Interface
+    \item Der Client-Code kennt nur das Produkt-Interface
     \item Stellt einen Hook für Superklassen bereit
 \end{itemize}
 \paragraph{Varianten}
 \begin{itemize}
     \item Generator als Abstrakte Klasse
-    \item Generator als Konkrete Klasse, mit einer Sinvollen default-Implementierung
+    \item Generator als Konkrete Klasse, mit einer sinvollen default-Implementierung
 \end{itemize}
 \clearpage
 \subsubsection{Abstrakte Fabrik (Abstract Factory)}
@@ -1375,18 +1377,18 @@ Der Context (Nutzer) erstellt Instanzen von konkreten Strategien, welche den Alg
     \item[Abstrakte Fabrik] Stellt Interface für die Produkterstellung einer Familie bereit
     \item[Konkrete Fabrik] Implementiert Operationen um Konkrete Produkte zu erstellen
     \item[Abstraktes Produkt] Deklariert ein Interface um die Konkreten Produkte zu erstellen
-    \item[Konkretes Produkt] Stellt implementation für das Produkt, welche von der Konkoreten Fabrik erstellt wurde bereit
-    \item[Client] Erstellt Produkt indem die Konkrete Fabrik genutzt wird, dabei wird das Abstrkte Produkt interface implementiert
+    \item[Konkretes Produkt] Stellt Implementation für das Produkt, welche von der Konkoreten Fabrik erstellt wurde bereit
+    \item[Client] Erstellt Produkt indem die Konkrete Fabrik genutzt wird, dabei wird das Abstrakte Produkt Interface implementiert
 \end{description}
 \begin{itemize}
     \item \textbf{Vorteile:}\begin{itemize}
-              \item Code muss nicht über allen Konkreten Produkte bescheid wissen
+              \item Code muss nicht über alle Konkreten Produkte bescheid wissen
               \item Eine Zeile Code zu verändern reicht aus, um andere Produkte zu unterstützen
               \item Kann mehrere Produkte unterstützen
-              \item Erzwingt die Erstellung von Konsistenten Produktfamilien
+              \item Erzwingt die Erstellung von konsistenten Produktfamilien
           \end{itemize}
     \item \textbf{Nachteile:}\begin{itemize}
-              \item Code muss einer neuen Konvention zur Erstellung von Produktfamilien folgen (Statt den Standartkonstruktor zu nutzen)
+              \item Code muss einer neuen Konvention zur Erstellung von Produktfamilien folgen (Statt den Standardkonstruktor zu nutzen)
           \end{itemize}
 \end{itemize}
 
@@ -1443,10 +1445,12 @@ Dies wird üblicherweise in (externen) Teams ausgearbeitet, welche den Code syst
 
 Eine mögliche Checkliste ist bspw.:
 \begin{description}
-    \item[Datenfehler] Werden Variablen initialisiert, bevor sie genutzt werden? Gibt es mögliche Array-Out-Of-Bounds Fehler? Werden deklarierte Variablen genutzt?
-    \item[Kontrollflussfehler] Sind die Bedingungen korrekt? Gibt es toten Code? Terminieren alle Schleifen? Sind switch-case Ausdrücke vollständig?
-    \item[I/O Fehler] Werden alle Eingabeparameter genutzt? Können unerwartete Eingaben zu einem Absturz führen?
-    \item[Schnittstellenfehler] Korrekte Anzahl/Typen der Parameter?
+    \item[Dokumentation] Ist der Code sinnvoll, verständlich und ausreichend Dokumentiert?
+    \item[Verständlichkeit] Ist der Code verständlich und die Variabeln sinnvoll benannt?
+    \item[Struktur] Werden alle Programmierstandards eingehalten und erfüllt der Code das vereinbarte Design?
+    \item[Fehlerbehandlung] Sind die am häufigsten vorkommenden Fälle abgedeckt?
+    \item[Defensive Programmierung] Werden alle Dateien und Geräte im Fehlerfall in einem validen Status hinterlassen? 
+            Sind die Sichtbarkeiten für die Klassen, Methoden und Felder so restriktiv wie möglich gewählt?
 \end{description}
 
 \begin{itemize}
@@ -1471,7 +1475,7 @@ Eine mögliche Checkliste ist bspw.:
     \enquote{Programmtesten kann zwar die Existenz von Fehlern aufzeigen, aber niemals ihre Abwesenheit beweisen!}\mbox{}\\\mbox{}\hfill — E. W. Dijkstra, EWD 249
 \end{defBox}
 \begin{definition}[Testplan]
-    Ein \textit{Testplan} ist zur Ausführung durch Menschen gedacht. Er dokumentiert die Schritte des Tests und das jeweilige erwartete Ergebnis. In der Testausführung kann das eigentliche Ergebnis dann mit dem erwarteten verglichen werden.
+    Ein \textit{Testplan} ist zur Ausführung durch Menschen gedacht. Er dokumentiert die Schritte des Tests und das jeweilige erwartete Ergebnis. In der Testausführung kann das eigentliche Ergebnis dann mit dem Erwarteten verglichen werden.
 \end{definition}
 
 \begin{definition}[Testfall (Test case)]
@@ -1501,7 +1505,7 @@ Sehr kleine, automatisierte, Tests, welche eine Funktionalität testen. In typis
 % end
 
 \paragraph{Integrations-Tests}\mbox{}\\
-Testen eines kompletten (Unter-) Systems, um die Zusammenarbeit der Komponenten zu Testen.
+Testen eines kompletten (Unter-) Systems, um die Zusammenarbeit der Komponenten zu testen.
 % end
 
 \paragraph{Systemtests}\mbox{}\\
@@ -1519,7 +1523,7 @@ Testen einer komplett integrierten Applikation (Funktion, Performanz, Stresstest
     Eine \textit{Entscheidung} ist eine Zusammensetzung von Bedingungen, welche bspw. den Test eines \texttt{if}-Ausdruckes darstellt.
 \end{definition}
 \begin{definition}[Basisblock (Basic block)]
-    Ein Basisblock $B$ ist eine Maximale Sequenz von Instruktionen ohne Sprünge.
+    Ein Basisblock $B$ ist eine maximale Sequenz von Instruktionen ohne Sprünge.
 \end{definition}
 \subsubsection{Strukturell}
 Strukturelle Testabdeckung basiert auf dem Kontrollflussgraphen (CFG) eines Programms\begin{itemize}
@@ -1555,19 +1559,19 @@ Ein Testautomationssystem
 \end{itemize}
 \subsubsection{Automatisierte Test Case Generierung (ATCG)}
 \paragraph{White Box}\begin{itemize}
-    \item Syntaktischer Ansatz: Suchen nach Bedingungen, Evaluierung ermöglicht logic-Based Coverage
+    \item Syntaktischer Ansatz: Suchen nach Bedingungen, Evaluierung ermöglicht Logic-Based Coverage
     \item Unerreichbarer Code kann gefunden werden
     \item Symbolische Ausführung: versuchen, CFG mit verschiedensten Werten durchzulaufen, Evaluierung ermöglicht Structural Coverage
 \end{itemize}
 \vspace*{-1ex}
 \paragraph{Black Box}\begin{itemize}
     \item Analyse der Ein-und Ausgabedaten der IUT
-    \item Probleme: Library Calls, Unnötige Testfälle, rekursion, \dots
+    \item Probleme: Library Calls, unnötige Testfälle, Rekursion, \dots
 \end{itemize}
 \vspace*{-1ex}
 \paragraph{Test Coverage Recording}\begin{enumerate}
-    \item IUT Initialisieren
-    \item Test suite ausführen und Informationen während des Testlaufes sammeln
+    \item IUT initialisieren
+    \item Test Suite ausführen und Informationen während des Testlaufes sammeln
     \item Test Coverage analysieren und darstellen
 \end{enumerate}
 \vspace*{-1ex}
@@ -1612,11 +1616,11 @@ Basiert auf CFG, hilft bei:
     \item Neue Funktion wird benötigt
     \item Hardware hat sich weiterentwickelt
     \item Softwarearchitektur hat sich weiterentwickelt
-    \item Software stack (Libraries und so) hat sich weiterentwickelt
+    \item Softwarestack (Libraries und so) hat sich weiterentwickelt
 \end{enumerate}
 \subsubsection{Parallelisierung als eine Wartungsarbeit}
 \paragraph{Beobachtung:} Mehrkernprozessoren und -Systeme werden immer weiter verbreitet\\
-$\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Existierende Software ist noch sequenziell geschrieben.
+$\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste existierende Software ist noch sequenziell geschrieben.
 \paragraph{Folge:} Parallelisierung von Software wird zu einem wichtigen Teil der Wartung (kann als komplexes Refactoring betrachtete werden)
 
 \begin{itemize}
@@ -1627,7 +1631,7 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
           \end{itemize}
 \end{itemize}
 \paragraph{Das Pipeline Parallelisierungsmuster (The Pipeline Parallelization Pattern)}\begin{enumerate}
-    \item Daten des Vorherigen Verarbeitungsschrittes (stage) empfangen (Beenden wenn alle Daten bereits abgearbeitet)
+    \item Daten des vorherigen Verarbeitungsschrittes (stage) empfangen (beenden wenn alle Daten bereits abgearbeitet)
     \item Daten verarbeiten
     \item Daten an nächsten Verarbeitungsschritt senden
 \end{enumerate}
@@ -1635,18 +1639,18 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
     \item Sorgt für:\begin{itemize}
               \item Stabile, syncrone Verarbeitungsreihenfolge
               \item Spezifische Verarbeitungsschritte können an dafür optimierte Hardware abgegeben werden
-              \item Erlaubt einfaches Modifizieren, Hinzufügen und Neuanordnen der einzeln Verarbeitungsschritten
+              \item Erlaubt einfaches Modifizieren, Hinzufügen und Neuanordnen der einzelnen Verarbeitungsschritten
               \item Kann aber nicht für Input Fauls kompensieren
           \end{itemize}
 \end{itemize}
 \clearpage
 \subsubsection{Softwareevolution (Software Evolution)}
 \begin{definition}[Softwareevolution]
-    Die Reihe von Änderungen, neuen Versionen und Anpassung die während der Wartung zwischen entwicklungsbeginn und der letzten Version entstehen.
+    Die Reihe von Änderungen, neuen Versionen und Anpassung die während der Wartung zwischen Entwicklungsbeginn und der letzten Version entstehen.
 \end{definition}
 \paragraph{Probleme:}\begin{itemize}
     \item Kann bereits existierende Funktionalität zerstören (Verschlimmbesserung)\begin{itemize}
-              \item Lösungsansatz: viel testen und ggf. Betaversion an erfahrene Benutzer verteilen
+              \item Lösungsansatz: viel testen und ggf. Betaversionen an erfahrene Benutzer verteilen
           \end{itemize}
     \item Kann Trennung zwischen Spezifikation, Dokumentation und Implementierung bewirken\begin{itemize}
               \item Lösungsansatz: Neue Funktionen rufen einen \enquote{Full development cycle} hervor.
@@ -1688,7 +1692,7 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
 \begin{enumerate}
     \item Entwurf des \enquote{Feature space} ist getrennt vom Softwareentwurf und wird \textbf{vorher} ausfgeführt.
     \item Ein Merkmal sollte nie mehr als einmal implementiert werden
-    \item Es muss möglich sein, den Code der ein bestimmtes Merkmal implementiert zu lokalisieren.
+    \item Es muss möglich sein den Code, der ein bestimmtes Merkmal implementiert, zu lokalisieren.
 \end{enumerate}
 \subsubsection{Merkmaldiagramme (Feature Diagrams)}
 \tikzstyle{FeatureNode}[0]=[draw,rectangle,thick, minimum width=3cm,align=center, minimum height=2em, rounded corners=#1]%
@@ -1701,7 +1705,6 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
 \begin{itemize}
     \item Oben ist das \enquote{Root Feature}
     \item Kein Subfeature ohne Parent möglich
-    \item Standartmodus: Oder (Ein oder mehrere Features auswählbar)
 \end{itemize}
 \begin{table}[ht]
     \centering
@@ -1712,6 +1715,9 @@ $\Rightarrow$ Große Geschwindigkeitsverbesserungen möglich, aber die meiste Ex
         \toprule
         \fatsf{Symbol}                                     & \fatsf{Bedeutung}                                                            \\
         \midrule
+        \raisebox{-.2\height}{\begin{tikzpicture}
+            \draw[thick] (-.5,-.5) coordinate(c1) -- (0,0) coordinate(c2) --(.5,-.5) coordinate(c3);
+            \end{tikzpicture}} & Und (And)                                                                    \\
         \raisebox{-.2\height}{\begin{tikzpicture}
                 \draw[thick] (-.5,-.5) coordinate(c1) -- (0,0) coordinate(c2) --(.5,-.5) coordinate(c3);
                 \pic [OrAngle,fill=fgcolor,angle radius=3mm] {angle = c1--c2--c3};
@@ -1907,7 +1913,7 @@ Beispiele für Prozessmodelle sind:
 
 \subsection{Prozessmodell: Wasserfall}
 \paragraph{Beschreibung}
-Die folgenden Aktivitäten werden strikt in der folgenden Reihenfolge abgearbeitet und der nächste Schritt wartet auf den vorherigen:
+Die folgenden Aktivitäten werden strikt in der folgenden Reihenfolge abgearbeitet und der nächste Schritt startet erst, wenn der Vorherige komplett abgeschlossen wurde:
 \begin{enumerate}
     \item Anforderungsdefinition (Requirements analysis and definition):\begin{itemize}
               \item Die Anforderungen werden in Zusammenarbeit mit dem Systemnutzern erarbeitet
@@ -1923,12 +1929,12 @@ Die folgenden Aktivitäten werden strikt in der folgenden Reihenfolge abgearbeit
           \end{itemize}
     \item Integrations- und Systemtests (Integration and system
           testing):\begin{itemize}
-              \item Program Units werden integriert und getestet als ganzes system
+              \item Program Units werden integriert und als ganzes System getestet
           \end{itemize}
     \item Inbetriebnahme und Wartung (Operation and maintenance)
 \end{enumerate}
 
-Sollten Fehler in einer Phase auftreten, so wird diese gestoppt und die vorherige Phase muss wiederholt werden. Somit fließen die Ergebnisse aller Phasen in die vorherigen ein, wie in \ref{fig:waterfall} zu sehen ist.
+Sollten Fehler in einer Phase auftreten, so wird diese gestoppt und die vorherige Phase muss wiederholt werden. Somit fließen die Ergebnisse aller Phasen in die Vorherigen ein, wie in \ref{fig:waterfall} zu sehen ist.
 
 \begin{figure}[ht]
     \centering
@@ -1963,11 +1969,11 @@ Sollten Fehler in einer Phase auftreten, so wird diese gestoppt und die vorherig
 \begin{itemize}
     \item Höchste Priorität hat das Zufriedenstellen des Kunden
     \item Regelmäßige Auslieferung von Zwischenständen (bspw. alle zwei Wochen)
-    \item Funktionierende Software ist das Primärziel (30\% Implementiert $ \rightarrow $ 30\% des Projektes abgeschlossen)
+    \item Funktionierende Software ist das Primärziel (30\% implementiert $ \rightarrow $ 30\% des Projektes abgeschlossen)
     \item Einfachheit ist essentiell
-    \item Änderungen der Anforderungen während der Entwicklung Problematisch
+    \item Änderungen der Anforderungen während der Entwicklung problematisch
     \item Das Team reflektiert in regelmäßigen Abständen, um effektiver zu werden
-    \item Manager und Entwickler müssen zusammen arbeiten
+    \item Manager und Entwickler müssen zusammenarbeiten
 \end{itemize}
 % end
 
@@ -1982,14 +1988,14 @@ In XP wird in kurzen Iterationen gearbeitet, wobei in jeder Iteration bestimmte 
 \begin{itemize}
     \item User Stories müssen für den Kunden verständlich sein
     \item Jede User Story muss von Wert sein für den Kunden
-    \item User Storie sollten so umfangreich sein, dass man einige abarbeiten kann pro Iteration
+    \item User Stories sollten so umfangreich sein, dass man einige pro Iteration abarbeiten kann
     \item User Stories sollten unabhängig sein
     \item Jede User Story muss testbar sein
     \item Jeder User Story werden \textit{Story Points} zugewiesen, welche ein abstraktes Zeitmaß darstellen zur Einschätzung der Bearbeitungsdauer
     \item In jeder User Story sollte ein Akzeptanzkriterium gegeben sein
 \end{itemize}
 
-\noindent Langes Template: Als ein <Rolle> möchte ich <Ziel> sodass <Vorteile>. \\
+\noindent Langes Template: Als ein <Rolle> möchte ich <Ziel>, sodass <Vorteile>. \\
 Kurzes Template: Als ein <Rolle> möchte ich <Ziel>.
 % end
 \clearpage
@@ -2003,7 +2009,7 @@ Entwickler checken ihren Code regelmäßig ein (mehrmals am Tag), sodass ein CI-
 % end
 
 \paragraph{Pair Programming}
-Code ist von genau zwei Entwicklern geschrieben
+Code wird von genau zwei Entwicklern zusammen geschrieben
 \begin{itemize}
     \item Einer fokussiert sich auf den besten Weg der Implementierung
     \item Der andere fokussiert sich auf den Code (aus einer strategischen Sicht)
@@ -2024,7 +2030,7 @@ Code ist von genau zwei Entwicklern geschrieben
 \paragraph{Release Planung}
 \begin{itemize}
     \item Entwickler und Kunden einigen sich auf ein Datum für das erste Release (2-4 Monate)
-    \item Kunden entscheiden sich für grobe Zusammensetzung der User Stories (unter Beachtung der Velotiy)
+    \item Kunden entscheiden sich für grobe Zusammensetzung der User Stories (unter Beachtung der Velocity)
     \item Wird die Velocity genauer, wird der Releaseplan geändert
 \end{itemize}
 % end
@@ -2040,6 +2046,12 @@ Code ist von genau zwei Entwicklern geschrieben
 
 \begin{equation*}
     \text{Velocity} = \frac{\text{Summe an Story Points}}{\text{Summe der verbrauchten Zeit pro User Story in einer Iteration}}
+\end{equation*}
+
+oder
+
+\begin{equation*}
+    \text{Velocity} = \frac{\text{Summe an Story Points}}{\text{Summe der Iterationen (meistens 1)}}
 \end{equation*}
 % end
 
