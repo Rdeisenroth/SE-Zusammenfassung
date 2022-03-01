@@ -26,7 +26,7 @@
 \title[SE]{Software Engineering}
 \subtitle{Zusammenfassung}
 \author{Ruben Deisenroth}
-% \contributor{} % List contributors here, seperate with \and
+\contributor{Hendrik Rüthers} % List contributors here, seperate with \and
 \semester{WiSe 2020/21}
 \fachbereich{Informatik}
 \version{1.0 (SNAPSHOT)}
@@ -384,8 +384,8 @@ Im Diagramm \ref{fig:domain} ist ein Beispiel für ein Domänenmodell gegeben. I
 
     \node [desc, right = 1 of Domänen-/Konzeptklasse] {Stellt ein Domänenobjekt/eine Konzeptklasse im Domänenmodell dar.};
     \node [desc, right = 1 of Klasse] {Attribute: Logische Datenwerte eines Objektes, Abgeleitete Attribute werden mit einem "`/"' vorm namen gekennzeichnet};
-    \node [desc, right = 1 of assoc2] {Repräsentiert eine bidirektionale Assoziation. Ließ: Ein A hat multB viele B und ein B hat multA viele A.};
-    \node [desc, right = 1 of uniassoc2] {Repräsentiert eine unidirektionale Assoziation. Ließ: Ein A hat multB viele B.};
+    \node [desc, right = 1 of assoc2] {Repräsentiert eine bidirektionale Assoziation. Lese: Ein A hat multB viele B und ein B hat multA viele A.};
+    \node [desc, right = 1 of uniassoc2] {Repräsentiert eine unidirektionale Assoziation. Lese: Ein A hat multB viele B.};
     \node [desc, right = 1 of inherit2] {Stellt eine Vererbungsbeziehung (Association) dar.};
 \end{tikzpicture}
 % end
@@ -406,7 +406,7 @@ In einer Universität wird jede Vorlesung von mindestens einem Dozenten gelesen.
         \umluniassoc[mult1 = 1, mult2 = 2..3, name = consistsof]{Lerngruppe}{Student*in}
         \umlassoc[mult1 = 1..*, mult2 = *, name = visits]{Student*in}{Vorlesung}
 
-        \node [above] at (reads-1) {ließt};
+        \node [above] at (reads-1) {liest};
         \node [above] at (consistsof-1) {besteht aus};
         \node [left] at (visits-1) {besucht};
     \end{tikzpicture}
